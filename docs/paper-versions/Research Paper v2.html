@@ -1,0 +1,815 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Research Paper v1 </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="369ee7a9-127a-80b4-902a-eb9f238616c2" class="page sans"><header><h1 class="page-title" dir="auto">Research Paper v2 </h1><p class="page-description" dir="auto"></p></header><div class="page-body">
+
+<div style="display:contents" dir="auto"><h1 id="369ee7a9-127a-8021-9847-c6b4cfa56269" class="">Project Proposal: Advanced Edge-Optimized Forest Fire Object Detection (v2)</h1></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-809e-af86-e68d69234b2c" class=""><strong>Team:</strong> Esraa Nasr and Ahmed Ayman</p></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-80c5-aebc-eb3026bf0f56" class=""><strong>Selection of Application Category:</strong> Forest Fire &amp; Environmental Disaster Management</p></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-8097-b000-dace26ca7e78" class="">Review: Current Challenges and Research Trends</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-80a5-8a00-ea1b37d6e0c8" class="">Traditional forest fire detection models focus purely on drawing bounding boxes around smoke or flames. This approach suffers from two major bottlenecks: heavy models cannot run on cheap drones, and fast edge models trigger too many false alarms (confusing clouds, fog, or sunset glare for fire). Furthermore, high-resolution 4K imagery from watchtowers is often naively resized, obliterating the very pixels that indicate early-stage distant smoke.</p></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-8031-a055-fadb67f632d3" class=""><strong>The Novel Discovery Angle:</strong> This project proposes a <strong>"Cognitive Fire Defense Pipeline"</strong>—a 100% Edge-native architecture tailored for real-world compute limits (e.g., T4 GPUs or Jetson Nano). We conduct three rigorous experiments across two data distributions to prove that a lightweight edge model acting as the <strong>Sentinel</strong> (fast reflexes) can be effectively paired with a zero-shot, prompt-driven <strong>YOLO-World</strong> model acting as the <strong>Commander</strong> (deep threat triage). By eliminating the cloud-compute bottleneck, we achieve high accuracy and latency-free zero-shot semantic filtering natively on the edge.</p></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-80d4-996f-fc3edc94e9df" class="">Selection of Object Detection Models</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-80ea-bbc8-d411b4132df4" class="">To derive new insights, we selected four models representing fundamentally different architectural philosophies, explicitly modified for low-compute environments.</p></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-8038-9ace-e094f5d2b19c" class="">Experiment 1: The Micro View (FLAME Dataset - Drone/UAV Imagery)</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-80be-b39a-d9a3a04c77fe" class=""><strong>Environment:</strong> Dynamic, moving cameras, top-down angles, requiring high processing speed on low-power edge devices.</p></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-800d-95a2-cf4b123bcef1" class=""><strong>Goal:</strong> Discover if modern single-stage <em>Nano</em> models outperform lightweight two-stage models for dynamic edge deployment.</p></div>
+<div style="display:contents" dir="auto"><ol type="1" id="369ee7a9-127a-807c-b9d8-ea9050360d24" class="numbered-list" start="1"><li><strong>The Modern CNN Edge Standard: YOLO11n (Nano)</strong><div style="display:contents" dir="auto"><ul id="369ee7a9-127a-808e-8c57-c92f3d8731c3" class="bulleted-list"><li style="list-style-type:disc"><strong>Architecture Family:</strong> One-Stage Detector.</li></ul></div><div style="display:contents" dir="auto"><ul id="369ee7a9-127a-801a-afee-e8a26b62e0ce" class="bulleted-list"><li style="list-style-type:disc"><strong>Why it’s in the stack:</strong> Designed specifically for extreme edge devices. It tests the baseline of speed and memory efficiency against motion blur.</li></ul></div></li></ol></div>
+<div style="display:contents" dir="auto"><ol type="1" id="369ee7a9-127a-80e6-babf-e10603b78cad" class="numbered-list" start="2"><li><strong>The Two-Stage Lightweight: Faster R-CNN (MobileNetV3)</strong><div style="display:contents" dir="auto"><ul id="369ee7a9-127a-808c-81eb-df928d28e2b8" class="bulleted-list"><li style="list-style-type:disc"><strong>Architecture Family:</strong> Two-Stage Detector (RPN + Classification).</li></ul></div><div style="display:contents" dir="auto"><ul id="369ee7a9-127a-8062-a124-d9c1b8ace272" class="bulleted-list"><li style="list-style-type:disc"><strong>Why it’s in the stack:</strong> By replacing the heavy ResNet backbone with <strong>MobileNetV3</strong>, we retain the stable Region Proposal Network (RPN) to test if two-stage localization handles complex forest backgrounds better than YOLO, without bottlenecking hardware.</li></ul></div></li></ol></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-8073-b2bb-ee400736d629" class="">Experiment 2: The Macro View (D-Fire Dataset - Watchtower/Panoramic)</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-8026-a24e-dfd887b21a48" class=""><strong>Environment:</strong> Static cameras, extreme distances, heavy environmental noise (clouds, haze, sunsets).</p></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-80f5-af52-c4cd43cc6452" class=""><strong>Goal:</strong> Determine whether lightweight visual transformers or zero-shot Open Vocabulary semantic prompting (YOLO-World) is more efficient at eliminating false positives at long distances on edge devices.</p></div>
+<div style="display:contents" dir="auto"><ol type="1" id="369ee7a9-127a-804e-8796-d1fca84bbea8" class="numbered-list" start="1"><li><strong>The Transformer-Based Pioneer: Swin-T (Tiny)</strong><div style="display:contents" dir="auto"><ul id="369ee7a9-127a-8052-bd68-d02c09971fed" class="bulleted-list"><li style="list-style-type:disc"><strong>Architecture Family:</strong> Hierarchical Vision Transformer (ViT).</li></ul></div><div style="display:contents" dir="auto"><ul id="369ee7a9-127a-807f-9a01-ce541eeb28c3" class="bulleted-list"><li style="list-style-type:disc"><strong>Why it’s in the stack:</strong> Tests if the hierarchical windowing logic of transformers can process high-resolution landscapes and spot tiny distant anomalies efficiently.</li></ul></div></li></ol></div>
+<div style="display:contents" dir="auto"><ol type="1" id="369ee7a9-127a-80f0-b44f-c2dd9d8f1fbb" class="numbered-list" start="2"><li><strong>The Zero-Shot Edge Commander: YOLO-World</strong><div style="display:contents" dir="auto"><ul id="369ee7a9-127a-80bb-bb79-d5f4ca88c0fa" class="bulleted-list"><li style="list-style-type:disc"><strong>Architecture Family:</strong> Open-Vocabulary Object Detector (Prompt-then-Detect).</li></ul></div><div style="display:contents" dir="auto"><ul id="369ee7a9-127a-80e8-b82a-c2d15d0d8d72" class="bulleted-list"><li style="list-style-type:disc"><strong>Why it’s in the stack:</strong> Replaces the slow, cloud-dependent OWLv2. YOLO-World uses a Re-parameterizable Vision-Language Path Aggregation Network (RepVL-PAN) to fuse pre-computed text embeddings ("smoke", "sunset", "cloud") directly into the model's weights offline. This allows real-time, zero-shot semantic filtering of visual mimics natively on the edge without running a heavy text encoder during inference.</li></ul></div></li></ol></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-8073-b2bb-ee400736d630" class="">Experiment 3: Slicing Aided Hyper Inference (SAHI) Ablation</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-8026-a24e-dfd887b21a49" class=""><strong>Goal:</strong> Prove that naive resizing of 4K watchtower imagery destroys tiny object detection performance.</p></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-80f5-af52-c4cd43cc6453" class=""><strong>Procedure:</strong> We will compare the recall of YOLO-World using standard 512x512 downscaling against YOLO-World deployed with SAHI, which slices the high-resolution image into overlapping patches, runs inference on each patch, and merges the bounding boxes. This solves the Scope Calibration gap for distant targets.</p></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-80fe-b52b-fc2423419c05" class="">Environment Setup</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-80dc-b075-cffc7e30d6ad" class=""><strong>The Development and Training Environment:</strong></p></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-808c-9ce8-ebeb50921284" class="bulleted-list"><li style="list-style-type:disc"><strong>Hardware:</strong> NVIDIA T4 (Simulating Edge constraints).</li></ul></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-805c-98a8-c3c81dab23c8" class="bulleted-list"><li style="list-style-type:disc"><strong>Frameworks:</strong> PyTorch, Ultralytics (YOLO11n, YOLO-World), Detectron2 (Faster R-CNN).</li></ul></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-80e6-8247-fd5844bbd4d2" class="bulleted-list"><li style="list-style-type:disc"><strong>Inference Optimization:</strong> TensorRT / ONNX for final edge benchmarking.</li></ul></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-8083-b688-e6940ec6889e" class="">Dataset Preprocessing &amp; Rigor</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-80cc-ab2b-c4060cd6fca5" class="">Forest fire data presents unique challenges that require strict preprocessing:</p></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-803c-933c-dd66107d6ee8" class="bulleted-list"><li style="list-style-type:disc"><strong>Target Datasets:</strong> FLAME Dataset (Drone imagery, moving background), D-Fire Dataset (Static, long-distance imagery).<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-803d-8dc5-e3c72e64728b" class="bulleted-list"><li style="list-style-type:circle"><strong>Classes:</strong> 2 (<code>Fire</code>, <code>Smoke</code>).</li></ul></div><div style="display:contents" dir="auto"><ul id="369ee7a9-127a-8068-b3e1-e8fb644de49f" class="bulleted-list"><li style="list-style-type:circle"><strong>Class Imbalance Mitigation:</strong> We will strictly employ <strong>Focal Loss</strong> during training to dynamically scale cross-entropy based on prediction confidence, forcing the model to focus on hard, tiny smoke patches instead of the massive background. Furthermore, <strong>Mosaic Augmentation</strong> will be used to simulate scale variation.</li></ul></div><div style="display:contents" dir="auto"><ul id="369ee7a9-127a-800d-9643-c1ebee3a4fa5" class="bulleted-list"><li style="list-style-type:circle"><strong>Small Object Detection:</strong> Preserving scale via SAHI inference for the D-Fire dataset.</li></ul></div></li></ul></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-803a-99d1-d4910b5c83cb" class="">Model Fine-Tuning: Training Configurations</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-8090-9017-c2a643287937" class="">Training configurations are the main settings used during training, specifically optimized here to prevent "CUDA Out of Memory" errors.</p></div>
+<div style="display:contents" dir="ltr"><table id="369ee7a9-127a-8054-b4de-e59d8b60a415" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-80fb-91d1-ee9ec8ee44df"><td id="du;T" class=""><strong>Parameter</strong></td><td id="c;kO" class=""><strong>Description</strong></td><td id="}wrS" class=""><strong>Edge-Optimized Setup</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-80c1-bbbc-f9d94b20d48e"><td id="du;T" class=""><strong>Epochs</strong></td><td id="c;kO" class="">Number of passes through dataset.</td><td id="}wrS" class="">100 (with Early Stopping)</td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-809b-9ff7-ffafae00ae40"><td id="du;T" class=""><strong>Batch Size</strong></td><td id="c;kO" class="">Images processed at once.</td><td id="}wrS" class="">8 (Crucial for low VRAM)</td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-808b-bff6-ec4edb6150ac"><td id="du;T" class=""><strong>Image Size</strong></td><td id="c;kO" class="">Input image resolution.</td><td id="}wrS" class="">$512 \times 512$ (Trained), SAHI Inference</td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-8060-b03c-f8f8b2a8c4ea"><td id="du;T" class=""><strong>Optimizer</strong></td><td id="c;kO" class="">Algorithm used to update weights.</td><td id="}wrS" class="">AdamW</td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-80bd-bc0b-c856990fd07c"><td id="du;T" class=""><strong>Mixed Precision</strong></td><td id="c;kO" class="">Accelerates training &amp; halves memory.</td><td id="}wrS" class="">FP16 (Enabled)</td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-80ef-8de2-e6832bebc998"><td id="du;T" class=""><strong>Loss Function</strong></td><td id="c;kO" class="">Penalty for incorrect predictions.</td><td id="}wrS" class="">Focal Loss + CIoU Loss</td></tr></div></tbody></table></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-80bf-b3fe-fa7b8d9fd8ee" class="">Documentation</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-8071-96ba-c18dfef964a9" class=""><strong>Experiment Matrix:</strong></p></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-8026-a4d0-dfce23a68ea9" class="bulleted-list"><li style="list-style-type:disc">YOLO11n $\rightarrow$ FLAME Dataset (E1)</li></ul></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-8026-ae84-e4e983e695e8" class="bulleted-list"><li style="list-style-type:disc">Faster R-CNN (MobileNet) $\rightarrow$ FLAME Dataset (E1)</li></ul></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-808c-af24-cecc1c83c907" class="bulleted-list"><li style="list-style-type:disc">Swin-T $\rightarrow$ D-Fire Dataset (E2)</li></ul></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-8053-8988-c9f3c97702ba" class="bulleted-list"><li style="list-style-type:disc">YOLO-World $\rightarrow$ D-Fire Dataset (E2)</li></ul></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-8053-8988-c9f3c97702bc" class="bulleted-list"><li style="list-style-type:disc">YOLO-World + SAHI $\rightarrow$ D-Fire Dataset (E3 Ablation)</li></ul></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-80a5-9dea-c435be9bbc0e" class="">Performance Evaluation Criteria</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-806c-9e2c-f6fb5d3099cf" class="">We will compare all models scientifically using standard evaluation metrics. Falsification criteria mandate strict numeric thresholds (e.g., &gt;30 FPS for Edge Real-Time, &lt;5% False Positive Rate on Visual Mimics).</p></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-80a3-a510-f99b6daca7d3" class="bulleted-list">
+<li style="list-style-type:disc"><strong>Precision &amp; Recall (mAP@50-95):</strong> Standard detection metrics.</li>
+<li style="list-style-type:disc"><strong>False Positive Rate (FPR):</strong> Critical metric for evaluating YOLO-World vs Swin-T on environmental noise.</li>
+<li style="list-style-type:disc"><strong>Inference Speed (FPS):</strong> Must include network latency comparisons (proving the 100% Edge YOLO-World pipeline beats the cloud requirement).</li>
+<li style="list-style-type:disc"><strong>Model Size (MB) &amp; FLOPs:</strong> Ensuring all models stay under edge constraints.</li>
+</ul></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-80c0-a87f-d4d52ae0755e" class="">Final Comparison Table</h3></div>
+<div style="display:contents" dir="ltr"><table id="369ee7a9-127a-801b-b031-e29f5d6fec65" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-80b5-aa10-fd27e4754df9"><td id="qVh=" class=""><strong>Model</strong></td><td id="aDXE" class=""><strong>Dataset</strong></td><td id="ZdGx" class=""><strong>mAP</strong></td><td id="A{lQ" class=""><strong>FPR</strong></td><td id="I@DB" class=""><strong>Recall</strong></td><td id="`qxu" class=""><strong>FPS</strong></td><td id="V:[w" class=""><strong>Size (MB)</strong></td><td id="ECWf" class=""><strong>FLOPs</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-80da-8b6e-d9df52137a2b"><td id="qVh=" class="">YOLO11n</td><td id="aDXE" class="">FLAME</td><td id="ZdGx" class="">-</td><td id="A{lQ" class="">-</td><td id="I@DB" class="">-</td><td id="`qxu" class="">-</td><td id="V:[w" class="">-</td><td id="ECWf" class="">-</td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-8088-800b-dfe39ecfdc0f"><td id="qVh=" class="">Faster R-CNN (MobileNet)</td><td id="aDXE" class="">FLAME</td><td id="ZdGx" class="">-</td><td id="A{lQ" class="">-</td><td id="I@DB" class="">-</td><td id="`qxu" class="">-</td><td id="V:[w" class="">-</td><td id="ECWf" class="">-</td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-8053-bc02-f2b6d23d4fdb"><td id="qVh=" class="">Swin-T</td><td id="aDXE" class="">D-Fire</td><td id="ZdGx" class="">-</td><td id="A{lQ" class="">-</td><td id="I@DB" class="">-</td><td id="`qxu" class="">-</td><td id="V:[w" class="">-</td><td id="ECWf" class="">-</td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-8062-91d0-d6ee82341ab4"><td id="qVh=" class="">YOLO-World</td><td id="aDXE" class="">D-Fire</td><td id="ZdGx" class="">-</td><td id="A{lQ" class="">-</td><td id="I@DB" class="">-</td><td id="`qxu" class="">-</td><td id="V:[w" class="">-</td><td id="ECWf" class="">-</td></tr></div><div style="display:contents" dir="ltr"><tr id="369ee7a9-127a-8062-91d0-d6ee82341ab5"><td id="qVh=" class="">YOLO-World + SAHI</td><td id="aDXE" class="">D-Fire</td><td id="ZdGx" class="">-</td><td id="A{lQ" class="">-</td><td id="I@DB" class="">-</td><td id="`qxu" class="">-</td><td id="V:[w" class="">-</td><td id="ECWf" class="">-</td></tr></div></tbody></table></div>
+
+<div style="display:contents" dir="auto"><h3 id="369ee7a9-127a-807f-9dbb-e51941033479" class="">Final Analysis and Discussion</h3></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-807d-8265-d2937d83c0f4" class="">The final project deliverable will rigorously compare the models across our three experiments:</p></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-8097-bbf5-fdcc07678bed" class="bulleted-list"><li style="list-style-type:disc">Did YOLO11n achieve the highest inference speed without sacrificing critical recall on drone data?</li></ul></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-802b-874d-dff2205a8550" class="bulleted-list"><li style="list-style-type:disc">Did Faster R-CNN localize small smoke plumes better due to its two-stage RPN?</li></ul></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-8003-8ab7-cb3f74425d24" class="bulleted-list"><li style="list-style-type:disc">Did YOLO-World eliminate distant atmospheric false alarms better than Swin-T, and did it achieve >30 FPS by bypassing the runtime text-encoder bottleneck?</li></ul></div>
+<div style="display:contents" dir="auto"><ul id="369ee7a9-127a-8003-8ab7-cb3f74425d25" class="bulleted-list"><li style="list-style-type:disc">Did SAHI prevent the degradation of recall for tiny distant targets in 4K imagery compared to naive resizing?</li></ul></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-8032-9dd1-faccbacfb7b7" class=""><strong>Overall Goal of the Project:</strong></p></div>
+<div style="display:contents" dir="auto"><p id="369ee7a9-127a-8098-a87d-db026224ccde" class="">By proving that lightweight visual algorithms can be paired with edge-native zero-shot linguistic reasoning (YOLO-World) and slicing inference techniques (SAHI), we establish a highly robust, 100% edge-deployable blueprint for modern disaster management.</p></div>
+
+</div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

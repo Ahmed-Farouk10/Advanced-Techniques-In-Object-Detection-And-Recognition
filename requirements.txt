@@ -1,0 +1,46 @@
+ultralytics>=8.2.0
+torch>=2.1.0
+torchvision>=0.16.0
+torchaudio>=2.1.0
+
+# Object Detection Frameworks
+detectron2 @ git+https://github.com/facebookresearch/detectron2.git@v0.6  # pin for stability
+transformers>=4.40.0,<4.45.0  # pinned — RT-DETR + DINO API stable range
+
+# Metrics & Evaluation
+pycocotools>=2.0.7
+torchmetrics>=1.3.0
+
+# Data & Augmentation
+opencv-python>=4.9.0
+albumentations>=1.4.0
+Pillow>=10.0.0
+
+# Scientific Computing
+numpy>=1.24.0
+scipy>=1.12.0
+scikit-learn>=1.4.0
+pandas>=2.2.0
+
+# Visualization
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# FLOPs measurement
+thop>=0.1.1
+
+# Experiment Tracking
+wandb>=0.16.0
+
+# Dataset Access
+kagglehub>=0.2.0
+
+# Notebook utilities
+ipykernel>=6.29.0
+ipywidgets>=8.1.0
+nbstripout>=0.7.1  # strip notebook outputs before git commit
+tqdm>=4.66.0
+
+# Code quality
+black>=24.0.0
+isort>=5.13.0
