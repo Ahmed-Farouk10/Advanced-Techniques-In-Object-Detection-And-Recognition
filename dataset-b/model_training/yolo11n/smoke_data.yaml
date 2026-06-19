@@ -1,0 +1,10 @@
+# YOLO11 Dataset Configuration for Cognitive Fire Defense Pipeline
+path: d:/Masters Academy AI/Advanced Techniques in Object Detection and Recognition/Research Paper/dataset-b/yolo_format
+train: images/train
+val: images/val
+test: images/test
+
+# Classes
+nc: 1
+names:
+  0: smoke

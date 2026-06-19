@@ -133,3 +133,9 @@ ara-output/
 # If treating as a submodule, leave commented:
 # AI-Research-SKILLs/
 Boreal-Dataset/
+
+dataset-b/yolo_format/
+dataset-b/coco_format/images/
+
+dataset-b/yolo_format/
+dataset-b/coco_format/images/
