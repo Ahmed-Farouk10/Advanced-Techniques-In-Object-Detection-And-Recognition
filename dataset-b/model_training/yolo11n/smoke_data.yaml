@@ -1,8 +1,8 @@
 # YOLO11 Dataset Configuration for Cognitive Fire Defense Pipeline
-path: /home/esraa/Public/AIN7015/advancedTechniques/Paper_Presentation/project/Advanced-Techniques-In-Object-Detection-And-Recognition/dataset-b/raw/Boreal-Forest-Fire-Subset-A/
+path: ../../yolo_format/ # Edit by Esraa Nasr
 train: images/train
 val: images/val
-test: images/test
+
 
 # Classes
 nc: 1

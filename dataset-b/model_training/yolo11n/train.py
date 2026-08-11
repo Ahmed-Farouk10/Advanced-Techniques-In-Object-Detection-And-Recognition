@@ -27,7 +27,7 @@ def train_model():
         epochs=100,
         imgsz=640,
         batch=16,
-        device=0,
+        device=cpu, # Edit by Esraa Nasr
         project="Cognitive_Fire_Defense",
         name="YOLO11n_Custom_Aug",
         exist_ok=True
