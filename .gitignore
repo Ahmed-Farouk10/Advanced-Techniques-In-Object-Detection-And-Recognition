@@ -1,5 +1,5 @@
-﻿# ============================================================
-# COGNITIVE FIRE DEFENSE PIPELINE — .gitignore
+# ============================================================
+# COGNITIVE FIRE DEFENSE PIPELINE - .gitignore
 # ML Research Project | Python + Jupyter
 # ============================================================
 
@@ -17,6 +17,11 @@ dataset-b/**/*.tar.gz
 *.db
 *.sqlite
 
+# Generated dataset splits (large; reproducible via build scripts)
+dataset-b/yolo_format/
+dataset-b/coco_format/
+Boreal-Dataset/
+
 # Keep annotations, READMEs, notebooks, results metrics
 !dataset-a/**/annotations/
 !dataset-b/**/annotations/
@@ -27,6 +32,7 @@ dataset-b/**/*.tar.gz
 !dataset-a/**/results/*.json
 !dataset-b/**/results/*.json
 !dataset-a/**/results/*.csv
+!dataset-b/**/results/*.csv
 
 # ──────────────────────────────────────────────
 # MODEL WEIGHTS — Large binary files
@@ -39,25 +45,41 @@ dataset-b/**/*.tar.gz
 *.pickle
 *.h5
 *.hdf5
+*.safetensors
+*.bin
+results/**/*.pt
+results/**/*.pth
+results/**/*.onnx
 
 # ──────────────────────────────────────────────
-# RESULTS & LOGS
+# PAPER ARTEFACTS
 # ──────────────────────────────────────────────
-wandb/
-runs/
-tensorboard/
+# Downloaded reference PDFs (copyrighted — use DOI list in literature_comparison_matrix.md)
+paper/references/
+# LaTeX build artifacts
+*.aux
 *.log
-results/**/*.onnx
+*.out
+*.toc
+*.synctex.gz
+*.bbl
+*.blg
+# Node/Puppeteer PDF tooling
+paper/node_modules/
+package-lock.json
+# Installers and bundled binaries
+*.msi
+tectonic_bin/
+paper/test.tex
 
 # ──────────────────────────────────────────────
 # PYTHON
 # ──────────────────────────────────────────────
 __pycache__/
 *.py[cod]
-*.class
+*$py.class
 *.so
 .Python
-env/
 build/
 develop-eggs/
 dist/
@@ -70,30 +92,14 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-.nox/
+MANIFEST
 
-# ──────────────────────────────────────────────
-# JUPYTER
-# ──────────────────────────────────────────────
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
-
-# ──────────────────────────────────────────────
-# KAGGLE
-# ──────────────────────────────────────────────
-kaggle.json
-.kaggle/
-
-# ──────────────────────────────────────────────
-# ENVIRONMENTS
-# ──────────────────────────────────────────────
+# Virtual environments
 .env
 .venv
 env/
@@ -103,12 +109,46 @@ env.bak/
 venv.bak/
 
 # ──────────────────────────────────────────────
-# IDE / OS
+# JUPYTER NOTEBOOKS — Strip outputs before commit
 # ──────────────────────────────────────────────
-.vscode/
-.idea/
-*.swp
-*.swo
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# ──────────────────────────────────────────────
+# ML EXPERIMENT TRACKING
+# ──────────────────────────────────────────────
+wandb/
+mlruns/
+runs/
+lightning_logs/
+.neptune/
+
+# Ultralytics YOLO runs
+runs/
+ultralytics/
+
+# HuggingFace cache
+.cache/
+~/.cache/huggingface/
+
+# ──────────────────────────────────────────────
+# KAGGLE CREDENTIALS — NEVER commit
+# ──────────────────────────────────────────────
+kaggle.json
+.kaggle/
+*.json.bak
+*_credentials*
+
+# ──────────────────────────────────────────────
+# COLAB / GOOGLE DRIVE ARTEFACTS
+# ──────────────────────────────────────────────
+*.gdrive
+sample_data/
+drive/
+
+# ──────────────────────────────────────────────
+# OS & EDITOR JUNK
+# ──────────────────────────────────────────────
 .DS_Store
 .DS_Store?
 ._*
@@ -116,7 +156,26 @@ venv.bak/
 .Trashes
 ehthumbs.db
 Thumbs.db
-Desktop.ini
+desktop.ini
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains
+.idea/
+*.iml
+*.iws
+
+# ──────────────────────────────────────────────
+# LOGS & TEMP
+# ──────────────────────────────────────────────
+*.log
+*.tmp
+*.temp
+logs/
+tmp/
+temp/
 
 # ──────────────────────────────────────────────
 # AG KIT — Internal tooling (not for repo consumers)
@@ -128,14 +187,15 @@ ara-output/
 
 # ──────────────────────────────────────────────
 # AI-Research-SKILLs — Separate git repo (submodule)
-# Exclude its nested .git to prevent conflicts
 # ──────────────────────────────────────────────
-# If treating as a submodule, leave commented:
 # AI-Research-SKILLs/
-Boreal-Dataset/
 
-dataset-b/yolo_format/
-dataset-b/coco_format/images/
-
-dataset-b/yolo_format/
-dataset-b/coco_format/images/
+# ──────────────────────────────────────────────
+# LARGE FIGURE OUTPUTS
+# ──────────────────────────────────────────────
+paper/figures/*.png
+paper/figures/*.jpg
+paper/figures/*.jpeg
+paper/figures/*.pdf
+!paper/figures/.gitkeep
+!paper/figures/*.md
