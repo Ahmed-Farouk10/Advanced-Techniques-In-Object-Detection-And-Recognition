@@ -1,6 +1,6 @@
 ﻿# YOLO11n (Nano) — One-Stage CNN
 
-**Dataset:** dataset-a | **Role:** Drone/UAV imagery — edge deployment
+**Dataset:** dataset-b | **Role:** Smoke detection training
 
 ## Prerequisite
 Complete all 6 preprocessing tasks in `../dataset-a/preprocessing/` before training.

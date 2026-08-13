@@ -1,0 +1,19 @@
+Annotated counts:
+
+Evo: 931 images
+Ruokolahti: 1765 images
+Karkkila: 1096 images
+Heinola: 906 images
+
+Not annotated counts (Empty/no smoke images):
+
+Ruokolahti: 2
+Heinola: 217
+Karkkila: 37
+
+Total counts: 
+
+Evo: 931 images
+Ruokolahti: 1767 images
+Karkkila: 1313 images
+Heinola: 943 images

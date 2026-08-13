@@ -8,7 +8,7 @@ Split 4,954 sequential video frames into train/val/test WITHOUT leaking adjacent
 
 ## The Problem: Temporal Leakage
 
-The Boreal dataset consists of frames extracted from 31 DJI drone flights (e.g., `evoDJI_0001_frame65.jpg`). Adjacent frames share the same forest background, lighting, and camera angle. If we use `train_test_split(random_state=42)`:
+The Boreal dataset consists of frames extracted from 30 DJI drone flights (e.g., `evoDJI_0001_frame65.jpg`). Adjacent frames share the same forest background, lighting, and camera angle. If we use `train_test_split(random_state=42)`:
 
 - Frame 65 goes to train, frame 66 goes to validation
 - The model learns "the trees in evoDJI_0001" → NOT "what smoke looks like"
@@ -33,7 +33,7 @@ The Boreal dataset consists of frames extracted from 31 DJI drone flights (e.g.,
 
 ## Why Not Exactly 70/15/15?
 
-31 drone clips are indivisible "blocks" of varying sizes (some clips have 1,700+ frames). Packing rigid variable-sized blocks into 3 buckets while forcing geographic stratification means 63/19/17 is the mathematical optimum. This is documented as a limitation in the paper.
+30 drone clips are indivisible "blocks" of varying sizes (some clips have 1,700+ frames). Packing rigid variable-sized blocks into 3 buckets while forcing geographic stratification means 63/19/17 is the mathematical optimum. This is documented as a limitation in the paper.
 
 ## Engineering Challenges & Near-Misses
 

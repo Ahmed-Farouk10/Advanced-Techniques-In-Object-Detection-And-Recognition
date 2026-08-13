@@ -197,3 +197,22 @@ ara-output/
 # ──────────────────────────────────────────────
 paper/figures/*.tmp
 paper/figures/*.cache
+
+# ──────────────────────────────────────────────
+# DATASET IMAGES — DO NOT COMMIT (Esraa)
+# ──────────────────────────────────────────────
+# Raw / working images
+dataset-b/raw/**/*.jpg
+dataset-b/raw/**/*.jpeg
+dataset-b/raw/**/*.png
+dataset-b/working-Boreal-Forest-Fire-Subset-A/**/*.jpg
+dataset-b/working-Boreal-Forest-Fire-Subset-A/**/*.jpeg
+dataset-b/working-Boreal-Forest-Fire-Subset-A/**/*.png
+
+# Generated YOLO images
+dataset-b/yolo_format/images/**/*.jpg
+dataset-b/yolo_format/images/**/*.jpeg
+dataset-b/yolo_format/images/**/*.png
+
+# Fire and Smoke Detection Dataset (unseen-fire test set)
+dataset-a/test_dataset/

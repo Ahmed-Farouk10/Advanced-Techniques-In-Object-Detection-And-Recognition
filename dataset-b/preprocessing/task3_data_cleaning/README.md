@@ -18,7 +18,7 @@ For object detection with bounding boxes, we cannot "impute" missing pixels or h
 | 2 — Exact Duplicates | Byte-identical files | MD5 hash | TBD |
 | 3 — Noisy Data & Outliers | BBox area, aspect ratio, blur, contrast | Percentile bounds (skewed data), IQR (normal), Laplacian variance | 26 area outliers, 368 AR outliers, 431 blurry frames |
 | 4 — Consistency & Validity | YOLO format, coordinate bounds, class ID | 5-float validation, 2-tier clipping (margin <0.02 clip, ≥0.02 delete), pixel-space bounds | 2 coordinates auto-corrected |
-| 5 — Sequential Consistency | Video-aware checks | Consecutive frame IoU, 3-frame interpolation, pHash near-duplicates | 255 temporal jumps, 2,864 near-duplicates |
+| 5 — Sequential Consistency | Video-aware checks | Consecutive frame IoU, 3-frame interpolation, pHash near-duplicates | 255 temporal jumps, 3,389 near-duplicates |
 | 6 — Data Drift | Temporal, illumination, spatial | Task 2 findings mapped to rubric | Day vs night, top 40% horizon |
 | 7 — Cleaning Log | Full audit trail | Pandas DataFrame per modification | 4,139 entries |
 
@@ -30,7 +30,7 @@ Our initial approach applied the standard IQR method (Q1 - 1.5×IQR, Q3 + 1.5×I
 
 ### pHash Near-Duplicate Policy
 
-2,864 near-duplicate frames were detected (pHash Hamming distance < 5). These are NOT deleted — they are flagged and documented. The handling occurs in Task 4 via `--max-frames-per-clip` frame sampling, not via destructive cleaning.
+3,389 near-duplicate frames were detected (pHash Hamming distance < 5). These are NOT deleted — they are flagged and documented. The handling occurs in Task 4 via `--max-frames-per-clip` frame sampling, not via destructive cleaning.
 
 ## Results Summary
 
@@ -41,9 +41,9 @@ Our initial approach applied the standard IQR method (Q1 - 1.5×IQR, Q3 + 1.5×I
 | Images deleted | **0** (zero ground truth modified) |
 | Images retained | 4,954 |
 | Labels auto-corrected | 2 (marginal coordinate clipping) |
-| Flags by type | Near Duplicates: 2,864, Blurry: 431, AR Outliers: 368, Temporal Jumps: 255, Box Count Shifts: 193, Area Outliers: 26 |
+| Flags by type | Near Duplicates: 3,389, Blurry: 431, AR Outliers: 368, Temporal Jumps: 255, Box Count Shifts: 193, Area Outliers: 26 |
 
-**Key insight:** The 2,864 near-duplicates were FLAGGED, not deleted. They represent redundant video frames within clips and are handled by the `--max-frames-per-clip` sampling in Task 4, not by deleting data.
+**Key insight:** The 3,389 near-duplicates were FLAGGED, not deleted. They represent redundant video frames within clips and are handled by the `--max-frames-per-clip` sampling in Task 4, not by deleting data.
 
 ## Outputs
 
