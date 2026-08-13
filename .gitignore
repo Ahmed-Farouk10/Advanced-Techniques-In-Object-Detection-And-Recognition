@@ -191,11 +191,9 @@ ara-output/
 # AI-Research-SKILLs/
 
 # ──────────────────────────────────────────────
-# LARGE FIGURE OUTPUTS
+# PAPER FIGURES
+# (EDA figures are small (<250 KB) and required for PDF compilation —
+#  track them. Only exclude oversized generated outputs if any appear.)
 # ──────────────────────────────────────────────
-paper/figures/*.png
-paper/figures/*.jpg
-paper/figures/*.jpeg
-paper/figures/*.pdf
-!paper/figures/.gitkeep
-!paper/figures/*.md
+paper/figures/*.tmp
+paper/figures/*.cache
