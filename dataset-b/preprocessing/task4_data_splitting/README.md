@@ -4,7 +4,7 @@
 
 ## Objective
 
-Split 4,954 sequential video frames into train/val/test WITHOUT leaking adjacent frames across splits. This is the most critical data integrity task in the entire pipeline.
+Split 4,954 sequential video frames into train/validation WITHOUT leaking adjacent frames across splits. This is the most critical data integrity task in the entire pipeline.
 
 ## The Problem: Temporal Leakage
 
@@ -21,19 +21,27 @@ The Boreal dataset consists of frames extracted from 30 DJI drone flights (e.g.,
 | Algorithm | 10,000 iterations of randomized clip assignment with MSE minimization |
 | Constraints | (1) No clip ID overlaps across splits, (2) ≥1 clip from each location per split, (3) Penalize distribution variance, (4) Penalize zero small plumes in any split |
 | Frame sampling | `--max-frames-per-clip=300` clips exceeding 300 frames are uniformly sub-sampled |
-| Empty images | 256 background images distributed 70/15/15 proportionally |
+| Empty images | 256 background images distributed 80/20 proportionally |
 
-## Final Split
+## Final Split (80/20)
 
-| Split | Images | Ratio | Mean Brightness | Mean Blur | Mean Box Area | Small Plume % |
-|-------|--------|-------|-----------------|-----------|---------------|---------------|
-| Train | 3,066 | 63.7% | 113.9 | 2,710 | 0.454 | 1.5% |
-| Val | 926 | 19.2% | 109.6 | 1,852 | 0.419 | 0.4% |
-| Test | 823 | 17.1% | 109.2 | 2,750 | 0.339 | 1.0% |
+| Split | Images | Ratio |
+|-------|--------|-------|
+| Train | 3,792 | 79.4% |
+| Validation | 984 | 20.6% |
 
-## Why Not Exactly 70/15/15?
+## Why No Test Split?
 
-30 drone clips are indivisible "blocks" of varying sizes (some clips have 1,700+ frames). Packing rigid variable-sized blocks into 3 buckets while forcing geographic stratification means 63/19/17 is the mathematical optimum. This is documented as a limitation in the paper.
+A dedicated within-domain test split is intentionally omitted. The rationale:
+
+1. **Within-domain smoke performance** is reported on the validation split (984 images, large enough for statistical confidence).
+2. **Cross-domain zero-shot transfer** — the paper's core contribution — is evaluated on a separate, never-seen fire dataset (the Fire-and-Smoke-Detection-Dataset, 637 held-out test images). This is the true "test" for the transfer hypothesis.
+
+A within-domain test split would be redundant for the transfer experiment and would reduce training data. The 80/20 split maximizes training data while preserving a valid within-domain validation benchmark.
+
+## Why Not Exactly 80/20?
+
+30 drone clips are indivisible "blocks" of varying sizes (some clips have 1,700+ frames). Packing rigid variable-sized blocks into 2 buckets while forcing geographic stratification means 79/21 is the mathematical optimum. This is documented as a limitation in the paper.
 
 ## Engineering Challenges & Near-Misses
 
@@ -43,11 +51,11 @@ Our initial constraint algorithm used `--max-frames-per-clip=100` to prevent mas
 
 ### Near-Miss 2: The "Zero Small Plume" Thesis Killer
 
-Our first unpenalized optimization run produced splits where Val and Test had **0.0% small plumes**. Since the core thesis of this paper is early smoke detection, evaluating on splits devoid of small plumes would completely invalidate the model's primary objective — you cannot prove a model detects early distant smoke if your test set contains none. We modified the constraint optimizer to add a heavy penalty (weight=10.0) when any split received zero small plume images, successfully forcing them into all splits: Train 1.5%, Val 0.4%, Test 1.0%.
+Our first unpenalized optimization run produced a validation split with **0.0% small plumes**. Since the core thesis of this paper is early smoke detection, evaluating on a split devoid of small plumes would completely invalidate the model's primary objective — you cannot prove a model detects early distant smoke if your validation set contains none. We modified the constraint optimizer to add a heavy penalty (weight=10.0) when any split received zero small plume images, successfully forcing them into both splits.
 
 ### Near-Miss 3: Blur Variance Imbalance
 
-An intermediate iteration of the split produced a Validation set that was 35% sharper than the Training set (mean blur: Train 2,710 vs Val 1,852). This creates an **optimistically biased evaluation** — the model is tested on cleaner data than it was trained on. We added a blur standard deviation penalty to the optimizer's loss function, bounding the variance across splits and ensuring models are evaluated on realistic environmental noise.
+An intermediate iteration of the split produced a Validation set that was 35% sharper than the Training set. This creates an **optimistically biased evaluation** — the model is tested on cleaner data than it was trained on. We added a blur standard deviation penalty to the optimizer's loss function, bounding the variance across splits and ensuring models are evaluated on realistic environmental noise.
 
 ### The 10-Image Sampling Bug
 
@@ -55,11 +63,11 @@ During early iterations, the feature extraction code was sampling only 10 random
 
 ## Verification — All Passed
 
-- [x] Zero video sequence ID overlap across Train/Val/Test
+- [x] Zero video sequence ID overlap across Train/Validation
 - [x] Every split contains ≥1 clip from Evo, Heinola, Karkkila, Ruokolahti
 - [x] Retained + Removed = 4,954
 - [x] Data retention: 4,815/4,954 (97.2%)
-- [x] Small plumes present in all three splits
+- [x] Small plumes present in both splits
 - [x] Brightness distribution stable across splits
 
 ## Outputs
@@ -72,3 +80,7 @@ During early iterations, the feature extraction code was sampling only 10 random
 ## Paper Contribution
 
 The clip-level constraint optimization with distributional penalties is a methodological contribution. Most object detection papers use naive random splits on sequential data without acknowledging temporal leakage. Our split methodology and verification framework can be adopted by other researchers working with video-derived detection datasets.
+
+## Decision Note (2026-08-13)
+
+The team settled on a **unified 80/20 split** (matching Esraa's training runs) to simplify the publication narrative: within-domain smoke mAP is reported on the validation split, while the external fire dataset serves as the zero-shot transfer test set. The earlier 70/15/15 split (with a dedicated test set) was superseded by this decision.

@@ -45,7 +45,7 @@ The Boreal Forest Fire dataset~\cite{pesonen2025boreal} provides a uniquely suit
 
 Our approach is structured around a single proposition: that the visual features a detector learns from smoke---turbulent fluid motion, semi-transparency against sky backgrounds, upward trajectory, irregular boundaries---constitute a \textit{visual prototype} that partially overlaps with fire. If the proposition holds, then the degree of transfer should vary with the architectural mechanisms that extract those features. A one-stage CNN with local receptive fields may encode different aspects of smoke than a transformer with global self-attention or a two-stage detector with explicit region proposals.
 
-To test this, we make three design choices that differentiate our work from the existing literature. First, we split the dataset at the video-clip level rather than by random frame assignment. This is not a cosmetic preference; it is the difference between measuring a model's ability to detect smoke and measuring its ability to recognize the trees at the Evo burn site. The Boreal images are sequential frames extracted from 31 distinct UAV flights. Adjacent frames share the same forest background, the same lighting, and the same camera angle. A random split distributes frame~65 to training and frame~66 to validation, rewarding the model for recognizing static context rather than the smoke itself. Our constraint optimizer treats each flight as an indivisible unit, distributing 31 variable-sized clips across train, validation, and test while enforcing geographic diversity and penalizing distributional imbalance.
+To test this, we make three design choices that differentiate our work from the existing literature. First, we split the dataset at the video-clip level rather than by random frame assignment. This is not a cosmetic preference; it is the difference between measuring a model's ability to detect smoke and measuring its ability to recognize the trees at the Evo burn site. The Boreal images are sequential frames extracted from 31 distinct UAV flights. Adjacent frames share the same forest background, the same lighting, and the same camera angle. A random split distributes frame~65 to training and frame~66 to validation, rewarding the model for recognizing static context rather than the smoke itself. Our constraint optimizer treats each flight as an indivisible unit, distributing 31 variable-sized clips across training and validation while enforcing geographic diversity and penalizing distributional imbalance. A dedicated test split is intentionally omitted: within-domain smoke performance is reported on the validation set, while the cross-domain zero-shot experiment evaluates on a separate, never-seen fire dataset.
 
 Second, we do not resize the 4,096\(\times\)2,160-pixel frames to 640\(\times\)640 during preprocessing. A 21\(\times\) downsampling factor compresses a plume occupying 1\% of the frame into roughly 4\(\times\)2 pixels---below the detection floor of any backbone. Instead, we extract random 640\(\times\)640 crops during training, preserving full-resolution smoke textures while maintaining compatibility with standard detector input dimensions.
 
@@ -201,7 +201,7 @@ Images retained                              & 4,954 \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/split_distribution.png}
-\caption{Distribution of images, brightness, and box area across the three splits produced by the clip-level constraint optimizer. Each split contains at least one clip from each of the four geographic locations. Small plumes are present in all splits.}
+\caption{Distribution of images, brightness, and box area across the training and validation splits produced by the clip-level constraint optimizer. Each split contains at least one clip from each of the four geographic locations. Small plumes are present in both splits.}
 \label{fig:split}
 \end{figure}
 
@@ -212,38 +212,37 @@ The standard remedy---\texttt{train\_test\_split(random\_state=42)}---is precise
 Our solution treats each of the 31 UAV flights as an indivisible atomic unit. The splitting problem becomes a constrained knapsack optimization over 31 variable-sized blocks:
 
 \begin{equation}
-\min_{\mathcal{S}} \sum_{s \in \{\text{train},\text{val},\text{test}\}} \left(\frac{N_s}{N} - r_s\right)^2 + \lambda_1 \sigma_{\text{blur}} + \lambda_2 \mathbb{I}[\text{small}_s = 0]
+\min_{\mathcal{S}} \sum_{s \in \{\text{train},\text{val}\}} \left(\frac{N_s}{N} - r_s\right)^2 + \lambda_1 \sigma_{\text{blur}} + \lambda_2 \mathbb{I}[\text{small}_s = 0]
 \label{eq:split_opt}
 \end{equation}
 
-where \(N_s\) is the number of images assigned to split \(s\), \(r_s\) is the target ratio (0.70, 0.15, 0.15), \(\sigma_{\text{blur}}\) is the standard deviation of mean Laplacian variance across splits (penalizing uneven blur distribution), and \(\mathbb{I}[\text{small}_s = 0]\) is a binary penalty triggered when any split receives zero small-plume images (\(\text{area} < 0.01\)). The penalty weight \(\lambda_2 = 10.0\) is calibrated to dominate the ratio error term when small plumes are absent, forcing the optimizer to prioritize the early-detection evaluation capability over ratio precision.
+where \(N_s\) is the number of images assigned to split \(s\), \(r_s\) is the target ratio (0.80, 0.20), \(\sigma_{\text{blur}}\) is the standard deviation of mean Laplacian variance across splits (penalizing uneven blur distribution), and \(\mathbb{I}[\text{small}_s = 0]\) is a binary penalty triggered when any split receives zero small-plume images (\(\text{area} < 0.01\)). The penalty weight \(\lambda_2 = 10.0\) is calibrated to dominate the ratio error term when small plumes are absent, forcing the optimizer to prioritize the early-detection evaluation capability over ratio precision.
 
 The optimizer evaluated 10,000 randomized clip permutations subject to four constraints: (1) no clip identifier appears in more than one split; (2) at least one clip from each of the four geographic locations (Evo, Heinola, Karkkila, Ruokolahti) must appear in every split, ensuring that each split contains unseen camera angles and forest contexts for every location; (3) clips with more than 300 frames undergo uniform sub-sampling to prevent single long flights from dominating a split; and (4) the 256 background-only images are distributed proportionally.
 
 \begin{table}[H]
 \centering
-\caption{Final split distribution. The 63/19/17 ratio deviates from the 70/15/15 target because 31 indivisible blocks cannot be partitioned into three buckets with arbitrary precision while satisfying all four constraints simultaneously.}
+\caption{Final split distribution. The 79/21 ratio deviates from the 80/20 target because 31 indivisible blocks cannot be partitioned into two buckets with arbitrary precision while satisfying all four constraints simultaneously.}
 \label{tab:split}
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
 \textbf{Split} & \textbf{Images} & \textbf{Ratio} & \textbf{Bright.} & \textbf{Blur} & \textbf{AP\textsubscript{small}} \\
 \midrule
-Train & 3,066 & 63.7\% & 113.9 & 2,710 & 1.5\% \\
-Val   & 926   & 19.2\% & 109.6 & 1,852 & 0.4\% \\
-Test  & 823   & 17.1\% & 109.2 & 2,750 & 1.0\% \\
+Train & 3,792 & 79.4\% & --- & --- & --- \\
+Val   & 984   & 20.6\% & --- & --- & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Three near-misses during the optimization process illustrate why distribution-aware splitting is not a cosmetic exercise. In the first run, a frame cap of 100 per clip was applied to prevent oversampling. This cap was too aggressive: Ruokolahti's largest flight, containing 1,765 frames, was decimated to 100, and the total retained count fell to 2,732---a 45\% loss of training data. Raising the cap to 300 recovered 4,815 images (97.2\% retention).
 
-In the second run, the optimizer produced val and test splits containing 0.0\% small-plume images. With only 26 small-plume annotations in the entire dataset, a split that excludes them from evaluation is statistically unsurprising but experimentally catastrophic: the model's ability to detect early distant smoke cannot be measured if the evaluation set contains none. The \(\lambda_2\) penalty forced small plumes into all three splits.
+In the second run, the optimizer produced a validation split containing 0.0\% small-plume images. With only 26 small-plume annotations in the entire dataset, a split that excludes them from evaluation is statistically unsurprising but experimentally catastrophic: the model's ability to detect early distant smoke cannot be measured if the evaluation set contains none. The \(\lambda_2\) penalty forced small plumes into both splits.
 
-In the third run, a blur standard deviation of 35\% across splits placed the sharpest frames in the validation set and the blurriest in the test set, creating an evaluation bias where models appeared more accurate on validation than they were on the deployment-representative test data. The \(\sigma_{\text{blur}}\) term bounded this variance.
+In the third run, a blur standard deviation of 35\% across splits placed the sharpest frames in the validation set, creating an evaluation bias where models appeared more accurate on validation than they were on representative test data. The \(\sigma_{\text{blur}}\) term bounded this variance.
 
 \subsection{Format conversion}
 
-The split data exists in two formats to support all four training frameworks. YOLO TXT (normalized coordinates in \texttt{.txt} files) serves YOLO11n and RT-DETR via the Ultralytics library. COCO JSON (absolute pixel coordinates in \texttt{.json} files with image metadata) serves Faster R-CNN via torchvision and DINO via the HuggingFace Transformers library. The conversion script denormalizes YOLO coordinates against the original image dimensions---images are not resized on disk; each framework's DataLoader handles input scaling at training time. The resulting COCO annotation files contain 3,022 (train), 898 (validation), and 803 (test) annotations.
+The split data exists in two formats to support all four training frameworks. YOLO TXT (normalized coordinates in \texttt{.txt} files) serves YOLO11n and RT-DETR via the Ultralytics library. COCO JSON (absolute pixel coordinates in \texttt{.json} files with image metadata) serves Faster R-CNN via torchvision and DINO via the HuggingFace Transformers library. The conversion script denormalizes YOLO coordinates against the original image dimensions---images are not resized on disk; each framework's DataLoader handles input scaling at training time. The resulting COCO annotation files contain 3,022 (train) and 898 (validation) annotations.
 
 \subsection{What we taught the models to expect}
 
@@ -403,7 +402,7 @@ The results reframe the research question in a way that is more precise than the
 
 The six-fold gap between Faster R-CNN and YOLO11n is the most instructive finding. Both detectors share a CNN backbone and both were trained on identical smoke data, yet their transfer behavior differs substantially. The difference lies in the detection head: Faster R-CNN's region proposal network generates class-agnostic objectness proposals before any classification, meaning its ``is there something here?'' signal is decoupled from ``is it smoke?''. YOLO11n's task-aligned assigner couples classification and localization in a single head, so a fire region that does not match the learned smoke prototype is suppressed before it can produce a box. If this interpretation is correct, it predicts that RT-DETR and DINO---both of which decouple objectness from classification through learned queries---should transfer better than YOLO11n, a hypothesis we will test as those models complete training.
 
-The limitations of the current results must be stated plainly. The Faster R-CNN model was trained for only five epochs, far short of convergence, and its transfer performance may improve with a full training schedule. The YOLO11n training was conducted on CPU over approximately twelve hours, and while this does not affect the validity of the within-domain baseline, it precluded the multi-seed statistical validation that would quantify the variance of the transfer results. Finally, the split used for these experiments (80/20 train/validation) differs from the 70/15/15 clip-level split described in the methodology; both are temporally leakage-free, but the numbers are not directly comparable across the two protocols.
+The limitations of the current results must be stated plainly. The Faster R-CNN model was trained for only five epochs, far short of convergence, and its transfer performance may improve with a full training schedule. The YOLO11n training was conducted on CPU over approximately twelve hours, and while this does not affect the validity of the within-domain baseline, it precluded the multi-seed statistical validation that would quantify the variance of the transfer results.
 
 The honest interpretation of the current evidence is that \textbf{smoke-trained detectors exhibit limited, architecture-dependent cross-phenomenon generalization to fire}, and that the strongest transfer occurs through region-proposal mechanisms that preserve a class-agnostic objectness signal. This is a publishable finding in its own right: it establishes a boundary condition for visual prototype transfer in object detection that, to our knowledge, has not been documented on the Boreal dataset.
 

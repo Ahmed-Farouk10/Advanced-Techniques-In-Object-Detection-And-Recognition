@@ -104,7 +104,7 @@ dataset-b/
 | **Phase 1** | Task 1 — Business Logic | What problem are we solving? | Maximize Recall. Split by video clip, not random frame. |
 | | Task 2 — Data Understanding | What's in the data? | 95.7% large plumes. 4K resolution. 30 video clips. Daytime bias. |
 | **Phase 2** | Task 3 — Data Cleaning | Is the data clean? | 4,139 flags, 0 deletions. pHash near-dupes flagged. All annotations valid. |
-| | Task 4 — Data Splitting | How do we split without leakage? | Clip-level constraint optimization. 63/19/17 split. Zero temporal leakage. |
+| | Task 4 — Data Splitting | How do we split without leakage? | Clip-level constraint optimization. 80/20 split. Zero temporal leakage. |
 | | Task 5 — Feature Engineering | What augmentations do we need? | Mosaic(0.4), scale(0.9), HSV jitter, flipud=0. Fog/blur documented. |
 | | Task 6 — Feature Selection | Which augmentations actually help? | Ablation study (post-training). Custom anchors for Faster R-CNN. |
 

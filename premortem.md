@@ -18,8 +18,8 @@ This premortem documents critical risks and anticipated failure modes BEFORE we 
 Before calling any phase complete, the following test cases must pass:
 
 ### Dataset B Split Verification
-- [ ] **Test:** Ensure zero cross-over of video prefix IDs (e.g., `evoDJI_0001`) between train, val, and test splits.
-- [ ] **Test:** Check that the 70/15/15 ratio is roughly maintained across the *number of images* despite being split by *clip ID*.
+- [ ] **Test:** Ensure zero cross-over of video prefix IDs (e.g., `evoDJI_0001`) between train and val splits.
+- [ ] **Test:** Check that the 80/20 ratio is roughly maintained across the *number of images* despite being split by *clip ID*.
 - [ ] **Test:** Validate that the empty (no-smoke) images are distributed proportionally.
 - [ ] **Test:** After pHash dedup in Task 3, verify that no near-duplicate frame pairs (Hamming < 5) exist across train/val boundaries from different clips of the same location.
 
