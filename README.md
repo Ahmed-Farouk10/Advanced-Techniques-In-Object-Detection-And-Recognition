@@ -14,6 +14,7 @@ A cross-domain generalization experiment for forest fire surveillance. We train 
 TRAINING PHASE (Smoke Only)                  EVALUATION PHASE (Fire Only)
 ───────────────────────────                  ────────────────────────────
 Dataset B (Watchtower)                       Dataset A (Drone/UAV)
+Boreal Forest Fire dataset
 4,954 images, YOLO BBoxes                    1,520 images, No BBoxes (Classification)
 Classes: [Smoke]                             Classes: [Fire, No-Fire]
 

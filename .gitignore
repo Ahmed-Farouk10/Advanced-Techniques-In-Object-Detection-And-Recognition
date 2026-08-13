@@ -139,3 +139,56 @@ dataset-b/coco_format/images/
 
 dataset-b/yolo_format/
 dataset-b/coco_format/images/
+
+
+# ============================================================
+# Edit by: Esraa Nasr
+# Dataset B - Boreal Forest Fire
+# ============================================================
+
+# Raw / working images
+dataset-b/raw/**/*.jpg
+dataset-b/raw/**/*.jpeg
+dataset-b/raw/**/*.png
+
+dataset-b/working-Boreal-Forest-Fire-Subset-A/**/*.jpg
+dataset-b/working-Boreal-Forest-Fire-Subset-A/**/*.jpeg
+dataset-b/working-Boreal-Forest-Fire-Subset-A/**/*.png
+
+# Generated YOLO images
+dataset-b/dataset-b/yolo_format/images/**/*.jpg
+dataset-b/dataset-b/yolo_format/images/**/*.jpeg
+dataset-b/dataset-b/yolo_format/images/**/*.png
+
+# If your actual path is dataset-b/yolo_format/
+dataset-b/yolo_format/images/**/*.jpg
+dataset-b/yolo_format/images/**/*.jpeg
+dataset-b/yolo_format/images/**/*.png
+
+# ============================================================
+# Dataset images - DO NOT COMMIT
+# ============================================================
+
+# Fire and Smoke Detection Dataset
+dataset-a/test_dataset/Fire-and-Smoke-Detection-Dataset/
+
+# Optional: ignore all raw/test dataset images
+dataset-a/test_dataset/**/*.jpg
+dataset-a/test_dataset/**/*.jpeg
+dataset-a/test_dataset/**/*.png
+
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
