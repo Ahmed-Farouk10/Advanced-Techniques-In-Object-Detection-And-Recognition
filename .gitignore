@@ -165,6 +165,19 @@ dataset-b/yolo_format/images/**/*.jpg
 dataset-b/yolo_format/images/**/*.jpeg
 dataset-b/yolo_format/images/**/*.png
 
+# ============================================================
+# Dataset images - DO NOT COMMIT
+# ============================================================
+
+# Fire and Smoke Detection Dataset
+dataset-a/test_dataset/Fire-and-Smoke-Detection-Dataset/
+
+# Optional: ignore all raw/test dataset images
+dataset-a/test_dataset/**/*.jpg
+dataset-a/test_dataset/**/*.jpeg
+dataset-a/test_dataset/**/*.png
+
+
 # Python
 __pycache__/
 *.py[cod]
