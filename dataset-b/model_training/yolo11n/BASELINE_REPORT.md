@@ -1,4 +1,4 @@
-# Phase 4.1 — YOLO11n Baseline
+# YOLO11n Baseline
 
 ## Objective
 

@@ -4,7 +4,7 @@ from ultralytics import YOLO
 def train_baseline():
 
     print("=" * 60)
-    print("PHASE 4.1 — YOLO11n BASELINE")
+    print("YOLO11n BASELINE")
     print("=" * 60)
 
     # Load pretrained YOLO11n
