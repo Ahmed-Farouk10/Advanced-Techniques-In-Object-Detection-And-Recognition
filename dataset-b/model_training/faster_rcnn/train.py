@@ -668,7 +668,7 @@ def main():
 
     start_epoch = 1
 
-    if RESUME_CHECKPOINT.exists():
+    if RESUME_CHECKPOINT is not None and RESUME_CHECKPOINT.exists():
 
         print(
             "\n"
