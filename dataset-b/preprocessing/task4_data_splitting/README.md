@@ -27,8 +27,8 @@ The Boreal dataset consists of frames extracted from 30 DJI drone flights (e.g.,
 
 | Split | Images | Ratio |
 |-------|--------|-------|
-| Train | 3,792 | 79.4% |
-| Validation | 984 | 20.6% |
+| Train | 3,825 | 79.4% |
+| Validation | 990 | 20.6% |
 
 ## Why No Test Split?
 

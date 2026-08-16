@@ -7,11 +7,11 @@ This premortem documents critical risks and anticipated failure modes BEFORE we 
 
 ## 1. The Temporal Leakage Risk (CRITICAL)
 
-> **The Flaw:** The Boreal Watchtower dataset (Dataset B) consists of sequential video frames (e.g., `evoDJI_0001_frame0`, `evoDJI_0001_frame1`, etc.). If we perform a naive randomized 70/15/15 train/val/test split across all images, we will inevitably place adjacent frames of the exact same physical scene into both the training and validation sets.
+> **The Flaw:** The Boreal Watchtower dataset (Dataset B) consists of sequential video frames (e.g., `evoDJI_0001_frame0`, `evoDJI_0001_frame1`, etc.). If we perform a naive randomized 80/20 train/val split across all images, we will inevitably place adjacent frames of the exact same physical scene into both the training and validation sets.
 > 
 > **The Consequence:** The model will not learn to detect "smoke"; it will learn to recognize "the trees in evoDJI_0001" and map that to a high confidence score. Validation metrics (mAP, Precision, Recall) will be artificially inflated (near 99%), but the model will fail entirely on new data. This is called "temporal leakage" or "data snooping".
 > 
-> **The Mitigation:** We MUST split the data at the **video/clip level**. All frames belonging to `evoDJI_0001` must remain strictly together in either train, val, or test.
+> **The Mitigation:** We MUST split the data at the **video/clip level**. All frames belonging to `evoDJI_0001` must remain strictly together in either train or val.
 
 ## 2. Test Cases & Verification Plan
 
@@ -102,4 +102,4 @@ Before calling any phase complete, the following test cases must pass:
 - **OOM on RT-DETR at high resolution:** RT-DETR with 640×640 inputs from 4K random crops will still have large activation maps in early layers. *Mitigation: Reduce input size to 512 if memory is tight; RT-DETR is less resolution-dependent than pure CNN architectures.*
 - **Zero-Shot Failure:** Smoke models may completely fail to trigger on fire images (0% detection rate). *Mitigation: This is acceptable academically; we will sweep confidence thresholds down to 0.1 to study the sensitivity curve.*
 - **Negative Ratio Mismatch:** Training set has 5.17% negatives. Dataset A test has 50% negatives (760/760 balanced). The model will be conditioned to rarely output "no detection." On Dataset A, it will produce more false positives than expected. *Mitigation: Account for this in FP rate analysis. The "50% false alarm rate" on Dataset A does not mean the model is broken — it means the model's prior matches training.*
-- **Train/Val Split Artifacts from Clip-Level Grouping:** 30 clips of varying sizes (931 to 1,765 images) make it impossible to hit exact 70/15/15. Some clips will be disproportionately large. *Mitigation: Accept approximation. Report actual split ratios in the paper.*"
+- **Train/Val Split Artifacts from Clip-Level Grouping:** 30 clips of varying sizes (931 to 1,765 images) make it impossible to hit exact 80/20. Some clips will be disproportionately large. *Mitigation: Accept approximation. Report actual split ratios in the paper.*"
