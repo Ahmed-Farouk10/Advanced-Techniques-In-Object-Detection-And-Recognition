@@ -18,8 +18,12 @@ def train_rtdetr():
         cfg=yaml_hyp,
         epochs=100,
         imgsz=640,
-        batch=8,
+        batch=4,          # Reduced from 8: RT-DETR-L needs ~3GB/sample on 8GB VRAM
         device=0,
+        workers=4,
+        optimizer="AdamW",   # Transformer decoder requires AdamW, not SGD
+        lr0=0.0001,          # RT-DETR diverges at YOLO default 0.01 (transformer LR)
+        lrf=0.01,
         project="Cognitive_Fire_Defense",
         name="RTDETR_Custom_Aug",
         exist_ok=True
