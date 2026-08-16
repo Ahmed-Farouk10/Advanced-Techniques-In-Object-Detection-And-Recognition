@@ -1,20 +1,20 @@
 # YOLO11 Custom Hyperparameters for Early Smoke Detection
 
 # Core Augmentations
-mosaic: 0.4           # Reduced from 1.0. Preserves spatial context while maintaining mosaic generalization
-close_mosaic: 10      # Disable in last 10 epochs (fine-tune on real clean data)
-copy_paste: 0.15      # Leverage our 256 empty background images dynamically
-scale: 0.9            # Increased from 0.5. Prevents aggressive downscaling that destroys small plumes
-flipud: 0.0           # Disable vertical flip to preserve natural horizon bias
+mosaic: 0.4
+close_mosaic: 10
+copy_paste: 0.15
+scale: 0.9
+flipud: 0.0
 
 # Environmental Simulation
-hsv_h: 0.015          # Color jitter (hue variation)
-hsv_s: 0.4            # Color jitter (saturation variation)
-hsv_v: 0.3            # Brightness jitter (simulates dusk/dawn lighting)
+hsv_h: 0.015
+hsv_s: 0.4
+hsv_v: 0.3
 
 # Sensor/Platform Distortions
-degrees: 5.0          # Small rotation simulating drone gimbal drift
-bgr: 0.0              # Keep as standard RGB
+degrees: 5.0
+bgr: 0.0
 
 # NOTE: Fog/Haze and Motion Blur are integrated via Albumentations 
 # since they are not native YOLO parameters in the standard hyp grid.

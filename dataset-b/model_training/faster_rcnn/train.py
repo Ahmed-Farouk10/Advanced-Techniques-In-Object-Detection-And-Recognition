@@ -34,7 +34,9 @@ IMAGE_SIZE = 640
 BATCH_SIZE = 2
 
 # Diagnostic run
-NUM_EPOCHS = 1
+NUM_EPOCHS = 5
+
+RESUME_CHECKPOINT = None
 
 DEVICE = torch.device(
     "cuda" if torch.cuda.is_available() else "cpu"
@@ -289,7 +291,40 @@ def train_one_epoch(
     for batch_idx, (images, targets) in enumerate(
         data_loader
     ):
+    # ----------------------------------------------------
+    # Check model parameters for NaN / Inf
+    # ----------------------------------------------------
 
+        for name, parameter in model.named_parameters():
+
+            if not torch.isfinite(parameter).all():
+
+                print(
+                    "\n"
+                    "======================================================================"
+                )
+
+                print(
+                    "NON-FINITE MODEL PARAMETER DETECTED"
+                )
+
+                print(
+                    f"Epoch: {epoch}"
+                )
+
+                print(
+                    f"Batch: {batch_idx + 1}/{total_batches}"
+                )
+
+                print(
+                    f"Parameter: {name}"
+                )
+
+                print(
+                    "======================================================================"
+                )
+
+                return None
         images = [
             image.to(device)
             for image in images
@@ -433,12 +468,29 @@ def train_one_epoch(
 
         losses.backward()
 
+        # Check gradients before optimizer step
+        for name, parameter in model.named_parameters():
+
+            if parameter.grad is not None:
+
+                if not torch.isfinite(
+                    parameter.grad
+                ).all():
+
+                    print(
+                        "\nNON-FINITE GRADIENT DETECTED"
+                    )
+
+                    print(
+                        f"Parameter: {name}"
+                    )
+
+                    return None
         # Gradient clipping for stability
         torch.nn.utils.clip_grad_norm_(
             model.parameters(),
             max_norm=5.0
         )
-
         optimizer.step()
 
         # ----------------------------------------------------
@@ -606,11 +658,66 @@ def main():
 
     optimizer = torch.optim.SGD(
         params,
-        lr=0.001,
+        lr=0.0005,
         momentum=0.9,
         weight_decay=0.0005
     )
+    # ============================================================
+    # Resume Training
+    # ============================================================
 
+    start_epoch = 1
+
+    if RESUME_CHECKPOINT.exists():
+
+        print(
+            "\n"
+            "============================================================"
+        )
+
+        print(
+            f"Loading checkpoint: {RESUME_CHECKPOINT}"
+        )
+
+        checkpoint = torch.load(
+            RESUME_CHECKPOINT,
+            map_location=DEVICE
+        )
+
+        model.load_state_dict(
+            checkpoint["model_state_dict"]
+        )
+
+        optimizer.load_state_dict(
+            checkpoint["optimizer_state_dict"]
+        )
+
+        # --------------------------------------------------------
+        # Override learning rate for stability
+        # --------------------------------------------------------
+
+        for param_group in optimizer.param_groups:
+            param_group["lr"] = 0.0005
+
+        start_epoch = checkpoint["epoch"] + 1
+
+        print(
+            f"✓ Resumed from epoch "
+            f"{checkpoint['epoch']}"
+        )
+
+        print(
+            f"✓ Starting epoch: {start_epoch}"
+        )
+
+        print(
+            f"✓ Learning rate: "
+            f"{optimizer.param_groups[0]['lr']}"
+        )
+
+        print(
+            "============================================================"
+        )
     # --------------------------------------------------------
     # Training
     # --------------------------------------------------------
@@ -623,7 +730,7 @@ def main():
 
     best_loss = float("inf")
 
-    for epoch in range(1, NUM_EPOCHS + 1):
+    for epoch in range(start_epoch, NUM_EPOCHS + 1):
 
         print(
             f"\nEpoch [{epoch}/{NUM_EPOCHS}]"
