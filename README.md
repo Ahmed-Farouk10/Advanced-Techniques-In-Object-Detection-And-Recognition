@@ -21,7 +21,7 @@ Classes: [Smoke]                             Classes: [Fire, No-Fire]
 Model 1: YOLO11n                      ──────>  Transfer Accuracy
 Model 2: Faster R-CNN + MobileNetV3   ──────>  Fire Detection Rate
 Model 3: RT-DETR                      ──────>  False Alarm Rate
-Model 4: DINO (Deformable DETR)       ──────>  Zero-Shot Sensitivity
+Model 4: Deformable DETR              ──────>  Zero-Shot Sensitivity
 ```
 
 ---
@@ -31,20 +31,22 @@ Model 4: DINO (Deformable DETR)       ──────>  Zero-Shot Sensitivity
 | | Dataset | Role | Camera | Format |
 |-|---------|------|--------|---------|
 | **A** | [Forest Fire (Drone)](https://www.kaggle.com/datasets/alik05/forest-fire-dataset) | **Test Probe** | Moving drone | Image Classification |
-| **B** | Fairdata / Boreal (Watchtower) | **Train/Val** | Static panoramic | Object Detection (YOLO BBox) |
+| **B** | Fairdata / Boreal (Watchtower) | **Train/Val** | Static panoramic | Object Detection (YOLO BBox & COCO JSON) |
 
-> ⚠️ **Data is not stored in this repository.** See `data/dataset-a/README.md` and `data/dataset-b/README.md` for download instructions.
+> ⚠️ **Data is not stored in this repository.** See `dataset-a/README.md` and `dataset-b/README.md` for details.
 
 ---
 
 ## Models Evaluated
 
-| # | Model | Paradigm | Why This Architecture? |
-|---|-------|----------|------------------------|
-| 1 | **YOLO11n** | One-Stage CNN | Ultra-lightweight edge inference; testing if pure CNNs can generalize |
-| 2 | **Faster R-CNN** | Two-Stage RPN | RPN anchor precision on plumes vs. YOLO's one-stage approach |
-| 3 | **RT-DETR** | Real-Time Transformer | Global attention — can it generalize semantic smoke context to fire? |
-| 4 | **DINO** | Deformable Transformer | Deformable attention on irregular shapes (smoke plumes are highly irregular) |
+| # | Model | Paradigm | Lead Owner | Why This Architecture? |
+|---|-------|----------|------------|------------------------|
+| 1 | **YOLO11n** | One-Stage CNN (Anchor-free) | Esraa Nasr | Ultra-lightweight edge baseline; testing if pure CNNs can generalize zero-shot. |
+| 2 | **Faster R-CNN** | Two-Stage RPN (Custom anchors) | Esraa Nasr | MobileNetV3-FPN backbone with $k=5$ domain-specific anchor clustering for large plumes. |
+| 3 | **RT-DETR** | Real-Time Transformer (Hybrid) | Ahmed Ayman | Hybrid CNN-Transformer encoder with learned query decoder; eliminates NMS. |
+| 4 | **Deformable DETR** | Sparse Attention Transformer | Ahmed Ayman | Sparse deformable attention captures irregular amorphous smoke boundaries with linear complexity. (See [Deformable DETR README](dataset-b/model_training/dino/README.md)). |
+
+> 📊 **Full Training Results & Detailed Contribution Matrix:** See [`CHANGELOG.md`](CHANGELOG.md).
 
 ---
 

@@ -117,17 +117,20 @@ dataset-b/
 | 1 | YOLO11n | One-stage CNN (anchor-free) | Ultralytics | YOLO TXT | 16 | Esraa |
 | 2 | RT-DETR | Real-time Transformer (query-based) | Ultralytics | YOLO TXT | 8 | Ahmed |
 | 3 | Faster R-CNN | Two-stage RPN (custom anchors) | torchvision | COCO JSON | 4 | Esraa |
-| 4 | DINO | Deformable Attention Transformer | HuggingFace | COCO JSON | 2 | Ahmed |
+| 4 | Deformable DETR | Sparse Attention Transformer | HuggingFace | COCO JSON | 4 | Ahmed |
+
+> 📊 See [`CHANGELOG.md`](../CHANGELOG.md) for full metrics and the detailed contribution matrix.
 
 ---
 
 ## Key Findings (for the Paper)
 
-1. **Anchor clustering:** Smoke plumes cluster into 5 size groups (0.03 to 0.73 area). Custom anchors injected into Faster R-CNN's RPN.
-2. **Temporal leakage prevented:** pHash dedup + clip-level constraint optimization eliminates soft leakage.
-3. **Small plume bias:** Only 1.3% of plumes are small (<1% area). Addressed via scale augmentations and random cropping.
-4. **Daytime bias:** 96% of images are bright. HSV jitter simulates dusk/dawn.
-5. **Validation integrity:** 4,139 anomalies flagged, zero ground truth modified. Full audit trail in `cleaning_log.csv`.
+1. **Deformable DETR Zero-Shot Transfer:** Sparse attention queries achieved ~58.8% fire anomaly detection on unseen fire images without prior exposure to fire labels.
+2. **Anchor clustering:** Smoke plumes cluster into 5 size groups (0.03 to 0.73 area). Custom anchors injected into Faster R-CNN's RPN.
+3. **Temporal leakage prevented:** pHash dedup + clip-level constraint optimization eliminates soft leakage.
+4. **Small plume bias:** Only 1.3% of plumes are small (<1% area). Addressed via scale augmentations and random cropping.
+5. **Daytime bias:** 96% of images are bright. HSV jitter simulates dusk/dawn.
+6. **Validation integrity:** 4,139 anomalies flagged, zero ground truth modified. Full audit trail in `cleaning_log.csv`.
 
 ---
 
