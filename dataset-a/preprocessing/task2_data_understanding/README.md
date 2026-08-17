@@ -1,15 +1,8 @@
-﻿# Task 2 — Data Understanding
+# Task 2: Exploratory Data Analysis & Understanding
 
-> **Dataset:** dataset-a | **Shared preprocessing — same pipeline for all models in this dataset**
+## Overview
+Analyzes class distributions, bounding box geometries, resolution profiles, and visual characteristics of the test probe.
 
-## Objective
-Explore dataset statistics, visualize samples, audit class distributions, identify biases, missing labels, and edge cases.
-
-## Inputs
-- TBD
-
-## Outputs
-- TBD
-
-## Notebook
-See notebook in this folder.
+## Key Files
+- [`data_understanding.md`](data_understanding.md) — Detailed summary of test probe metrics and scale inversion analysis.
+- [`explore.ipynb`](explore.ipynb) — Interactive EDA notebook.

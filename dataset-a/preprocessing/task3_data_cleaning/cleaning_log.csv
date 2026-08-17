@@ -1,0 +1,175 @@
+Step,Image,Issue Type,Detection Method,Treatment,Rationale
+Part 3,Frame_No0_video_2_jpg.rf.c372febd2ba86018411f9380a7899ef3,Blurry Image,Laplacian var = 51.4 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No10050_video_2_jpg.rf.7c0228ca233f9df07355c97c326f147f,Blurry Image,Laplacian var = 96.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No116_video_14_jpg.rf.501be501ab90fa21186396a30e8990be,Blurry Image,Laplacian var = 39.6 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No1189_video_5_jpg.rf.f6e7da56b7cfbb290a293717f81fb3e9,Blurry Image,Laplacian var = 84.9 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No1260_video_1_jpg.rf.c8d4f92427740697e70b35d16e3615fe,Blurry Image,Laplacian var = 52.6 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No1380_video_2_jpg.rf.bc55802776d771619128666326d4d5c1,Blurry Image,Laplacian var = 79.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No150_video_2_jpg.rf.05a8c58a513e514ee5c256ed9e778736,Blurry Image,Laplacian var = 46.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No1680_video_2_jpg.rf.fd25684f146c42e59386b944ca5a993f,Blurry Image,Laplacian var = 61.4 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No17850_video_2_jpg.rf.8e7e73adec09e528203f33af5c974e87,Blurry Image,Laplacian var = 55.1 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No1798_video_5_jpg.rf.db1b47d1b44387425caff3e95823a2d6,Blurry Image,Laplacian var = 59.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No1800_video_1_jpg.rf.de04d660e90660d44f833d40d38fcdd3,Blurry Image,Laplacian var = 95.7 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No2124_video_7_jpg.rf.c0a6a0df87b87e9620e0c4b39a0cea09,Blurry Image,Laplacian var = 88.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No2130_video_1_jpg.rf.9a001ed03d197de9048b8b7d1c6d15cc,Blurry Image,Laplacian var = 92.4 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No2190_video_1_jpg.rf.7f4818aaa3437c01c4bef473e669868e,Blurry Image,Laplacian var = 81.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No230_video_3_jpg.rf.acd83999eae37bc909e4729e247169c6,Blurry Image,Laplacian var = 52.1 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No2360_video_7_jpg.rf.63e0151a33a22861042c40a1d23aca9a,Blurry Image,Laplacian var = 84.1 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No26100_video_9_jpg.rf.d7ec952a3b7d3ac55d4d1f83bf581578,Blurry Image,Laplacian var = 48.4 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No26580_video_2_jpg.rf.53c18cfb15ba9a317443ac4e94d4cc92,Blurry Image,Laplacian var = 48.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No26610_video_2_jpg.rf.29c80311b51b76d2d7072dbdef9b46ff,Blurry Image,Laplacian var = 47.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No2691_video_6_jpg.rf.ede66bb03ca5cc633b339d2e708e9a27,Blurry Image,Laplacian var = 66.6 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No26970_video_2_jpg.rf.345e51b64e18dc71438f2aa2157d5d4b,Blurry Image,Laplacian var = 16.4 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No27000_video_2_jpg.rf.d5170dd44bb5c8b76b6e268dfd4e47fd,Blurry Image,Laplacian var = 28.1 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No27150_video_2_jpg.rf.64c599edb38c31d21cb8c15811b829c7,Blurry Image,Laplacian var = 29.9 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No28860_video_2_jpg.rf.452fb812ce13ac93dbbc70ca5d987951,Blurry Image,Laplacian var = 19.4 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No2900_video_5_jpg.rf.7cd352f69367c43a03468866daef677e,Blurry Image,Laplacian var = 61.4 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No2950_video_7_jpg.rf.da7d0cad49bb917011be156835853c64,Blurry Image,Laplacian var = 64.7 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No29618_video_7_jpg.rf.32136ab25cedb67251b8847b2011d1b4,Blurry Image,Laplacian var = 60.8 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No2970_video_1_jpg.rf.175c15f69588d29bf96436c2ffdc4890,Blurry Image,Laplacian var = 93.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No30090_video_7_jpg.rf.15ce6dbfa2bdae5481a2cd407670319a,Blurry Image,Laplacian var = 86.3 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3068_video_7_jpg.rf.9b4f458538262bed6c27b3602ea5f4d8,Blurry Image,Laplacian var = 65.8 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No30972_video_9_jpg.rf.04e409f15d5afc1677238132676a35ea,Blurry Image,Laplacian var = 16.7 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3186_video_7_jpg.rf.0a97eaff22abd25d3b02d055070b2b56,Blurry Image,Laplacian var = 56.1 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No32214_video_7_jpg.rf.1cafcf4421a3f3785e3aa165e4bdda2f,Blurry Image,Laplacian var = 98.8 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No32880_video_17_jpg.rf.3b9cc154701cd1ee6d53cb76bd9f62a5,Blurry Image,Laplacian var = 15.9 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No33240_video_17_jpg.rf.e86075d5870d3941637aa3a3f1668376,Blurry Image,Laplacian var = 14.9 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3360_video_1_jpg.rf.09b3dfc5008f3e9dde059c2f3ba96def,Blurry Image,Laplacian var = 98.5 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No33840_video_17_jpg.rf.5a56e1291e2f9dbf9848747b5a7fee25,Blurry Image,Laplacian var = 45.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3420_video_1_jpg.rf.fc90f18a60f38be067d0ee834f8afbb5,Blurry Image,Laplacian var = 90.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3450_video_2_jpg.rf.41eddc7c78e7000d0c0fc10835dec033,Blurry Image,Laplacian var = 84.5 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No34800_video_17_jpg.rf.f4346d8bcd8cff7b40be5d6d914597ba,Blurry Image,Laplacian var = 56.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No34920_video_17_jpg.rf.fccb8da8ef13dd8faed16f73b74ef4dc,Blurry Image,Laplacian var = 46.7 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No35400_video_17_jpg.rf.669c9ed0f290a69ecc527387f7b5811f,Blurry Image,Laplacian var = 29.8 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No35760_video_17_jpg.rf.99a7177bd62c11639ffee656ad5fd139,Blurry Image,Laplacian var = 38.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No36076_video_9_jpg.rf.b06e5ed3bc3a72ff03f4403bf4ffc68a,Blurry Image,Laplacian var = 96.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No360_video_2_jpg.rf.52cb69bb634ec36e805fd9058edfe46f,Blurry Image,Laplacian var = 36.9 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No36360_video_17_jpg.rf.3f5037dd5c26403a5a3fcaf01757c7a2,Blurry Image,Laplacian var = 53.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3660_video_1_jpg.rf.1e0a961989ce94ea390c22d1ce1fd31a,Blurry Image,Laplacian var = 72.8 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3690_video_2_jpg.rf.6120051b5c7a32bfcda03ad06cdc58e6,Blurry Image,Laplacian var = 53.6 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3712_video_5_jpg.rf.7c48dcd3e2c17e644c4a4bc0f569c04c,Blurry Image,Laplacian var = 75.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No377_video_14_jpg.rf.152ed79f0382b4863d7f5c14fb397da0,Blurry Image,Laplacian var = 62.5 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No37932_video_9_jpg.rf.adbf211dbcf85e974f8a9919d37b2391,Blurry Image,Laplacian var = 71.1 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3799_video_5_jpg.rf.4b40fb9a7e26e98aa65dc7e03a8a33f8,Blurry Image,Laplacian var = 70.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3840_video_11_jpg.rf.f066ed1373999893dd4d8a9b9117ba87,Blurry Image,Laplacian var = 17.3 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3857_video_5_jpg.rf.301aec256b7b46ccc2531c4a83721d9e,Blurry Image,Laplacian var = 75.5 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No3973_video_5_jpg.rf.dc46443c07ee4a38dfd1ddf610980142,Blurry Image,Laplacian var = 74.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No4080_video_11_jpg.rf.f1e8d0661efc8f7dc2e1b2f2bdc37e81,Blurry Image,Laplacian var = 32.5 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No4140_video_1_jpg.rf.52d30ceffeb252d3c4293ed87fa98d9f,Blurry Image,Laplacian var = 48.5 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No4170_video_1_jpg.rf.b8f661688a2d50ec5af237ac52946da5,Blurry Image,Laplacian var = 54.8 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No42166_video_9_jpg.rf.c2f999d2f85593fabc2d94bddf92f3d4,Blurry Image,Laplacian var = 94.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No42716_video_7_jpg.rf.612ef8f895316f53d0028bdeea5a1ef8,Blurry Image,Laplacian var = 87.5 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No42834_video_7_jpg.rf.573526b38e100f7262420839baabeb66,Blurry Image,Laplacian var = 76.3 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No4290_video_2_jpg.rf.e51a70d1de80b6316dd01ee64ffce857,Blurry Image,Laplacian var = 34.3 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No4320_video_11_jpg.rf.df8c460a25d33afa54a9256df758cead,Blurry Image,Laplacian var = 29.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No435_video_5_jpg.rf.d4e690c5295b5f7a2d29d7e9c799bf4c,Blurry Image,Laplacian var = 81.8 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No4380_video_11_jpg.rf.a7aec523341bec79b9a2cc1b0afcffa5,Blurry Image,Laplacian var = 26.3 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No4437_video_5_jpg.rf.ccdad70b01df659c24e12b0eb55d3bab,Blurry Image,Laplacian var = 91.3 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No4650_video_2_jpg.rf.793289094b59d3e823973a1726ef2edd,Blurry Image,Laplacian var = 55.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No4680_video_2_jpg.rf.b1bdb7fb36a271f15fc51c41ff96b487,Blurry Image,Laplacian var = 50.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No4920_video_2_jpg.rf.4dff7be2845920af3cfe4ac54715d5e0,Blurry Image,Laplacian var = 45.5 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No5070_video_2_jpg.rf.bb51d1b3230c55081a099c037d61aa8b,Blurry Image,Laplacian var = 45.6 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No5481_video_14_jpg.rf.6e4f1806c187ef004d4339f6c946deb6,Blurry Image,Laplacian var = 71.5 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No551_video_14_jpg.rf.cd758b2ccfa9bfd3ad1cbf8eb57b443a,Blurry Image,Laplacian var = 83.3 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No5664_video_7_jpg.rf.188e2a1c5c1465d5ba4d6b8330ec9689,Blurry Image,Laplacian var = 56.3 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No5880_video_11_jpg.rf.0f248a7fa3e6907a3f7b19390d264d25,Blurry Image,Laplacian var = 22.1 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No58_video_14_jpg.rf.6207e77ed0c6f9a98cb205e0cf1e9b40,Blurry Image,Laplacian var = 65.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No6120_video_11_jpg.rf.67fe182751dcd2588cbbfcf6782e58a6,Blurry Image,Laplacian var = 67.3 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No6120_video_2_jpg.rf.199a449c6e7e4eb2978d8cdb5fe4fe6d,Blurry Image,Laplacian var = 21.3 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No6360_video_2_jpg.rf.f9e44d4226bc65485584af8fe34e5182,Blurry Image,Laplacian var = 78.0 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No638_video_14_jpg.rf.4db5d19c8ac1350999520797b3b128a2,Blurry Image,Laplacian var = 96.9 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No6510_video_2_jpg.rf.0bf354966826ac531946fc7427d120c3,Blurry Image,Laplacian var = 67.8 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No6570_video_2_jpg.rf.55ed5a0b9aea5f2ad2615a3572be1819,Blurry Image,Laplacian var = 59.7 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No660_video_1_jpg.rf.a9b3d4e43d563df3dd5cc6162b63efc8,Blurry Image,Laplacian var = 95.8 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No725_video_5_jpg.rf.f7d79c0a84aa5e6ee08b9a606e070c89,Blurry Image,Laplacian var = 69.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No7320_video_2_jpg.rf.ac99ebcd0511db5c080918e489e38a7c,Blurry Image,Laplacian var = 48.4 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No7670_video_7_jpg.rf.5a8f11937a159ed91fae029736c625bc,Blurry Image,Laplacian var = 53.4 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No7680_video_2_jpg.rf.31b5fd7be227c63d554d39af688b9340,Blurry Image,Laplacian var = 66.9 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No8070_video_2_jpg.rf.d9a5d2ccf7f452a340ec7923668d3000,Blurry Image,Laplacian var = 24.5 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No8190_video_2_jpg.rf.cde35a4427d4b574d3ef0e24d6f9f60e,Blurry Image,Laplacian var = 27.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No9690_video_2_jpg.rf.cb49af2276e01413442fda0c7ddc504c,Blurry Image,Laplacian var = 95.2 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No9870_video_2_jpg.rf.8b302003b08599f290d632945a206c03,Blurry Image,Laplacian var = 97.6 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No990_video_1_jpg.rf.0c947dc1de4a120ebd831ac09dbe34a5,Blurry Image,Laplacian var = 88.5 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-106_jpg.rf.32539b5e5de75b2d391d4adb30d12118,Blurry Image,Laplacian var = 89.6 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-113_jpg.rf.d994529e3672fe42bcd82d3bf20e6411,Blurry Image,Laplacian var = 80.1 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-127_jpg.rf.3861004b32560d097a053860b680d2f0,Blurry Image,Laplacian var = 52.2 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-130_jpg.rf.bda483eed15b6ad9f251c95750b3b799,Blurry Image,Laplacian var = 60.6 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-138_jpg.rf.1fc8e8d6da7414b6c84c80ad193238a8,Blurry Image,Laplacian var = 79.4 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-139_jpg.rf.b634b872ffc14eb94ea6fa8c17418a9e,Blurry Image,Laplacian var = 82.9 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-141_jpg.rf.d517d660ba141ae640178f97692de765,Blurry Image,Laplacian var = 88.3 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-151_jpg.rf.789f1107f227cee379fc22d692648866,Blurry Image,Laplacian var = 58.6 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-151_jpg.rf.e9aaca93c65956b40f9cc47ef5401c86,Blurry Image,Laplacian var = 94.2 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-15_jpg.rf.757e4dd95b1ff8f6843c7d60cd2d32d0,Blurry Image,Laplacian var = 60.8 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-171_jpg.rf.e790561d692b15674113346d97edbe40,Blurry Image,Laplacian var = 68.6 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-177_jpg.rf.0839e22b232764ca236ac72853aefb27,Blurry Image,Laplacian var = 61.4 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-17_jpg.rf.e9f0e05be5be65cb7bd3a4d28ffc63bc,Blurry Image,Laplacian var = 24.8 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-180_jpg.rf.5989bb6250ee85f1f463ad6205b8be8b,Blurry Image,Laplacian var = 38.8 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-193_jpg.rf.d27554ce678d30cd78c992c8f3924b52,Blurry Image,Laplacian var = 48.6 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-194_jpg.rf.78f06db2d10c4d94d6cf14558dbf8611,Blurry Image,Laplacian var = 76.4 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-19_jpg.rf.f09fc6dcd3df9b11055e90e70d79d4e5,Blurry Image,Laplacian var = 44.6 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-209_jpg.rf.eedd15be670b2ce4b6f44c89bc72be7e,Blurry Image,Laplacian var = 63.0 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-211_jpg.rf.fff60266090570e764c4883eb2fe7cdd,Blurry Image,Laplacian var = 61.7 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-217_jpg.rf.728fd1ce5eeb3cf430f285fb02368d6e,Blurry Image,Laplacian var = 52.1 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-220_jpg.rf.c5ea919d9e4da3cc9ef0d34270b0b86b,Blurry Image,Laplacian var = 51.1 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-22_jpg.rf.0f9ef40a78cae1924f891f4564b4b67b,Blurry Image,Laplacian var = 42.9 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-22_jpg.rf.e06e726f34b7d3c8e40f7d57609e5e88,Blurry Image,Laplacian var = 58.1 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-26_jpg.rf.dbe0e2faf9befe8f2d1f1eace6f93000,Blurry Image,Laplacian var = 64.8 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-304_jpg.rf.2dfc05dd557891a5ea521dc720a52054,Blurry Image,Laplacian var = 76.0 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-30_jpg.rf.af2ddbfa0c4f9262dfb844e41efa444b,Blurry Image,Laplacian var = 78.1 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-312_jpg.rf.2db129f4a8850ba53d9cde3a13dba96c,Blurry Image,Laplacian var = 59.6 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-317_jpg.rf.052f04ea7a83cb870112f699913b8815,Blurry Image,Laplacian var = 70.0 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-31_jpg.rf.8c4c60baf28cc2d0ecdecfc0ef6a999f,Blurry Image,Laplacian var = 47.7 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-328_jpg.rf.df4f2e0fccbb466a03adc6137a95ad31,Blurry Image,Laplacian var = 47.4 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-338_jpg.rf.d7c5b56abe6b07a96159d6394c8ff853,Blurry Image,Laplacian var = 58.9 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-358_jpg.rf.e0d6c3d4619d43e0a345f0ad3a7ae52e,Blurry Image,Laplacian var = 48.2 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-35_jpg.rf.8c84d1765f78eefb200b4509851ec4f0,Blurry Image,Laplacian var = 22.2 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-37_jpg.rf.e961dcc467391b01d2eda551262ca821,Blurry Image,Laplacian var = 30.0 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-39_jpg.rf.9fd6a075bca4e3c8fec5cd73a2e6df28,Blurry Image,Laplacian var = 37.3 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-41_jpg.rf.35112fb89f33e98677262e8d08d1351d,Blurry Image,Laplacian var = 61.2 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-43_jpg.rf.a493a1d7ddbce3b4f55c076a3af69051,Blurry Image,Laplacian var = 44.6 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-485_jpg.rf.9375f7c6e2a99f7bfc437a0cd074206f,Blurry Image,Laplacian var = 93.5 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-4_jpg.rf.616778de8bcf5055aae30353de5d18c5,Blurry Image,Laplacian var = 91.9 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-50_jpg.rf.f9f8038c315d6627cc3fe14a0dc45b13,Blurry Image,Laplacian var = 47.4 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-51_jpg.rf.46b460fbbc8b18b281282628b71f103e,Blurry Image,Laplacian var = 63.0 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-53_jpg.rf.3ad0c814cafa267b098b256c912ce731,Blurry Image,Laplacian var = 50.3 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-56_jpg.rf.7bae535dbc23c1973d461c22a2d21490,Blurry Image,Laplacian var = 59.6 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-583_jpg.rf.30c26a9a0fd795650c1f948325252208,Blurry Image,Laplacian var = 44.5 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-58_jpg.rf.2550aebd8300511d42d54fc261b4a94d,Blurry Image,Laplacian var = 49.0 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-594_jpg.rf.be6cf5c3f12d4779f1b5403ebaf2201d,Blurry Image,Laplacian var = 44.6 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-595_jpg.rf.eee5a7748f83b8b10fd3acda034b2b6c,Blurry Image,Laplacian var = 43.1 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-602_jpg.rf.4a33586b95270cfa017ca864837865d3,Blurry Image,Laplacian var = 31.9 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-60_jpg.rf.d396b0d7de67ccd0d65b6551c701bb2a,Blurry Image,Laplacian var = 30.1 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-64_jpg.rf.ae283dd5186d0a46956a41c7b90af270,Blurry Image,Laplacian var = 32.4 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-66_jpg.rf.940fb86eadded85c777fb3ecb1a2605a,Blurry Image,Laplacian var = 39.3 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-71_jpg.rf.928793d05bd179568c8fb9a4eddbb246,Blurry Image,Laplacian var = 74.8 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-74_jpg.rf.8501f9e910896068355b7388ee94c84b,Blurry Image,Laplacian var = 61.2 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-7_jpg.rf.2a4e8c43001c494af48940892e826850,Blurry Image,Laplacian var = 72.3 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-82_jpg.rf.d5b1ee26b026421cd44feed872f4f6b1,Blurry Image,Laplacian var = 69.7 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-89_jpg.rf.adbd00b9fd19eece9cb06abc4a95e1cc,Blurry Image,Laplacian var = 63.7 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-94_jpg.rf.01a8899ca393ebbf522b381c145404c4,Blurry Image,Laplacian var = 72.3 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-95_jpg.rf.bd40667f38bea543736942366e192423,Blurry Image,Laplacian var = 68.7 (<100),Flagged,Motion/defocus blur
+Part 3,youtube-96_jpg.rf.dfc6e8283a1bf8e1ec4d4ec682f57227,Blurry Image,Laplacian var = 67.8 (<100),Flagged,Motion/defocus blur
+Part 3,Frame_No10150_video_8_jpg.rf.95dba1dfba7d9aef16ae91bc281f191f,Micro Box Outlier,Area 0.00165 < 0.00176,Flagged,Degenerate tiny box
+Part 3,Frame_No13079_video_8_jpg.rf.4a9eaa1c374e0fc4fded0a85a206d6d3,Micro Box Outlier,Area 0.00133 < 0.00176,Flagged,Degenerate tiny box
+Part 3,Frame_No14396_video_10_jpg.rf.7494f2befb39c746b4ddfc31695d42a5,Micro Box Outlier,Area 0.00047 < 0.00176,Flagged,Degenerate tiny box
+Part 3,Frame_No1479_video_4_jpg.rf.740dd9e92e3d461c2ef7bed116ed405b,Massive Box Outlier,Area 0.65592 > 0.39314,Flagged,Full frame coverage
+Part 3,Frame_No15104_video_10_jpg.rf.c62a013956ee3b8fba181c2f123e3720,Micro Box Outlier,Area 0.00134 < 0.00176,Flagged,Degenerate tiny box
+Part 3,Frame_No1566_video_4_jpg.rf.3b2cd789d0a341339c3d748e03c8e459,Massive Box Outlier,Area 0.65592 > 0.39314,Flagged,Full frame coverage
+Part 3,Frame_No16950_video_2_jpg.rf.cf5332f5c0306abbc65d6ccfb59904e9,Micro Box Outlier,Area 0.00125 < 0.00176,Flagged,Degenerate tiny box
+Part 3,Frame_No17980_video_12_jpg.rf.9676580f56424a6e460d52cc2ae747b0,Micro Box Outlier,Area 0.00000 < 0.00176,Flagged,Degenerate tiny box
+Part 3,Frame_No2204_video_4_jpg.rf.6745160365b84003038ca54a11b7fa30,Massive Box Outlier,Area 0.56994 > 0.39314,Flagged,Full frame coverage
+Part 3,Frame_No33276_video_7_jpg.rf.f3e42e7b99057caa11eae4ad645ce7d5,Massive Box Outlier,Area 0.40747 > 0.39314,Flagged,Full frame coverage
+Part 3,Frame_No35760_video_17_jpg.rf.99a7177bd62c11639ffee656ad5fd139,Massive Box Outlier,Area 0.43783 > 0.39314,Flagged,Full frame coverage
+Part 3,Frame_No3799_video_5_jpg.rf.4b40fb9a7e26e98aa65dc7e03a8a33f8,Massive Box Outlier,Area 0.41244 > 0.39314,Flagged,Full frame coverage
+Part 3,Frame_No4379_video_8_jpg.rf.f668550a572178a36d11f78cea9ffff7,Micro Box Outlier,Area 0.00173 < 0.00176,Flagged,Degenerate tiny box
+Part 3,Frame_No7670_video_7_jpg.rf.5a8f11937a159ed91fae029736c625bc,Micro Box Outlier,Area 0.00000 < 0.00176,Flagged,Degenerate tiny box
+Part 3,youtube-22_jpg.rf.0f9ef40a78cae1924f891f4564b4b67b,Massive Box Outlier,Area 0.52604 > 0.39314,Flagged,Full frame coverage
+Part 3,youtube-31_jpg.rf.8c4c60baf28cc2d0ecdecfc0ef6a999f,Massive Box Outlier,Area 0.54754 > 0.39314,Flagged,Full frame coverage
+Part 3,youtube-50_jpg.rf.ff5391c1af78596455ecf3d8c278b154,Micro Box Outlier,Area 0.00167 < 0.00176,Flagged,Degenerate tiny box
+Part 3,youtube-56_jpg.rf.861b3f7a7c941a43f9e9821549271511,Micro Box Outlier,Area 0.00001 < 0.00176,Flagged,Degenerate tiny box
+Part 3,youtube-66_jpg.rf.940fb86eadded85c777fb3ecb1a2605a,Massive Box Outlier,Area 0.96463 > 0.39314,Flagged,Full frame coverage
+Part 5,Frame_No4640_video_14_jpg.rf.4fe37c7e7d1afa2cc51ca8bb57930696,Near Duplicate Frame,pHash diff 2 with Frame_No4611_video_14_jpg.rf.7cda16edbb84f343be63a9485df0eb38,Flagged,Redundant frame
+Part 5,Frame_No690_video_2_jpg.rf.c8805794ec99889f7073a3ef0ca706f6,Near Duplicate Frame,pHash diff 2 with Frame_No600_video_2_jpg.rf.73247b5715f2ebd5946cdace409d814f,Flagged,Redundant frame
+Part 5,youtube-159_jpg.rf.686f39a41312994902f6f62f6d6c81e3,Near Duplicate Frame,pHash diff 2 with youtube-145_jpg.rf.c5f5381de4cc558dca1f883483e20f5f,Flagged,Redundant frame
+Part 5,youtube-230_jpg.rf.a16eb6035b29a5f11739374ec734dac5,Near Duplicate Frame,pHash diff 0 with youtube-230_jpg.rf.1c881083771ae8f8b0edcaa4b53021ec,Flagged,Redundant frame
+Part 5,youtube-88_jpg.rf.a20b69502378f3976cf62f8936ffc0bb,Near Duplicate Frame,pHash diff 0 with youtube-88_jpg.rf.58f13cd8e3c199333cb423643368aed2,Flagged,Redundant frame

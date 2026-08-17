@@ -1,15 +1,7 @@
-﻿# Task 1 — Business Logic
+# Task 1: Business Logic & Zero-Shot Strategy
 
-> **Dataset:** dataset-a | **Shared preprocessing — same pipeline for all models in this dataset**
+## Overview
+Defines the business metrics, asymmetric cost model, and dual evaluation protocols (Strict $\text{IoU} \ge 0.50$ vs Relaxed $\text{IoU} \ge 0.10$) for testing models on unseen fire.
 
-## Objective
-Define the problem domain, operational objectives, case studies, and deployment context. Translate business requirements into ML objectives.
-
-## Inputs
-- TBD
-
-## Outputs
-- TBD
-
-## Notebook
-See notebook in this folder.
+## Key Files
+- [`business_logic.md`](business_logic.md) — Comprehensive strategic analysis and cost matrix.
