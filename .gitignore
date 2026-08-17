@@ -216,3 +216,7 @@ dataset-b/yolo_format/images/**/*.png
 
 # Fire and Smoke Detection Dataset (unseen-fire test set)
 dataset-a/test_dataset/
+dataset-a/dataset/
+dataset-a/raw/
+dataset-a/processed/images/
+*.jpeg

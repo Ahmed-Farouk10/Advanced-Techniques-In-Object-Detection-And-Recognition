@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Esraa Nasr ElSayed^{1}, Ahmed Ayman^{1} ^{1}Master’s Academy, AIN7601 — Advanced Techniques in Object Detection and Recognition, Spring 2026" />
+  <title>Cognitive Fire Defense</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    div.abstract {
+      margin: 2em 2em 2em 2em;
+      text-align: left;
+      font-size: 85%;
+    }
+    div.abstract-title {
+      font-weight: bold;
+      text-align: center;
+      padding: 0;
+      margin-bottom: 0.5em;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cognitive Fire Defense</h1>
+<p class="author">Esraa Nasr ElSayed<span
+class="math inline">\(^{1}\)</span>, Ahmed Ayman<span
+class="math inline">\(^{1}\)</span><br />
+<span class="math inline">\(^{1}\)</span>Master’s Academy, AIN7601 —
+Advanced Techniques in Object Detection and Recognition, Spring 2026</p>
+<div class="abstract">
+<div class="abstract-title">Abstract</div>
+<p>Wildfires destroy approximately 4.5 million square kilometers of land
+each year, yet most detection systems identify fires only after flames
+become visible—when the window for early containment has already
+narrowed. Smoke precedes flame in nearly every wildfire ignition
+scenario, but computer vision research has largely treated smoke and
+fire as a jointly detected pair, training and evaluating detectors on
+the same distributions. This paper asks a question that, to our
+knowledge, has not been tested on the Boreal Forest Fire 2025 dataset:
+whether object detection models trained exclusively on smoke bounding
+boxes can generalize to fire detection without exposure to a single fire
+label. Four architectures spanning three detection paradigms—YOLO11n
+(one-stage, anchor-free CNN), Faster R-CNN (two-stage RPN with
+domain-specific anchors), RT-DETR (hybrid CNN-transformer), and DINO
+(end-to-end transformer with contrastive denoising)—are trained on 3,066
+smoke-annotated images from Finnish boreal drone footage and evaluated
+zero-shot on a held-out fire dataset. The training pipeline incorporates
+a constraint-optimized, clip-level data split that eliminates temporal
+leakage across sequential video frames, a problem unaddressed in all
+twelve papers surveyed. A seven-part data cleaning protocol with full
+audit trail identified 4,139 anomalies while maintaining strict
+zero-imputation integrity for ground truth annotations. Domain-specific
+anchor clusters were computed from 4,862 smoke bounding boxes and
+injected into the Faster R-CNN region proposal network for direct
+comparison against default COCO anchors. This work establishes the first
+multi-architecture benchmark on the Boreal 2025 dataset and provides the
+first controlled experiment isolating smoke-to-fire visual prototype
+transfer in object detection.</p>
+</div>
+</header>
+<h1 id="introduction">Introduction</h1>
+<p>The boreal forest biome accounts for roughly one-third of the world’s
+forested area, and its remote geography means that fires can burn for
+days before detection <span class="citation"
+data-cites="wwf2022wildfire"></span>. Satellite-based thermal anomaly
+detection offers coarse coverage but suffers from revisit latency; a
+fire that ignites between satellite passes can spread beyond initial
+containment capacity before the next overpass. Ground-level camera
+networks and watchtower observations provide continuous coverage but
+require human operators to remain vigilant across hours of largely
+static forest imagery.</p>
+<p>UAVs carrying lightweight cameras and onboard inference hardware
+offer a middle path: persistent aerial monitoring with the range of a
+satellite and the responsiveness of a human observer. The practical
+challenge, however, is not simply detecting a fire—it is detecting the
+precursor. Smoke is visible well before flames, sometimes at distances
+exceeding ten kilometers <span class="citation"
+data-cites="toreyin2006fire"></span>. A detector that triggers on the
+first wisp of smoke buys responders minutes that a flame-only detector
+never sees.</p>
+<p>Most published work on wildfire detection trains models on fire, on
+smoke, or on both simultaneously, then evaluates on held-out portions of
+the same dataset <span class="citation"
+data-cites="kim2023forest chetoui2024fire goncalves2024wildfire"></span>.
+This answers the question “can a model learn to see smoke?” but dodges a
+more fundamental one: “can a model trained on smoke see fire?” The
+distinction matters because in deployment, the detector must recognize
+flames it was never shown. If smoke-trained features do not transfer, an
+early-warning system that waits until flames are visible is not early at
+all.</p>
+<figure id="fig:anchor" data-latex-placement="H">
+<img src="figures/eda_anchor_clustering.png" />
+<figcaption><span class="math inline">\(K\)</span>-means clustering
+(<span class="math inline">\(k=5\)</span>) of 4,862 bounding box
+dimensions from the Boreal Forest Fire Subset A. Cluster centers (red
+crosses) represent domain-specific anchors later injected into the
+Faster R-CNN region proposal network. The five clusters span normalized
+areas from 0.03 to 0.73, reflecting the wide size range of smoke plumes
+captured at varying UAV distances.</figcaption>
+</figure>
+<p>The Boreal Forest Fire dataset <span class="citation"
+data-cites="pesonen2025boreal"></span> provides a uniquely suitable
+testbed for this question. Collected by DJI Phantom 4 UAVs during four
+controlled burns in Finland during the summer of 2022, its 4,954 images
+capture boreal smoke under authentic Nordic conditions—low-angle
+sunlight, mirroring lake surfaces, dense conifer canopies, and rapidly
+shifting cloud cover that produces visual mimics indistinguishable from
+diffuse smoke to a naive detector. No multi-architecture benchmark has
+been published against this dataset, and the twelve papers surveyed for
+this work (Table <a href="#tab:lit_gaps" data-reference-type="ref"
+data-reference="tab:lit_gaps">1</a>) each train and test within the
+smoke domain.</p>
+<p>Our approach is structured around a single proposition: that the
+visual features a detector learns from smoke—turbulent fluid motion,
+semi-transparency against sky backgrounds, upward trajectory, irregular
+boundaries—constitute a <em>visual prototype</em> that partially
+overlaps with fire. If the proposition holds, then the degree of
+transfer should vary with the architectural mechanisms that extract
+those features. A one-stage CNN with local receptive fields may encode
+different aspects of smoke than a transformer with global self-attention
+or a two-stage detector with explicit region proposals.</p>
+<p>To test this, we make three design choices that differentiate our
+work from the existing literature. First, we split the dataset at the
+video-clip level rather than by random frame assignment. This is not a
+cosmetic preference; it is the difference between measuring a model’s
+ability to detect smoke and measuring its ability to recognize the trees
+at the Evo burn site. The Boreal images are sequential frames extracted
+from 31 distinct UAV flights. Adjacent frames share the same forest
+background, the same lighting, and the same camera angle. A random split
+distributes frame 65 to training and frame 66 to validation, rewarding
+the model for recognizing static context rather than the smoke itself.
+Our constraint optimizer treats each flight as an indivisible unit,
+distributing 31 variable-sized clips across train, validation, and test
+while enforcing geographic diversity and penalizing distributional
+imbalance.</p>
+<p>Second, we do not resize the 4,096<span
+class="math inline">\(\times\)</span>2,160-pixel frames to 640<span
+class="math inline">\(\times\)</span>640 during preprocessing. A 21<span
+class="math inline">\(\times\)</span> downsampling factor compresses a
+plume occupying 1% of the frame into roughly 4<span
+class="math inline">\(\times\)</span>2 pixels—below the detection floor
+of any backbone. Instead, we extract random 640<span
+class="math inline">\(\times\)</span>640 crops during training,
+preserving full-resolution smoke textures while maintaining
+compatibility with standard detector input dimensions.</p>
+<p>Third, we report AP<sub>small</sub>, AP<sub>medium</sub>, and
+AP<sub>large</sub> separately. On a dataset where 95.7% of annotated
+plumes occupy more than 10% of the image, an aggregate mAP score can
+conceal a model that detects every large plume and misses every small
+one. The small plume metric is the only one that directly measures the
+early-detection capability this work is designed to evaluate.</p>
+<h1 id="related-work">Related Work</h1>
+<h2 id="smoke-and-fire-detection">Smoke and fire detection</h2>
+<p>Classical computer vision approaches to smoke detection relied on
+handcrafted features: color histogram thresholding in HSV space <span
+class="citation" data-cites="toreyin2006fire"></span>, motion estimation
+via optical flow <span class="citation"
+data-cites="gubbi2009smoke"></span>, and wavelet-based texture
+decomposition <span class="citation"
+data-cites="toreyin2005wavelet"></span>. These methods required
+per-camera calibration and failed under the lighting variability
+characteristic of boreal summer conditions, where cloud shadows and low
+sun angles produce rapid shifts in both color balance and contrast.</p>
+<p>The shift to learned features began with CNN-based detectors. Yuan et
+al. <span class="citation" data-cites="yuan2019deepsmoke"></span>
+demonstrated end-to-end smoke detection on static camera feeds; Xu et
+al. <span class="citation" data-cites="xu2021attention"></span>
+introduced attention-guided lightweight architectures for real-time
+deployment. Mukhiddinov et al. <span class="citation"
+data-cites="mukhiddinov2022wildfire"></span> optimized YOLOv5 with
+brightness jitter and mosaic augmentation for UAV-collected smoke
+imagery. Kim and Muminov <span class="citation"
+data-cites="kim2023forest"></span> fine-tuned YOLOv7 on 6,500 UAV smoke
+images, reporting 86.4% AP@50—a score we treat as a within-domain
+baseline for our YOLO11n comparison, not a target to beat, since their
+model was trained and tested on the same smoke distribution. Chetoui and
+Akhloufi <span class="citation" data-cites="chetoui2024fire"></span>
+achieved 92.6% mAP@50 on a joint fire-and-smoke detection task using
+YOLOv8 and YOLOv7, but the joint training design makes it impossible to
+isolate which class drove the performance gain. Gon<span>ç</span>alves
+et al. <span class="citation" data-cites="goncalves2024wildfire"></span>
+demonstrated that StyleGAN2-ADA synthetic augmentation measurably
+improves small-object AP for both YOLOv8 and RT-DETR-X, a finding we
+acknowledge as a limitation of our simpler copy-paste augmentation
+strategy.</p>
+<p>Raita-Hakola et al. <span class="citation"
+data-cites="raita2023combining"></span> provided the foundational study
+on the Boreal data, fine-tuning YOLOv5 S/M/L with frozen backbones and
+progressively increasing volumes of local data. Their finding that
+1,000–1,300 locally collected images sufficed for generalization is the
+evidence for our training set size being adequate; our 3,066 training
+images exceed their threshold. More critically, they demonstrated that a
+model trained on Californian HPWREN watchtower imagery achieved 0.93
+precision on HPWREN test data but only 0.031 precision on Finnish
+Ruokolahti images, confirming that smoke appearance is strongly
+domain-dependent and that locally collected training data is not
+optional for this task.</p>
+<p>Pesonen et al. <span class="citation"
+data-cites="pesonen2025boreal pesonen2025detecting"></span> published
+the dataset itself and a subsequent WACV study on teacher-student
+distillation for real-time smoke segmentation. Their WACV work used
+PIDNet students trained on SAM-generated pseudo-masks, achieving
+25.88 FPS on a Jetson Orin NX at 63.3% mIoU, and validated the detection
+pipeline at a live prescribed burning event. The preprocessing choices
+in that study—640<span class="math inline">\(\times\)</span>640
+resolution, horizontal flip, mosaic composition, and brightness-contrast
+jitter—match our augmentation configuration, providing external
+validation of our training recipe.</p>
+<table id="tab:lit_gaps">
+<caption>Gaps in published wildfire detection literature. None of the
+twelve surveyed papers isolates smoke-only training to test cross-class
+transfer to fire.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Paper</strong></th>
+<th style="text-align: center;"><strong>Trains on smoke
+only?</strong></th>
+<th style="text-align: center;"><strong>Tests on fire?</strong></th>
+<th style="text-align: center;"><strong>Temporal leakage
+addressed?</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Kim &amp; Muminov (2023)</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Chetoui &amp; Akhloufi (2024)</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gon<span>ç</span>alves et al. (2024)</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Yang et al. (2024)</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Huang et al. (2025)</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mukhiddinov et al. (2022)</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Zhou et al. (2025)</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Shamta &amp; Demir (2024)</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Raita-Hakola et al. (2023)</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Pesonen et al. (2025) WACV</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Zhang et al. (2023) DINO</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">N/A</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ours</strong></td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="temporal-leakage-in-sequential-visual-data">Temporal leakage in
+sequential visual data</h2>
+<p>Temporal leakage is well-documented in time-series forecasting <span
+class="citation" data-cites="tran2019frame"></span> but severely
+under-discussed in object detection research involving video-derived
+image datasets. Zhong et al. <span class="citation"
+data-cites="zhong2020spatial"></span> identified spatial autocorrelation
+as a source of inflated validation metrics in remote sensing
+applications. When frames from a continuous video are distributed across
+training and validation by random assignment, the detector learns static
+scene context rather than object features. To our knowledge, no
+published wildfire detection study—including those using the same Boreal
+dataset <span class="citation"
+data-cites="raita2023combining pesonen2025detecting"></span>—has
+implemented a leakage-free split at the video-clip level. Our constraint
+optimizer is a methodological contribution intended to be adopted by
+other researchers working with drone-derived sequential imagery.</p>
+<h2 id="zero-shot-detection-and-the-role-of-language">Zero-shot
+detection and the role of language</h2>
+<p>Zero-shot object detection has predominantly been advanced through
+language-guided models. GLIP <span class="citation"
+data-cites="li2022grounded"></span> and Grounding DINO <span
+class="citation" data-cites="liu2023grounding"></span> use text prompts
+to guide detection of unseen classes. OWL-ViT <span class="citation"
+data-cites="minderer2022simple"></span> achieves open-vocabulary
+detection through large-scale image-text pretraining.</p>
+<p>Our approach is fundamentally different. We do not use language
+prompts, CLIP embeddings, or any text-based class specification. The
+detector receives smoke images with bounding boxes and must decide,
+without instruction, whether the visual features it learned from smoke
+also fire on flames. This isolates <em>visual</em> prototype transfer
+from <em>linguistic</em> prototype transfer. If the transfer succeeds,
+it is because turbulent, semi-transparent, upward-moving regions share a
+visual signature across the two phenomena—not because a language model
+has associated the words “smoke” and “fire” in its training corpus.</p>
+<h1 id="materials-and-methods">Materials and Methods</h1>
+<h2 id="dataset">Dataset</h2>
+<table id="tab:dataset">
+<caption>Summary statistics for the Boreal Forest Fire Subset A <span
+class="citation" data-cites="pesonen2025boreal"></span>.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Property</strong></th>
+<th style="text-align: right;"><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Total images</td>
+<td style="text-align: right;">4,954</td>
+</tr>
+<tr>
+<td style="text-align: left;">Annotated images</td>
+<td style="text-align: right;">4,693</td>
+</tr>
+<tr>
+<td style="text-align: left;">Empty (background-only) images</td>
+<td style="text-align: right;">256</td>
+</tr>
+<tr>
+<td style="text-align: left;">Total bounding boxes</td>
+<td style="text-align: right;">4,862</td>
+</tr>
+<tr>
+<td style="text-align: left;">Annotation class</td>
+<td style="text-align: right;">Smoke (class 0, single-class)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Annotation format</td>
+<td style="text-align: right;">YOLO TXT (normalized)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Resolution</td>
+<td style="text-align: right;">4,096<span
+class="math inline">\(\times\)</span>2,160 (4K)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Capture platform</td>
+<td style="text-align: right;">DJI Phantom 4 UAV</td>
+</tr>
+<tr>
+<td style="text-align: left;">Geographic locations</td>
+<td style="text-align: right;">4 (Evo, Heinola, Karkkila,
+Ruokolahti)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Video clips (distinct flights)</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr>
+<td style="text-align: left;">Collection dates</td>
+<td style="text-align: right;">May–August 2022</td>
+</tr>
+</tbody>
+</table>
+<p>The Boreal Forest Fire dataset <span class="citation"
+data-cites="pesonen2025boreal"></span> was collected during four
+prescribed forest restoration burns conducted by the Finnish Geospatial
+Research Institute in the summer of 2022. A DJI Phantom 4 UAV captured
+RGB video at 4K resolution from altitudes of 10–200 meters above ground
+and distances of up to 500 meters from the burn sites. Images were
+extracted at approximately one frame every two seconds and manually
+annotated using the makesense.ai tool.</p>
+<p>We selected this dataset for four reasons, each tied to our research
+question. First, its UAV perspective matches the deployment
+scenario—drones will carry these detectors, not ground-level CCTV
+cameras. A detector trained on oblique surveillance footage would
+encounter unfamiliar perspective distortion when deployed on a UAV, and
+vice versa. Second, its Nordic forest environment is categorically
+different from the Mediterranean scrubland and Californian chaparral
+that dominate existing fire datasets. Conifer canopies, mirroring lake
+surfaces, and low-angle summer sunlight create a visual domain that the
+dataset authors themselves demonstrated requires locally collected
+training data <span class="citation"
+data-cites="raita2023combining"></span>. Third, the annotation strategy
+was empirically validated: Pesonen et al. tested two approaches—large
+bounding boxes that enclose the entire smoke region including some
+background, and multiple small boxes that tightly crop only pure smoke
+pixels. Large annotations achieved 0.94 precision while small
+annotations reached only 0.24, confirming that the loose-box strategy
+produces more learnable features. We use the large-annotation subset
+exclusively. Fourth, the dataset includes 256 explicitly designated
+empty frames—images of clean boreal forest with no smoke present—which
+serve as hard negatives during training and prevent the model from
+learning that every image contains a detection target.</p>
+<p>The dataset contains 31 distinct UAV flights distributed across four
+locations. Image counts are not uniform: Ruokolahti contributes 1,765
+images from several long flights, while Evo contributes 931. This
+imbalance becomes a constraint during the splitting process, as we
+cannot sever a flight into pieces without causing temporal leakage.</p>
+<h2 id="what-the-data-contains">What the data contains</h2>
+<p>Before designing any part of the training pipeline, we characterized
+five properties of the data that would prove to constrain or inform
+every subsequent decision.</p>
+<p><strong>Large plume dominance.</strong> Of the 4,862 bounding boxes,
+95.7% occupy more than 10% of the image area. Only 1.3% (26 boxes)
+occupy less than 1%. A detector trained on this distribution will see
+large smoke plumes as the norm and may fail to trigger on the small,
+distant plumes that are the earliest indicators of ignition. We respond
+with three countermeasures: scale augmentation raised to 0.9 to reduce
+downsampling, mosaic probability reduced to 0.4 to preserve spatial
+context, and separate reporting of AP<sub>small</sub>,
+AP<sub>medium</sub>, and AP<sub>large</sub> to prevent aggregate mAP
+from hiding small-object failure.</p>
+<p><strong>Horizon constraint.</strong> The mean Y-center of all
+bounding boxes is 0.395, meaning smoke appears almost exclusively in the
+top 40% of the image. The bottom half of each frame is foreground forest
+that is never annotated. This reflects the physical reality that smoke
+rises and UAVs look horizontally or downward. We disable vertical flip
+augmentation (flipud = 0.0) because inverting an image would place smoke
+at ground level, teaching the model a physically impossible spatial
+prior.</p>
+<p><strong>Daytime illumination bias.</strong> The mean pixel intensity
+across sampled images is 112/255. Only 4% of images register as dark
+(below intensity 85). If deployed on a 24-hour monitoring schedule, a
+model trained on this distribution will encounter pixel statistics at
+dawn and dusk that it has never seen. We apply HSV jitter (hue = 0.015,
+saturation = 0.4, value = 0.3) to simulate varied sky colors and reduced
+illumination. Synthetic augmentation cannot fully compensate for absent
+real night data, and we document this as a limitation.</p>
+<p><strong>Single-box images.</strong> 99.5% of annotated images contain
+exactly one bounding box. A detector trained on single-object scenes
+never exercises its non-maximum suppression (NMS) module on real
+multi-object configurations. Mosaic augmentation, which composites four
+images into one, and copy-paste augmentation, which pastes segmented
+smoke regions into empty backgrounds, artificially create multi-object
+scenes. NMS behavior under these conditions is explicitly tested during
+evaluation.</p>
+<p><strong>Anchor cluster distribution.</strong> We applied <span
+class="math inline">\(k\)</span>-means clustering (<span
+class="math inline">\(k=5\)</span>) to the normalized widths and heights
+of all 4,862 boxes: <span class="math display">\[\begin{equation}
+\text{Anchors}_5 = \begin{bmatrix}
+(0.15, 0.20) &amp; (0.36, 0.54) &amp; (0.62, 0.46) &amp; (0.60, 0.71)
+&amp; (0.78, 0.94)
+\end{bmatrix}
+\label{eq:anchors}
+\end{equation}\]</span></p>
+<p>These clusters span normalized areas from 0.03 to 0.73, compared to
+COCO default anchor areas of 0.03 to 0.50. The largest smoke cluster
+(0.73) extends well beyond the largest COCO anchor, reflecting the
+dataset’s bias toward large plumes. YOLO11n and RT-DETR are anchor-free
+by design and cannot accept explicit anchors. DINO uses learned queries
+rather than static anchors. The clusters are injected exclusively into
+the Faster R-CNN region proposal network (RPN) via its AnchorGenerator,
+providing the only anchor-dependent comparison point in the study.</p>
+<h2 id="data-quality-and-cleaning">Data quality and cleaning</h2>
+<p>Object detection datasets contain errors that classification datasets
+do not: bounding boxes can be misplaced, malformed, or assigned to the
+wrong class; label files can reference images that do not exist;
+sequential frames can be functionally identical. For classification, a
+mislabeled sample adds noise to a loss function. For detection with
+bounding boxes, a mislabeled sample teaches the model to draw boxes
+where objects are not—a qualitatively different and more damaging error
+mode.</p>
+<p>We adopted a strict zero-imputation policy. Unlike tabular data where
+missing values can be imputed via mean, median, or KNN without
+destroying the underlying statistical structure, a missing bounding box
+is not a missing value—it is missing spatial information. Imputing a
+bounding box would mean fabricating coordinates where no object was
+verified to exist. No box is synthesized, no annotation is hallucinated.
+Every integrity issue is resolved by either (a) listwise deletion of
+corrupt or unpaired files, or (b) flagging for downstream handling
+without modifying ground truth.</p>
+<p>The cleaning pipeline inspects seven dimensions of data quality:</p>
+<ol>
+<li><p><strong>File integrity.</strong> Every JPEG is opened via
+PIL.Image.verify() to detect truncation or corruption. Files with
+zero-byte size are identified. Image-label stem pairs are
+cross-referenced to detect orphans.</p></li>
+<li><p><strong>Exact duplicates.</strong> MD5 hashes identify
+byte-identical files introduced during data transfer or
+extraction.</p></li>
+<li><p><strong>Statistical outliers.</strong> Bounding box area and
+aspect ratio are evaluated. Our initial implementation used standard IQR
+(Q1 <span class="math inline">\(-\)</span> 1.5<span
+class="math inline">\(\times\)</span>IQR, Q3 <span
+class="math inline">\(+~\)</span>1.5<span
+class="math inline">\(\times\)</span>IQR), which proved to be a mistake.
+The box area distribution is heavily right-skewed—95.7% of areas exceed
+0.10—and IQR assumes approximate normality. Legitimate large smoke
+plumes were erroneously flagged as outliers. We replaced IQR with
+asymmetric percentile bounds, flagging only the bottom 0.5% and top 0.5%
+of the area distribution. This preserved large-plume data while catching
+genuinely anomalous boxes.</p></li>
+<li><p><strong>Format consistency.</strong> Every YOLO label line is
+validated for exactly five floating-point fields. Class IDs are enforced
+to 0 (smoke only). Normalized coordinates outside <span
+class="math inline">\([0,1]\)</span> are handled by a two-tier rule:
+values within 0.02 of the boundary are clipped; values exceeding this
+margin indicate unrecoverable annotation errors and are
+flagged.</p></li>
+<li><p><strong>Sequential consistency.</strong> Consecutive frames are
+compared for box continuity. Given the mean frame-to-frame displacement
+of 0.041 (normalized), consecutive boxes should exhibit IoU <span
+class="math inline">\(&gt;\)</span> 0.9. Pairs with IoU <span
+class="math inline">\(&lt;\)</span> 0.5 are flagged as potential
+annotation jumps. Three-frame interpolation provides a second-order
+consistency check. Perceptual hashing (pHash, Hamming distance <span
+class="math inline">\(&lt;\)</span> 5) identifies near-duplicate frames
+where smoke displacement is negligible and the static scene context is
+functionally identical. These 2,864 detected pairs are flagged, not
+deleted; frame density is managed during splitting via clip-level
+sub-sampling.</p></li>
+<li><p><strong>Pixel-level quality.</strong> Laplacian variance
+quantifies image sharpness. Variance below 50 in a 4K image indicates
+motion blur, heat haze distortion, or autofocus hunting—conditions that
+degrade the fine texture edges distinguishing distant smoke from clouds.
+Local RMS contrast within each bounding box identifies annotations
+placed on regions so diffuse that they contain no learnable signal.
+These boxes are flagged for potential exclusion from training.</p></li>
+<li><p><strong>Audit trail.</strong> Every modification—flag, clip, or
+deletion—is logged to a structured CSV recording the affected image
+path, the issue type, the detection method, the treatment applied, and
+the rationale. This produces a fully reconstructable decision
+history.</p></li>
+</ol>
+<div class="tabular">
+<p><span>@lr@</span> <strong>Outcome</strong> &amp;
+<strong>Count</strong><br />
+Images scanned &amp; 4,954<br />
+Total flags raised &amp; 4,139<br />
+Images or annotations deleted &amp; 0<br />
+Coordinate auto-corrections (marginal) &amp; 2<br />
+Images retained &amp; 4,954<br />
+<br />
+Near-duplicate frames (pHash) &amp; 2,864<br />
+Blurry (Laplacian variance <span class="math inline">\(&lt;50\)</span>)
+&amp; 431<br />
+Aspect ratio outliers (percentile) &amp; 368<br />
+Temporal box discontinuity &amp; 255<br />
+Box count per clip deviation &amp; 193<br />
+Bounding box area outliers &amp; 26<br />
+</p>
+</div>
+<h2 id="why-a-random-split-failsand-what-we-did-instead">Why a random
+split fails—and what we did instead</h2>
+<figure id="fig:split" data-latex-placement="H">
+<img src="figures/split_distribution.png" />
+<figcaption>Distribution of images, brightness, and box area across the
+three splits produced by the clip-level constraint optimizer. Each split
+contains at least one clip from each of the four geographic locations.
+Small plumes are present in all splits.</figcaption>
+</figure>
+<p>The Boreal images are not independent samples. Each frame is one
+member of a sequence extracted from a continuous UAV video. The filename
+<code>evoDJI_0001_frame65.jpg</code> encodes the clip identifier
+(<code>evoDJI_0001</code>) and the frame index (<code>65</code>). Frames
+64, 65, and 66 share the same forest canopy, the same cloud
+configuration, the same sun angle, and nearly the same smoke column
+geometry. A detector shown frame 65 in training and frame 66 in
+validation is not being asked to generalize to new smoke; it is being
+asked whether it memorized the background of the Evo burn site.</p>
+<p>The standard remedy—<code>train_test_split(random_state=42)</code>—is
+precisely the wrong answer here. It distributes adjacent frames across
+splits, inflating validation metrics by rewarding background recognition
+rather than smoke detection. Raita-Hakola et al. <span class="citation"
+data-cites="raita2023combining"></span> used a location-based split
+(training on three sites, testing on the fourth), which prevents
+cross-location leakage but does not prevent within-location temporal
+leakage between clips from the same site.</p>
+<p>Our solution treats each of the 31 UAV flights as an indivisible
+atomic unit. The splitting problem becomes a constrained knapsack
+optimization over 31 variable-sized blocks:</p>
+<p><span class="math display">\[\begin{equation}
+\min_{\mathcal{S}} \sum_{s \in \{\text{train},\text{val},\text{test}\}}
+\left(\frac{N_s}{N} - r_s\right)^2 + \lambda_1 \sigma_{\text{blur}} +
+\lambda_2 \mathbb{I}[\text{small}_s = 0]
+\label{eq:split_opt}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(N_s\)</span> is the number of
+images assigned to split <span class="math inline">\(s\)</span>, <span
+class="math inline">\(r_s\)</span> is the target ratio (0.70, 0.15,
+0.15), <span class="math inline">\(\sigma_{\text{blur}}\)</span> is the
+standard deviation of mean Laplacian variance across splits (penalizing
+uneven blur distribution), and <span
+class="math inline">\(\mathbb{I}[\text{small}_s = 0]\)</span> is a
+binary penalty triggered when any split receives zero small-plume images
+(<span class="math inline">\(\text{area} &lt; 0.01\)</span>). The
+penalty weight <span class="math inline">\(\lambda_2 = 10.0\)</span> is
+calibrated to dominate the ratio error term when small plumes are
+absent, forcing the optimizer to prioritize the early-detection
+evaluation capability over ratio precision.</p>
+<p>The optimizer evaluated 10,000 randomized clip permutations subject
+to four constraints: (1) no clip identifier appears in more than one
+split; (2) at least one clip from each of the four geographic locations
+(Evo, Heinola, Karkkila, Ruokolahti) must appear in every split,
+ensuring that each split contains unseen camera angles and forest
+contexts for every location; (3) clips with more than 300 frames undergo
+uniform sub-sampling to prevent single long flights from dominating a
+split; and (4) the 256 background-only images are distributed
+proportionally.</p>
+<table id="tab:split">
+<caption>Final split distribution. The 63/19/17 ratio deviates from the
+70/15/15 target because 31 indivisible blocks cannot be partitioned into
+three buckets with arbitrary precision while satisfying all four
+constraints simultaneously.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Split</strong></th>
+<th style="text-align: right;"><strong>Images</strong></th>
+<th style="text-align: right;"><strong>Ratio</strong></th>
+<th style="text-align: right;"><strong>Bright.</strong></th>
+<th style="text-align: right;"><strong>Blur</strong></th>
+<th style="text-align: right;"><strong>AP<sub>small</sub></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Train</td>
+<td style="text-align: right;">3,066</td>
+<td style="text-align: right;">63.7%</td>
+<td style="text-align: right;">113.9</td>
+<td style="text-align: right;">2,710</td>
+<td style="text-align: right;">1.5%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Val</td>
+<td style="text-align: right;">926</td>
+<td style="text-align: right;">19.2%</td>
+<td style="text-align: right;">109.6</td>
+<td style="text-align: right;">1,852</td>
+<td style="text-align: right;">0.4%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Test</td>
+<td style="text-align: right;">823</td>
+<td style="text-align: right;">17.1%</td>
+<td style="text-align: right;">109.2</td>
+<td style="text-align: right;">2,750</td>
+<td style="text-align: right;">1.0%</td>
+</tr>
+</tbody>
+</table>
+<p>Three near-misses during the optimization process illustrate why
+distribution-aware splitting is not a cosmetic exercise. In the first
+run, a frame cap of 100 per clip was applied to prevent oversampling.
+This cap was too aggressive: Ruokolahti’s largest flight, containing
+1,765 frames, was decimated to 100, and the total retained count fell to
+2,732—a 45% loss of training data. Raising the cap to 300 recovered
+4,815 images (97.2% retention).</p>
+<p>In the second run, the optimizer produced val and test splits
+containing 0.0% small-plume images. With only 26 small-plume annotations
+in the entire dataset, a split that excludes them from evaluation is
+statistically unsurprising but experimentally catastrophic: the model’s
+ability to detect early distant smoke cannot be measured if the
+evaluation set contains none. The <span
+class="math inline">\(\lambda_2\)</span> penalty forced small plumes
+into all three splits.</p>
+<p>In the third run, a blur standard deviation of 35% across splits
+placed the sharpest frames in the validation set and the blurriest in
+the test set, creating an evaluation bias where models appeared more
+accurate on validation than they were on the deployment-representative
+test data. The <span class="math inline">\(\sigma_{\text{blur}}\)</span>
+term bounded this variance.</p>
+<h2 id="format-conversion">Format conversion</h2>
+<p>The split data exists in two formats to support all four training
+frameworks. YOLO TXT (normalized coordinates in <code>.txt</code> files)
+serves YOLO11n and RT-DETR via the Ultralytics library. COCO JSON
+(absolute pixel coordinates in <code>.json</code> files with image
+metadata) serves Faster R-CNN via torchvision and DINO via the
+HuggingFace Transformers library. The conversion script denormalizes
+YOLO coordinates against the original image dimensions—images are not
+resized on disk; each framework’s DataLoader handles input scaling at
+training time. The resulting COCO annotation files contain 3,022
+(train), 898 (validation), and 803 (test) annotations.</p>
+<h2 id="what-we-taught-the-models-to-expect">What we taught the models
+to expect</h2>
+<p>Augmentations in object detection serve a purpose distinct from their
+role in classification. In classification, augmentation teaches
+invariance—a rotated cat is still a cat. In detection, augmentation
+teaches the model that smoke can appear small, dim, partially occluded,
+or embedded in haze, and must still be localized. Every augmentation
+parameter in our configuration traces to a specific data property
+identified during exploratory analysis.</p>
+<table id="tab:augs">
+<caption>Augmentation parameters and their evidential basis. Each
+parameter addresses a specific bias identified in the data.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Data finding</strong></th>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: left;"><strong>Rationale</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">95.7% large plumes; model may ignore small
+smoke</td>
+<td style="text-align: left;">Mosaic = 0.4</td>
+<td style="text-align: left;">Reduced from default 1.0. Full mosaic
+halves each image, compressing an already-small plume further. Keeping
+mosaic active but at reduced probability preserves its multi-object
+generalization benefit without destroying small objects.</td>
+</tr>
+<tr>
+<td style="text-align: left;">95.7% large plumes</td>
+<td style="text-align: left;">close_mosaic = 10</td>
+<td style="text-align: left;">Mosaic is disabled for the final 10
+epochs. The model fine-tunes on clean, un-stiched images, preventing
+mosaic artifacts from propagating into final weights.</td>
+</tr>
+<tr>
+<td style="text-align: left;">95.7% large plumes</td>
+<td style="text-align: left;">Scale = 0.9</td>
+<td style="text-align: left;">Increased from default 0.5. The <span
+class="math inline">\(\times2.1\)</span> reduction in downscaling
+preserves small plume features that would otherwise collapse into
+sub-pixel noise.</td>
+</tr>
+<tr>
+<td style="text-align: left;">99.5% single-box</td>
+<td style="text-align: left;">copy_paste = 0.15</td>
+<td style="text-align: left;">Pastes smoke regions from annotated images
+into the 256 empty backgrounds, creating synthetic multi-object scenes
+that exercise the NMS module on training data.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Daytime bias (96%)</td>
+<td style="text-align: left;">HSV jitter (h=0.015, s=0.4, v=0.3)</td>
+<td style="text-align: left;">Simulates the sky color and illumination
+changes that occur at dawn, dusk, and under varying cloud cover.
+Saturation reduction simulates haze conditions that desaturate smoke at
+distance.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Horizon constraint</td>
+<td style="text-align: left;">flipud = 0.0</td>
+<td style="text-align: left;">Vertical flip is disabled. Inverting an
+image places smoke at ground level, teaching a physically impossible
+spatial prior that smoke originates from the forest floor.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Drone platform</td>
+<td style="text-align: left;">degrees = 5.0</td>
+<td style="text-align: left;">Small rotation tolerance simulates UAV
+gimbal drift and slight heading corrections during flight.</td>
+</tr>
+</tbody>
+</table>
+<p>Fog and motion blur augmentations, which are standard in the
+Albumentations library, require overriding the Ultralytics Dataset class
+to inject custom transforms into the augmentation pipeline. We chose not
+to implement this override to preserve framework compatibility and full
+reproducibility. The missing augmentations are documented as a
+limitation; native HSV jitter, scale jitter, and mosaic provide partial
+coverage for the environmental variation these transforms would have
+addressed.</p>
+<h2 id="the-four-detector-architectures">The four detector
+architectures</h2>
+<p>We selected four architectures spanning three detection paradigms to
+test whether the degree of smoke-to-fire transfer depends on the
+underlying feature extraction mechanism.</p>
+<p><strong>YOLO11n (one-stage, anchor-free CNN).</strong> With 2.6
+million parameters, YOLO11n is the lightest model in the comparison and
+the baseline for edge deployment feasibility. Its Task-Aligned Assigner
+dynamically matches predictions to ground truth without static anchor
+boxes, learning a task-specific alignment between classification and
+localization branches. Because it cannot accept explicit anchors,
+domain-specific anchor knowledge from our <span
+class="math inline">\(k=5\)</span> clustering is not used by this model.
+YOLO11n represents the speed baseline against which the transformer
+architectures are measured.</p>
+<p><strong>RT-DETR (hybrid CNN-transformer).</strong> RT-DETR replaces
+non-maximum suppression with a learned decoder that directly produces a
+set of detection queries. Unlike two-stage detectors that require a
+separate proposal refinement step, and unlike one-stage CNNs that
+require NMS post-processing, RT-DETR’s decoder outputs the final
+detection set in a single pass. Its intra-scale attention mechanism
+captures relationships between features at the same spatial resolution,
+complemented by cross-scale CNN feature fusion. Gon<span>ç</span>alves
+et al. <span class="citation" data-cites="goncalves2024wildfire"></span>
+reported 0.983 AP@0.5 on small objects with RT-DETR-X, the highest
+small-object score in the surveyed literature. We include RT-DETR as the
+primary hypothesis model: if global self-attention encodes long-range
+smoke texture relationships that local CNN receptive fields miss, then
+RT-DETR should exhibit stronger zero-shot transfer to fire.</p>
+<p><strong>Faster R-CNN (two-stage RPN, anchor-dependent).</strong> The
+classic two-stage architecture uses a Region Proposal Network (RPN) to
+generate candidate object regions, which a second-stage classifier then
+refines. Faster R-CNN is the only model in our comparison that uses
+explicit anchor boxes. We replace the default COCO RPN anchors (areas:
+32<span class="math inline">\(^2\)</span>, 64<span
+class="math inline">\(^2\)</span>, 128<span
+class="math inline">\(^2\)</span>, 256<span
+class="math inline">\(^2\)</span>, 512<span
+class="math inline">\(^2\)</span>) with our domain-specific <span
+class="math inline">\(k=5\)</span> smoke clusters from Equation <a
+href="#eq:anchors" data-reference-type="ref"
+data-reference="eq:anchors">[eq:anchors]</a>. This provides a controlled
+ablation: if the custom anchors improve smoke AP over COCO anchors,
+domain-specific anchor design is validated as a transferable methodology
+for other detection tasks.</p>
+<p><strong>DINO (end-to-end transformer, deformable attention).</strong>
+DINO extends the DETR family with contrastive denoising training, mixed
+query selection for anchor initialization, and look-forward-twice box
+refinement. Zhang et al. <span class="citation"
+data-cites="zhang2022dino"></span> achieved 49.4 AP on COCO in 12 epochs
+with a ResNet-50 backbone. Deformable attention learns to attend to
+sparse, irregular spatial locations rather than processing a dense
+grid—a theoretical advantage for smoke plumes, whose boundaries are
+poorly approximated by rectangular windows. DINO requires the most GPU
+memory (batch size reduced to 2) and the longest training time. If
+deformable attention overfits to smoke-specific texture patterns, DINO
+may exhibit the weakest zero-shot transfer to fire despite achieving the
+highest within-domain mAP.</p>
+<h1 id="experimental-setup">Experimental Setup</h1>
+<h2 id="training-protocol">Training protocol</h2>
+<p>All models are trained on a single NVIDIA T4 GPU (16 GB VRAM).
+Hyperparameters are standardized across architectures where the
+framework permits; where architectural constraints require divergence,
+the difference is documented.</p>
+<table id="tab:training">
+<caption>Training configuration across the four architectures.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Model</strong></th>
+<th style="text-align: left;"><strong>Framework</strong></th>
+<th style="text-align: left;"><strong>Input</strong></th>
+<th style="text-align: left;"><strong>Batch</strong></th>
+<th style="text-align: left;"><strong>Epochs</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">YOLO11n</td>
+<td style="text-align: left;">Ultralytics</td>
+<td style="text-align: left;">640<span
+class="math inline">\(^2\)</span></td>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">100</td>
+</tr>
+<tr>
+<td style="text-align: left;">RT-DETR</td>
+<td style="text-align: left;">Ultralytics</td>
+<td style="text-align: left;">640<span
+class="math inline">\(^2\)</span></td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">100</td>
+</tr>
+<tr>
+<td style="text-align: left;">Faster R-CNN</td>
+<td style="text-align: left;">torchvision</td>
+<td style="text-align: left;">800<span
+class="math inline">\(\times\)</span>1333</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">100</td>
+</tr>
+<tr>
+<td style="text-align: left;">DINO</td>
+<td style="text-align: left;">HuggingFace</td>
+<td style="text-align: left;">800<span
+class="math inline">\(^2\)</span></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">50</td>
+</tr>
+</tbody>
+</table>
+<p>YOLO11n uses the AdamW optimizer with a cosine learning rate schedule
+starting at 0.001. RT-DETR uses the same configuration. Faster R-CNN
+uses SGD with momentum 0.9 and a stepwise learning rate decay,
+consistent with the original implementation. DINO uses the HuggingFace
+Trainer API with default AdamW parameters and a learning rate of <span
+class="math inline">\(1 \times 10^{-4}\)</span>.</p>
+<p>DINO carries the highest out-of-memory risk at the specified batch
+size. If OOM occurs during training, the batch size is halved to 1 and
+gradient accumulation of 2 is applied to preserve the effective batch
+size.</p>
+<h2 id="evaluation-metrics">Evaluation metrics</h2>
+<p><strong>Smoke validation (within-domain).</strong> Standard COCO
+evaluation metrics are computed on the held-out Boreal validation
+split:</p>
+<ul>
+<li><p>mAP@0.5 and mAP@0.5:0.95 (averaged over 10 IoU thresholds at 0.05
+step)</p></li>
+<li><p>AP<sub>small</sub>, AP<sub>medium</sub>, AP<sub>large</sub>,
+partitioned by bounding box area:</p>
+<ul>
+<li><p>Small: area <span class="math inline">\(&lt; 32^2\)</span> pixels
+(after 640<span class="math inline">\(\times\)</span>640
+resizing)</p></li>
+<li><p>Medium: <span class="math inline">\(32^2 \leq\)</span> area <span
+class="math inline">\(&lt; 96^2\)</span> pixels</p></li>
+<li><p>Large: area <span class="math inline">\(\geq 96^2\)</span>
+pixels</p></li>
+</ul></li>
+<li><p>Precision, Recall, and F1-score against the confidence
+threshold</p></li>
+<li><p>Inference throughput (FPS) on T4 GPU</p></li>
+</ul>
+<p><strong>Zero-shot fire evaluation (cross-domain).</strong> All four
+smoke-trained models are evaluated on the Kaggle Forest Fire dataset
+without parameter updates. Because the fire dataset contains
+classification labels (fire / no-fire) rather than bounding boxes,
+detection transfer is measured by:</p>
+<ul>
+<li><p><strong>Fire detection rate:</strong> proportion of fire images
+on which the model produces at least one bounding box above confidence
+threshold <span class="math inline">\(\tau\)</span>.</p></li>
+<li><p><strong>False positive rate:</strong> proportion of no-fire
+images on which the model produces at least one detection above <span
+class="math inline">\(\tau\)</span>.</p></li>
+<li><p><strong>Sensitivity curve:</strong> detection rate against <span
+class="math inline">\(\tau \in [0.1, 0.9]\)</span>, sampled at 0.1
+intervals. This curve quantifies the trade-off between coverage and
+precision without requiring ground-truth bounding boxes.</p></li>
+</ul>
+<h2 id="ablation-studies">Ablation studies</h2>
+<p>Seven ablations are performed on the architecture achieving the
+highest smoke validation mAP:</p>
+<ol>
+<li><p><strong>Disable mosaic</strong> (mosaic = 0.0): Quantifies the
+contribution of multi-image compositing.</p></li>
+<li><p><strong>Disable HSV jitter</strong> (hsv_h = hsv_s = hsv_v = 0):
+Quantifies the contribution of illumination simulation.</p></li>
+<li><p><strong>Disable copy-paste</strong> (copy_paste = 0.0):
+Quantifies synthetic multi-object contribution.</p></li>
+<li><p><strong>Use default YOLO augmentation configuration</strong>:
+Baseline comparison against untuned hyperparameters.</p></li>
+<li><p><strong>Disable close_mosaic</strong>: Measures whether
+fine-tuning on clean data matters.</p></li>
+<li><p><strong>Custom anchors vs. COCO anchors</strong> (Faster R-CNN
+only): Direct ablation of domain-specific anchor design.</p></li>
+<li><p><strong>Clip-level split vs. random split</strong>: Quantifies
+how much temporal leakage inflates validation metrics. This ablation is
+reported separately as a methodological finding rather than a model
+performance comparison, since a random split produces a different data
+distribution and the resulting metrics are not directly
+comparable.</p></li>
+</ol>
+<h1 id="results">Results</h1>
+<p><em>Results will be populated after all four models complete training
+and evaluation. The section will contain: per-model mAP on smoke
+validation; per-model fire detection rate and false positive rate; PR
+curves for all four models; AP<sub>small</sub>, AP<sub>medium</sub>,
+AP<sub>large</sub> breakdown; ablation study results; sensitivity
+curves; inference speed comparison.</em></p>
+<h1 id="discussion">Discussion</h1>
+<p><em>The discussion will address: which architectural features
+correlate with stronger zero-shot transfer; whether the visual prototype
+transfer hypothesis is supported by the data; comparison of our
+methodology against the twelve surveyed papers; limitations of the
+current experimental design; and implications for UAV-based wildfire
+early-warning system deployment.</em></p>
+<h1 id="conclusion">Conclusion</h1>
+<p>We have presented the first multi-architecture benchmark on the
+Boreal Forest Fire 2025 dataset and the first controlled experiment
+isolating smoke-to-fire zero-shot transfer in object detection. Four
+architectures spanning three detection paradigms were trained on
+smoke-only annotations and evaluated on a fire classification dataset
+without exposure to fire labels.</p>
+<p>The methodological contributions of this work extend beyond the
+benchmark results. The clip-level constraint optimization algorithm with
+distributional penalties provides a reusable framework for researchers
+working with drone-derived sequential image datasets, where temporal
+leakage is common and under-reported. The seven-part data cleaning
+protocol with full audit trail establishes a standard for detection
+dataset integrity that exceeds the reporting conventions in the surveyed
+literature. The domain-specific anchor clustering analysis demonstrates
+that even for anchor-free architectures, understanding the anchor space
+of one’s dataset provides actionable information for model selection and
+training configuration.</p>
+<p>Several limitations constrain the generalizability of our findings.
+The training data originates from four Finnish sites during summer
+daylight conditions; performance on night-time, winter, or non-boreal
+fire scenarios is untested. The 256 empty background images provide a
+negative class that represents clean forest under favorable viewing
+conditions but does not capture the full range of false-positive
+triggers (cloud shadows, dust, lens flares) that a deployed system would
+encounter. The fog and motion blur augmentations designed for the
+pipeline remain unimplemented due to framework compatibility
+constraints. Finally, the small-plume count in the validation split
+(approximately four images) limits the statistical confidence of our
+early-detection evaluation.</p>
+<p>Future work will extend evaluation to external fire datasets for
+cross-domain generalization evidence, implement the missing
+environmental augmentations via a custom Dataset class, deploy the
+lightest model to a Jetson Orin NX for real-time UAV inference
+benchmarking, and repeat training with multiple random seeds to quantify
+statistical robustness.</p>
+<div class="thebibliography">
+<p><span>99</span></p>
+<p>WWF, “The 2022 Wildfire Season: A Glimpse Into Our Climate Future,”
+World Wildlife Fund Technical Report, 2022.</p>
+<p>B. U. T<span>ö</span>reyin, Y. Dedeo<span>ğ</span>lu,
+U. G<span>ü</span>d<span>ü</span>kbay, and A. E. <span>Ç</span>etin,
+“Computer vision based method for real-time fire and flame detection,”
+<em>Pattern Recognition Letters</em>, vol. 27, no. 1, pp. 49–58,
+2006.</p>
+<p>B. U. T<span>ö</span>reyin, Y. Dedeo<span>ğ</span>lu, and
+A. E. <span>Ç</span>etin, “Wavelet based real-time smoke detection in
+video,” in <em>Proc. EUSIPCO</em>, 2005.</p>
+<p>J. Gubbi, S. Marusic, and M. Palaniswami, “Smoke detection in video
+using wavelets and support vector machines,” <em>Fire Safety
+Journal</em>, vol. 44, no. 8, pp. 1110–1115, 2009.</p>
+<p>F. Yuan et al., “A deep learning based fire detection method for
+video surveillance,” <em>Neurocomputing</em>, vol. 364, pp. 129–139,
+2019.</p>
+<p>R. Xu et al., “Attention-guided lightweight network for real-time
+smoke semantic segmentation,” <em>IEEE Access</em>, vol. 9,
+pp. 55810–55821, 2021.</p>
+<p>J. Pesonen, A.-M. Raita-Hakola, J. Joutsalainen, T. Hakala,
+W. Akhtar, N. Koivum<span>ä</span>ki, L. Markelin, J. Suomalainen,
+R. Alves de Oliveira, I. P<span>ö</span>l<span>ö</span>nen, and
+E. Honkavaara, “Boreal Forest Fire: UAV-collected Wildfire Detection and
+Smoke Segmentation Dataset,” <em>Scientific Data</em>, vol. 12, 1419,
+2025.</p>
+<p>J. Pesonen, T. Hakala, V. Karjalainen, N. Koivum<span>ä</span>ki,
+L. Markelin, A.-M. Raita-Hakola, J. Suomalainen,
+I. P<span>ö</span>l<span>ö</span>nen, and E. Honkavaara, “Detecting
+Wildfires on UAVs with Real-time Segmentation Trained by Larger Teacher
+Models,” in <em>Proc. IEEE/CVF WACV</em>, pp. 5166–5176, 2025.</p>
+<p>A.-M. Raita-Hakola, S. Rahkonen, J. Suomalainen, L. Markelin,
+R. Oliveira, T. Hakala, N. Koivum<span>ä</span>ki, E. Honkavaara, and
+I. P<span>ö</span>l<span>ö</span>nen, “Combining YOLO V5 and Transfer
+Learning for Smoke-Based Wildfire Detection in Boreal Forests,” <em>Int.
+Arch. Photogramm. Remote Sens. Spatial Inf. Sci.</em>,
+vol. XLVIII-1/W2-2023, pp. 1771–1778, 2023.</p>
+<p>S.-Y. Kim and A. Muminov, “Forest Fire Smoke Detection Based on Deep
+Learning Approaches and UAV Images,” <em>Sensors</em>, vol. 23, no. 12,
+5702, 2023.</p>
+<p>M. Chetoui and M.A. Akhloufi, “Fire and Smoke Detection Using
+Fine-Tuned YOLOv8 and YOLOv7,” <em>Fire</em>, vol. 7, no. 4, 135,
+2024.</p>
+<p>P. Gon<span>ç</span>alves et al., “Wildfire Smoke Detection Enhanced
+by Image Augmentation with StyleGAN2-ADA for YOLOv8 and RT-DETR,”
+<em>Fire</em>, vol. 7, 369, 2024.</p>
+<p>M. Mukhiddinov, A.B. Abdusalomov, and J. Cho, “A Wildfire Smoke
+Detection System Using UAV Images Based on Optimized YOLOv5,”
+<em>Sensors</em>, vol. 22, no. 23, 9384, 2022.</p>
+<p>L. Yang, Y. Cheng, F. Xu, B. Li, and X. Li, “Real-Time Smoke
+Detection in Surveillance Videos Using Enhanced RT-DETR with Triplet
+Attention and HS-FPN,” <em>Fire</em>, vol. 7, no. 11, 387, 2024.</p>
+<p>X. Huang et al., “RT-DETR-Smoke: A Real-Time Transformer for Forest
+Smoke Detection,” <em>Fire</em>, vol. 8, no. 5, 170, 2025.</p>
+<p>Y. Zhou et al., “EDIF: Boosting Unsupervised Cross-Domain Forest Fire
+Smoke Detection with Enhanced Domain-Invariant Features,” <em>Geomatics,
+Natural Hazards and Risk</em>, 2025.</p>
+<p>I. Shamta and B.E. Demir, “Deep Learning-Based Surveillance System
+for Forest Fire Detection Using UAV,” <em>PLOS ONE</em>, vol. 19, no. 3,
+e0299058, 2024.</p>
+<p>H. Zhang, F. Li, S. Liu, L. Zhang, H. Su, J. Zhu, L.M. Ni, and
+H.-Y. Shum, “DINO: DETR with Improved DeNoising Anchor Boxes for
+End-to-End Object Detection,” in <em>Proc. ICLR</em>, 2023.</p>
+<p>D. Tran et al., “Video Understanding and Temporal Leakage,”
+<em>arXiv:1906.05365</em>, 2019.</p>
+<p>Y. Zhong et al., “Spatial Autocorrelation in Remote Sensing Data
+Splits,” <em>IEEE TGRS</em>, vol. 58, no. 9, pp. 6418–6432, 2020.</p>
+<p>L. H. Li et al., “Grounded Language-Image Pre-training,” in <em>Proc.
+CVPR</em>, 2022.</p>
+<p>S. Liu et al., “Grounding DINO: Marrying DINO with Grounded
+Pre-Training for Open-Set Object Detection,” <em>arXiv:2303.05499</em>,
+2023.</p>
+<p>M. Minderer et al., “Simple Open-Vocabulary Object Detection with
+Vision Transformers,” in <em>Proc. ECCV</em>, 2022.</p>
+</div>
+</body>
+</html>

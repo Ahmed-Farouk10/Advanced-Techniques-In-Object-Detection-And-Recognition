@@ -1,6 +1,7 @@
-train: /kaggle/input/fire-and-smoke-detection-dataset/Fire-and-Smoke-Detection-Dataset/dataset/train/images
-val: /kaggle/input/fire-and-smoke-detection-dataset/Fire-and-Smoke-Detection-Dataset/dataset/valid/images
-test: /kaggle/input/fire-and-smoke-detection-dataset/Fire-and-Smoke-Detection-Dataset/dataset/test/images
+path: d:/Masters Academy AI/Advanced Techniques in Object Detection and Recognition/Research Paper/dataset-a/dataset
+train: train/images
+val: valid/images
+test: test/images
 
 nc: 2  # Number of classes
 names: ['fire', 'smoke']  # List of class names
