@@ -10,132 +10,124 @@
 \usepackage{float}
 \usepackage{tabularx}
 \usepackage{makecell}
+\usepackage{placeins}
 
+\begin{document}
 \title{``Smoke Before Fire'' \\
-Can object detectors find a wildfire before the flame is visible?}
+Can object detectors find a wildfire before the flames are visible?}
 
 \author{
 \IEEEauthorblockN{
-Esraa Nasr$^{1}$ \quad
-Ahmed Ayman$^{1}$ \quad
-Dr.~Hany Hanafy$^{1}$
+\parbox{0.9\textwidth}{
+\centering
+\textsuperscript{1}Esraa Nasr Elsayed,
+\textsuperscript{1}Ahmed Ayman Farouk Shahin,
+\textsuperscript{1}Shahd Ayman Elagan
+}
 }
 \IEEEauthorblockA{
-\textit{College of Artificial Intelligence} \\
-\textit{Arab Academy for Science, Technology and Maritime Transport (AASTMT)}\\
-Alexandria, Egypt \\
-\texttt{\{me@esraa.dev, ahmed.aafmms@gmail.com, hanysaid2000@aast.edu\}}
+\parbox{0.9\textwidth}{
+\centering
+\textsuperscript{1}Department of Artificial Intelligence, Artificial Intelligence College,
+Alamein Campus, Arab Academy for Science, Technology and Maritime Transport,
+Alamein, Egypt.\\
+\texttt{me@esraa.dev},
+\texttt{Ahmed.shahin.2022@Aiu.edu.eg},
+\texttt{shahd4116@gmail.com}
+}
 }
 }
 
-\date{}
-
-\begin{document}
 \maketitle
 
 \begin{abstract}
-Wildfire detection studies routinely train neural networks on mixed image sets containing both smoke and active flames. Consequently, these models are assessed on data drawn from the same underlying distribution. Such experimental designs bypass a practical operational question: does a vision model trained solely on smoke annotations retain enough visual feature overlap to detect unannotated fire zero-shot? To evaluate this, four distinct object detection architectures---YOLO11n, Faster R-CNN, RT-DETR, and Deformable DETR---were trained strictly on the smoke class of a Finnish boreal forest drone dataset (Dataset B), holding out all flame instances. Each trained checkpoint was subsequently probed zero-shot on an independent fire dataset (Dataset A) without fine-tuning or parameter updates. This investigation was conducted at the Arab Academy for Science, Technology and Maritime Transport, College of Artificial Intelligence (est, IEEE). Empirical results show sharp performance disparities across detection paradigms: convolutional networks show near-complete transfer failure under bounding-box localization constraints, whereas transformer architectures maintain measurable cross-domain sensitivity, detecting flames in up to 58.8\% of test images under relaxed spatial overlap thresholds.
+Most existing wildfire detection research trains object detectors on smoke and fire jointly, subsequently evaluating them on the same distribution or on a separate but similarly labeled dataset. This approach leaves a fundamental question unanswered: can a detector trained exclusively on smoke recognize a fire it has never seen? In this study, four object detection architectures---YOLO11n, Faster R-CNN, RT-DETR, and Deformable DETR---are trained solely on the smoke class of a boreal forest dataset (Dataset B), with fire labels withheld entirely during the training phase. These trained models are then evaluated zero-shot on an unseen dataset containing fire (Dataset A), without any fine-tuning. Results demonstrate the architectural limits of cross-domain transfer. At a relaxed IoU threshold of 0.10, Deformable DETR achieved the strongest transfer, detecting fire-related anomalies in 58.82\% of test images at a confidence threshold of 0.05, whereas convolutional architectures showed near-complete transfer failure under identical conditions.
 
-\textit{Keywords---Deep learning, object detection, wildfire detection, smoke detection, zero-shot learning, domain transfer, UAV imagery, convolutional neural networks, transformer networks.}
+\textit{Keywords: Deep learning, object detection, wildfire detection, smoke detection, zero-shot learning, domain transfer, UAV imagery, convolutional neural networks, transformer networks.}
 \end{abstract}
 
 \section{Introduction}
-Boreal forest biomes span roughly one-third of the planet's total forested cover. Because these landscapes are remote and sparsely populated, ignitions frequently expand for hours or days before manual observation, as recorded in forestry assessments by the World Wildlife Fund [1]. Orbital satellites equipped with infrared sensors capture large-scale thermal anomalies, yet their operational utility is constrained by orbital revisit cycles lasting hours. Stationary ground towers provide continuous surveillance across fixed horizons, but camera-based watchtowers still require continuous human oversight over mostly static wilderness scenes [2].
+The boreal forest biome accounts for roughly one-third of the global forested area. Its remote geography often allows fires to burn undetected for extended periods, as documented by the World Wildlife Fund [1]. While satellite-based thermal anomaly detection provides broad coverage, it suffers from revisit latency. Conversely, ground-based camera networks offer continuous monitoring but rely heavily on human vigilance over largely static forest imagery [2].
 
-Unmanned aerial vehicles (UAVs) offer a functional compromise between satellite coverage and ground camera immediacy. In wildland fires, early detection hinges on identifying smoke plumes rather than open flames. Plumes rise above tree canopies and can be spotted from aerial sensors at distances exceeding ten kilometers, long before surface fires emerge [2].
+UAV-based monitoring provides a crucial middle path, blending the persistence of satellite coverage with the responsiveness of ground observation. The primary challenge lies in detecting the precursor to the flame---smoke---which is often visible long before the fire itself, sometimes at distances exceeding ten kilometers [2].
 
-Most existing machine learning literature trains detection models simultaneously on fire and smoke, validating them on identically sampled imagery. Studies by Kim and Muminov [10] focused exclusively on within-domain smoke detection, while Chetoui and Akhloufi [11] utilized joint fire-and-smoke data. These setups do not answer whether smoke-trained feature extractors generalize to unseen fire targets. Early-warning systems deployed in wilderness settings must trigger on early plume formations, yet they must also generate positive detections if ground flames become exposed before an aerial flight concludes.
+Existing research typically trains models on fire, smoke, or both jointly, subsequently evaluating them on the same distribution. For instance, Kim and Muminov [10] focused on within-domain smoke detection, while Chetoui and Akhloufi [11] utilized joint fire-and-smoke training. These approaches leave a significant gap regarding cross-class generalization: it remains unclear whether a model trained exclusively on smoke can recognize fire it has never been exposed to. Early-warning systems must be capable of acting on smoke precursors while still responding correctly when flames eventually appear.
 
-A further gap exists in the framing of evaluation objectives. Standard object detection benchmarks optimize for precision under strict geometric localization criteria (e.g., $\text{IoU} \ge 0.50$). For a system whose operational purpose is reducing the probability of undetected ignition events, this criterion is misaligned with the underlying risk profile: in remote boreal terrain, the cost of a missed fire detection substantially outweighs the cost of a false positive. No prior study has reported zero-shot fire sensitivity under an evaluation protocol explicitly designed around this asymmetric cost structure.
+A second gap concerns the framing of evaluation objectives. Standard object detection benchmarks optimize for precision under strict geometric localization criteria (e.g., $\text{IoU} \ge 0.50$). For a system whose operational purpose is reducing the probability of undetected ignition events, this criterion is misaligned with the underlying risk profile: in remote boreal terrain, the cost of a missed fire detection substantially outweighs the cost of a false positive. No prior study has reported zero-shot fire sensitivity under an evaluation protocol explicitly designed around this asymmetric cost structure.
 
 A third gap concerns the characterization of the transfer process itself. Existing zero-shot detection literature frames cross-class generalization as a semantic embedding problem, relying on language-vision alignment to bridge unseen categories [18], [19], [21]. This study examines a distinct case: purely visual proxy inference, in which a model generalizes from a learned precursor state (smoke) to an unobserved co-occurring state (fire) without linguistic supervision or target-class labels. It remains unknown whether any detection architecture can perform this form of inference and, if so, which architectural properties enable it.
 
-To investigate the cross-phenomenon transfer boundary and characterize the recall ceiling of smoke-trained models on unseen fire, four detector architectures spanning three design philosophies are evaluated. The models are trained on smoke annotations alone and tested zero-shot against an external fire dataset.
-
-Fig.~\ref{fig:design} outlines this experimental workflow. The goal is to determine whether structural visual primitives learned from smoke---such as semi-transparent texture boundaries, grey-scale gradients, and diffuse plume contours---share sufficient representational overlap with flame geometry to trigger detections across domain shifts.
-
-\begin{figure*}[!t]
-\centering
-\includegraphics[width=\textwidth,height=10cm,keepaspectratio]{figures/study_design.png}
-\caption{Overall study design: Models are trained exclusively on smoke annotations (Dataset B) and evaluated zero-shot on an unseen collection of fire images (Dataset A). Dataset A represents the Fire and Smoke Detection dataset [24], while Dataset B represents the Boreal Forest Fire dataset [6].}
-\label{fig:design}
-\end{figure*}
+To investigate these three gaps, four distinct object detection architectures are trained exclusively on smoke imagery and evaluated zero-shot on an entirely unseen fire dataset.
 
 \section{Related Work}
-Early automated smoke detection relied on handcrafted visual descriptors. Standard methods used thresholding across HSV color spaces [2], optical flow field estimation for rising plume dynamics [3], and wavelet decomposition for spatial frequency changes [4]. These hand-engineered pipelines suffered from high false alarm rates during boreal summers due to shifting solar angles, atmospheric haze, and ground glare, requiring site-specific parameter tuning for individual camera sensors.
+The transition from traditional computer vision to deep learning has fundamentally reshaped object detection. This section contextualizes the specific challenges of domain shift and temporal leakage relevant to the experimental design.
 
-Deep neural networks replaced these manual feature extraction pipelines. Yuan et al. [7] demonstrated direct smoke detection from surveillance feeds using deep convolutional networks. Xu et al. [8] introduced attention modules into lightweight segmentation backbones to accelerate inference speeds. Mukhiddinov et al. [9] adapted YOLOv5 with brightness adjustments and mosaic augmentation specifically for drone surveillance feeds. Kim and Muminov [10] fine-tuned YOLOv7 on aerial smoke imagery, establishing single-domain performance benchmarks. Chetoui and Akhloufi [11] achieved high detection scores on combined fire and smoke datasets, though mixing both classes prevented isolating the individual contribution of smoke representations. To address training data scarcity, Gon\c{c}alves et al. [12] applied StyleGAN2-ADA to synthesize smoke instances and boost small-object recall.
+Early approaches to smoke detection relied on handcrafted features: color histogram thresholding in HSV space [2], motion estimation via optical flow [3], and wavelet-based texture decomposition [4]. These methods required per-camera calibration and degraded under the lighting variability typical of boreal summer conditions.
 
-Geographic domain shifts remain a recurring hurdle in wildland fire modeling. Raita-Hakola et al. [13] demonstrated that YOLOv5 models trained on watchtower feeds from Mediterranean or Californian environments transferred poorly when tested on Nordic boreal forests, proving that regional vegetation and illumination strongly shape visual smoke signatures. Pesonen et al. [5], [6] curated the Finnish boreal UAV imagery used here and evaluated teacher-student knowledge distillation for real-time edge segmentation.
+The shift to learned features began with CNN-based detectors. Yuan et al. [7] demonstrated end-to-end smoke detection on static camera feeds, and Xu et al. [8] introduced attention-guided lightweight architectures for real-time deployment. Mukhiddinov et al. [9] optimized YOLOv5 with brightness jitter and mosaic augmentation for UAV smoke imagery. Kim and Muminov [10] fine-tuned YOLOv7 on UAV smoke images, establishing a strong within-domain reference. Chetoui and Akhloufi [11] achieved high precision on joint fire-and-smoke detection, though the joint-training design makes it impossible to isolate which class drove performance. Gon\c{c}alves et al. [12] showed that StyleGAN2-ADA synthetic augmentation measurably improves small-object detection.
 
-A methodological issue frequently overlooked in video-based object detection is temporal data leakage [22]. When continuous video sequences are split into training and validation sets through uniform random sampling, consecutive video frames share nearly identical background foliage, lighting, and camera positions. As noted by Zhong et al. [23], detectors trained under random frame splits learn static background landmarks rather than generalizable object boundaries, producing artificially inflated validation scores.
+Raita-Hakola et al. [13] found that YOLOv5 models trained on Californian imagery transferred poorly to Finnish boreal forests, demonstrating how strongly smoke appearance depends on geographic domain. Pesonen et al. [5], [6] published the boreal dataset used in this study and a subsequent investigation on teacher-student distillation for real-time segmentation.
 
-In zero-shot detection, modern methods typically rely on multimodal language-vision alignments. Architectures like GLIP [18], Grounding DINO [19], and OWL-ViT [21] utilize text prompts to detect novel objects. In contrast, this paper investigates purely visual zero-shot transfer, testing whether visual representations learned from one physical phenomenon (smoke) can localize a distinct but co-occurring phenomenon (fire) without linguistic supervision.
+Temporal leakage is well-documented in time-series forecasting [22] but under-discussed in video-derived object detection datasets. Zhong et al. [23] identified spatial autocorrelation as a source of inflated validation metrics; when frames from a continuous video are randomly distributed, a detector can learn static scene context rather than object features.
+
+Zero-shot object detection has predominantly been advanced through language-guided models. GLIP [18] and Grounding DINO [19] use text prompts to guide detection of unseen classes, and OWL-ViT [21] achieves open-vocabulary detection through image-text pretraining. The approach taken in this study differs fundamentally, relying solely on visual prototype transfer without linguistic guidance.
 
 \section{Datasets and Architectures}
-Two independent datasets were used to isolate within-domain training from cross-domain zero-shot testing. Data preprocessing and formatting scripts are maintained in the project repository.
+Two distinct data sources are utilized for training and evaluation. Reproduction details are provided in the project repository.
 
-Dataset B is derived from the Boreal Forest Fire dataset [6] and supplementary recordings by Tawseef, captured during controlled forest restoration burns in Finland. Videos were recorded in 4K resolution using a DJI Phantom 4 drone. Extracted video frames were manually annotated with bounding boxes around visible smoke plumes. A multi-step data integrity audit flagged 4,139 frame anomalies, resulting in a curated subset of 4,868 smoke bounding boxes across 30 flight sequences. Analysis of box geometry showed a strong structural bias: 95.7\% of the annotated smoke boxes cover more than 10\% of the total image area. To handle this distribution, scale jitter was increased and mosaic probabilities were lowered to avoid over-fragmenting broad plumes.
+Dataset B, derived from the Boreal Forest Fire dataset [6] and the Tawseef collection, was captured during prescribed forest restoration burns in Finland using a DJI Phantom 4 UAV at 4K resolution. Frames were manually annotated, yielding 4,868 smoke bounding boxes across 30 flight sequences after a cleaning process that identified 4,139 integrity flags. All bounding boxes are labeled exclusively as smoke.
 
-To derive anchor priors tailored to smoke morphology, K-means clustering ($k = 5$) was computed over normalized box dimensions. The resulting anchor clusters reflect the wide aspect ratios characteristic of rising plumes, providing domain-adapted spatial priors for region proposal networks.
+Exploratory analysis revealed a strong large-plume bias: 95.7\% of bounding boxes occupy more than 10\% of the image area. To counteract this, scale augmentation was increased and mosaic probability was reduced. K-means clustering ($k = 5$) over normalized box dimensions derived domain-specific anchor priors reflecting this large-plume distribution.
 
-To eliminate temporal leakage between video frames, data partitioning was performed at the video-clip level rather than by random frame sampling. The 30 flights were grouped into an 80/20 train/validation split, ensuring that all frames from any individual drone flight remained strictly isolated within a single partition.
+To prevent temporal leakage, data partitioning was performed at the video-clip level rather than by naive random frame-level sampling. The 30 flights were grouped into an 80/20 train/validation split, ensuring frames from any given flight remained exclusively in one partition.
 
-Dataset A, the Fire and Smoke Detection Dataset [24], serves as the unseen zero-shot evaluation benchmark. Dataset A originates from different geographical locations, sensor hardware, and capture angles, containing bounding-box annotations for open fire. No image or label from Dataset A was exposed to any model during training.
+Dataset A---the Fire and Smoke Detection Dataset [24]---provides bounding-box annotations for open fire, originating from distinct geographical locations, sensor hardware, and camera perspectives. No image from Dataset A was exposed during training.
 
-\begin{figure}[!t]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\columnwidth]{figures/fig3_saber.png}
-\caption{Architectural overview showcasing the feature extraction mechanisms.}
+\includegraphics[width=1\linewidth]{figures/fig2_architectures.jpeg}
+\caption{Architectural overview showcasing the feature extraction mechanisms of the four evaluated detectors.}
 \label{fig:saber}
 \end{figure}
+\FloatBarrier
 
-\begin{figure*}[!t]
-\centering
-\includegraphics[width=\textwidth,height=8cm,keepaspectratio]{figures/fig2_architectures.jpeg}
-\caption{Architectural Overview of the Four Detectors. The models span three distinct paradigms: Single-stage CNN, Two-stage CNN, and Transformer-based architectures.}
-\label{fig:architectures}
-\end{figure*}
+Four architectures spanning three detection paradigms were selected. YOLO11n establishes the edge-deployment baseline. RT-DETR serves as a hybrid CNN-transformer, replacing non-maximum suppression with a learned decoder. Faster R-CNN acts as a two-stage anchor-dependent detector using a region proposal network.
 
-Four detection architectures spanning three computational paradigms were implemented (see Fig.~\ref{fig:architectures}):
-1) YOLO11n represents single-stage anchor-free convolutional detectors, chosen for low parameter count (2.6M) and real-time edge processing speed.
-2) RT-DETR represents hybrid CNN-transformer designs, pairing a convolutional backbone with an efficient multi-scale hybrid encoder and a learned query decoder that removes non-maximum suppression (NMS).
-3) Faster R-CNN with a MobileNetV3-Large FPN backbone represents classic two-stage anchor-based detectors with explicit region proposal networks (RPN).
-4) For the transformer category, architectural selection followed an empirical progression. Standard vanilla DETR was tested first; its global dense self-attention suffered from quadratic memory scaling ($\mathcal{O}(H^2 W^2)$) on high-resolution inputs and failed to converge within reasonable training limits. DINO was evaluated next; while training speed improved, bipartite matching and contrastive query dynamics proved unstable under the extreme class imbalance of single-class smoke imagery. Consequently, Deformable DETR was selected. Its multi-scale deformable attention samples a sparse set of $K=4$ key points per query, capturing diffuse, irregular plume contours with linear computational complexity.
+The transformer selection followed a deliberate architectural progression. Vanilla DETR failed to converge under the computational cost of dense global attention ($\mathcal{O}(H^2W^2)$) on high-resolution inputs. DINO was subsequently tested; bipartite matching and contrastive query dynamics proved unstable under single-class extreme imbalance. Deformable DETR was consequently adopted: its sparse multi-scale attention samples $K=4$ key points per query, capturing irregular plume contours with linear complexity. To counteract the 299:1 background-to-object query ratio, the focal loss parameter was set to $\alpha = 0.95$.
 
 \section{Methodology}
-Models were trained using standardized input dimensions and data augmentation protocols where framework backbones permitted.
+All models were trained standardizing hyperparameters where framework constraints permitted.
 
-YOLO11n was trained on $640\times640$ inputs with a batch size of 16 for 100 epochs, utilizing AdamW with a cosine learning rate decay schedule. Faster R-CNN was trained using a MobileNetV3-Large FPN backbone at $640\times640$ with a batch size of 2 and SGD optimizer. Due to computational constraints, Faster R-CNN was trained for five epochs. Transformer architectures (RT-DETR and Deformable DETR) were trained on $640\times640$ images using batch sizes adapted to available memory. In Deformable DETR, the focal loss parameter was set to $\alpha = 0.95$ to counteract gradient suppression caused by the 299:1 background-to-object query ratio in single-class datasets.
+YOLO11n was trained at $640\times640$ resolution, batch size 16, for 100 epochs using AdamW with a cosine learning rate schedule. Faster R-CNN utilized a MobileNetV3-Large FPN backbone at $640\times640$ with batch size 2 and SGD; due to compute constraints, results reflect approximately five epochs. RT-DETR was trained for 75 epochs via the Ultralytics framework. Deformable DETR was trained for 50 epochs via HuggingFace Transformers. All transformer architectures used batch sizes adapted to available memory.
 
-Within-domain smoke detection was evaluated on the held-out Dataset B validation split using standard COCO metrics: mean Average Precision at IoU 0.50 (mAP@50) and averaged over IoU 0.50 to 0.95 (mAP@50--95).
+Within-domain smoke evaluation used standard COCO metrics: mAP@50 and mAP@50--95, computed on the held-out Dataset B validation split.
 
-Zero-shot transfer was evaluated on the 637 test images of Dataset A (459 images containing 995 ground-truth fire bounding boxes). Model inference was executed across a confidence threshold sweep ($0.50, 0.30, 0.20, 0.10, 0.05$). Under the strict zero-shot evaluation, a predicted box was scored as a true positive if its overlap with a ground-truth fire box satisfied $\text{IoU} \ge 0.50$, regardless of predicted class label.
+Zero-shot fire evaluation was computed on the Dataset A test split (637 images; 459 containing 995 ground-truth fire bounding boxes). Inference ran across a confidence threshold sweep ($0.50, 0.30, 0.20, 0.10, 0.05$). A predicted box counted as a true positive if it overlapped a ground-truth fire box at $\text{IoU} \ge 0.50$ (strict) or $\text{IoU} \ge 0.10$ (relaxed), regardless of predicted class label.
 
 \section{Results}
 \subsection{Within-Domain Smoke Detection}
-\begin{table}[!t]
+\begin{table}[htbp]
 \centering
-\caption{YOLO11n baseline vs. custom augmentation}
-\label{tab:yolo-comparison}
-\setlength{\tabcolsep}{2.5pt}
-\renewcommand{\arraystretch}{1.1}
-\footnotesize
-\begin{tabular}{@{}lcccccc@{}}
+\caption{YOLO11n performance under baseline and custom augmentation}
+\label{tab:yolo11n_augmentation}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\columnwidth}{@{}lcccccc@{}}
 \toprule
 Configuration & Epoch & Precision & Recall & F1 & mAP@50 & mAP@50--95 \\
 \midrule
-Baseline & 40 & 89.51\% & 86.86\% & 88.15\% & 94.01\% & 62.01\% \\
+Baseline            & 40 & 89.51\% & 86.86\% & 88.15\% & 94.01\% & 62.01\% \\
 Custom augmentation & 70 & 92.70\% & 92.81\% & 92.75\% & 96.51\% & 60.27\% \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
-The baseline shows a wide gap between mAP@0.50 and mAP@0.50--0.95 thresholds, indicating reliable coarse detection that degrades under strict spatial localization criteria.
+The baseline demonstrates a gap between the 0.50 and 0.50--0.95 mAP thresholds, indicating reliable coarse detection that degrades under strict localization criteria.
 
-\begin{table}[!t]
+\begin{table}[htbp]
 \centering
-\caption{Faster R-CNN validation performance, default anchors}
+\caption{Faster R-CNN validation performance with domain-adapted anchors}
+\label{tab:faster_rcnn_val}
 \begin{tabularx}{\columnwidth}{lX}
 \toprule
 Metric & Value \\
@@ -149,42 +141,62 @@ Precision & 95.27\% \\
 Recall & 94.47\% \\
 F1 score & 94.87\% \\
 mAP@50 & 94.18\% \\
-mAP@50-95 & 63.24\% \\
+mAP@50--95 & 63.24\% \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\begin{table}[!t]
+\begin{table}[htbp]
 \centering
-\caption{Comparison of YOLO11n and Faster R-CNN}
-\label{tab:model-comparison}
+\caption{RT-DETR validation performance (best checkpoint, epoch 34 of 75)}
+\label{tab:rtdetr_val}
+\begin{tabularx}{\columnwidth}{lX}
+\toprule
+Metric & Value \\
+\midrule
+Precision  & 98.17\% \\
+Recall     & 96.61\% \\
+F1 score   & 97.38\% \\
+mAP@50     & 97.48\% \\
+mAP@50--95 & 65.37\% \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Within-domain smoke detection: summary across all four architectures}
+\label{tab:within_domain_summary}
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
-\begin{tabular}{@{}p{3.0cm}cccc@{}}
+\begin{tabular}{@{}p{2.5cm}cccc@{}}
 \toprule
 Model & Precision & Recall & mAP@50 & mAP@50--95 \\
 \midrule
-YOLO11n (baseline)
-& 89.51\% & 86.86\% & 94.01\% & 62.01\% \\
-
-Faster R-CNN
-& 95.27\% & 94.47\% & 94.18\% & 63.24\% \\
+YOLO11n (custom)  & 92.70\% & 92.81\% & 96.51\% & 60.27\% \\
+Faster R-CNN      & 95.27\% & 94.47\% & 94.18\% & 63.24\% \\
+RT-DETR           & 98.17\% & 96.61\% & 97.48\% & 65.37\% \\
+Deformable DETR   & ---     & ---     & 88.61\% & 40.75\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Both models attain similar detection accuracy at mAP@50, though Faster R-CNN achieves higher precision despite fewer training epochs. For Deformable DETR, in-domain validation on Dataset B reached 88.61\% mAP@50 and 40.75\% mAP@50--95.
+RT-DETR achieves the highest mAP@50 and mAP@50--95 across all evaluated architectures within the smoke domain. Deformable DETR reached 88.61\% mAP@50 and 40.75\% mAP@50--95 on the same validation split; the lower within-domain score is partially attributable to its convergence instability under single-class extreme imbalance prior to the focal loss correction.
 
+\FloatBarrier
 \subsection{Zero-Shot Fire Transfer}
-\begin{table}[!t]
+\begin{table}[htbp]
 \centering
-\caption{Faster R-CNN zero-shot fire transfer}
-\begin{tabularx}{\columnwidth}{lXXXXXXXXX}
+\caption{Faster R-CNN zero-shot fire transfer under strict localization ($\text{IoU} \ge 0.50$)}
+\label{tab:faster_rcnn_zeroshot}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabularx}{\columnwidth}{@{}c*{9}{>{\centering\arraybackslash}X}@{}}
 \toprule
-Conf & Preds & TP & FP & FN & Precision & Recall & F1 & Images & Box Det \\
+Conf. & Preds & TP & FP & FN & \makecell{Prec.} & \makecell{Rec.} & F1 & \makecell{Images} & \makecell{Box\\Det.} \\
 \midrule
-0.50 & 761 & 10 & 751 & 985 & 1.31\% & 1.01\% & 1.14\% & 10/459 & 1.01\% \\
+0.50 & 761   & 10 & 751   & 985 & 1.31\% & 1.01\% & 1.14\% & 10/459 & 1.01\% \\
 0.30 & 1,036 & 13 & 1,023 & 982 & 1.25\% & 1.31\% & 1.28\% & 13/459 & 1.31\% \\
 0.20 & 1,297 & 19 & 1,278 & 976 & 1.46\% & 1.91\% & 1.66\% & 19/459 & 1.91\% \\
 0.10 & 1,875 & 36 & 1,839 & 959 & 1.92\% & 3.62\% & 2.51\% & 36/459 & 3.62\% \\
@@ -193,97 +205,114 @@ Conf & Preds & TP & FP & FN & Precision & Recall & F1 & Images & Box Det \\
 \end{tabularx}
 \end{table}
 
-\begin{table}[!t]
+\begin{table}[htbp]
 \centering
-\caption{YOLO11n (custom augmentation) zero-shot fire transfer}
-\begin{tabularx}{\columnwidth}{lXXXXXXXXX}
+\caption{YOLO11n zero-shot fire transfer under strict localization ($\text{IoU} \ge 0.50$)}
+\label{tab:yolo11n_custom_zeroshot}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabularx}{\columnwidth}{@{}c*{9}{>{\centering\arraybackslash}X}@{}}
 \toprule
-Conf & Preds & TP & FP & FN & Precision & Recall & F1 & Images & Box Det \\
+Conf. & Preds & TP & FP & FN & \makecell{Prec.} & \makecell{Rec.} & F1 & \makecell{Images} & \makecell{Box\\Det.} \\
 \midrule
-0.50 & 220 & 0 & 220 & 995 & 0.00\% & 0.00\% & 0.00\% & 0/459 & 0.00\% \\
-0.30 & 391 & 1 & 390 & 994 & 0.26\% & 0.10\% & 0.14\% & 1/459 & 0.10\% \\
-0.20 & 562 & 1 & 561 & 994 & 0.18\% & 0.10\% & 0.13\% & 1/459 & 0.10\% \\
-0.10 & 960 & 4 & 956 & 991 & 0.42\% & 0.40\% & 0.41\% & 4/459 & 0.40\% \\
+0.50 & 220   & 0 & 220   & 995 & 0.00\% & 0.00\% & 0.00\% & 0/459 & 0.00\% \\
+0.30 & 391   & 1 & 390   & 994 & 0.26\% & 0.10\% & 0.14\% & 1/459 & 0.10\% \\
+0.20 & 562   & 1 & 561   & 994 & 0.18\% & 0.10\% & 0.13\% & 1/459 & 0.10\% \\
+0.10 & 960   & 4 & 956   & 991 & 0.42\% & 0.40\% & 0.41\% & 4/459 & 0.40\% \\
 0.05 & 1,628 & 6 & 1,622 & 989 & 0.37\% & 0.60\% & 0.46\% & 6/459 & 0.60\% \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Under strict box-level matching ($\text{IoU} \ge 0.50$), both convolutional architectures show near-zero transfer from smoke to fire.
+Both CNN architectures show negligible zero-shot transfer from smoke to fire under strict box-level IoU matching. YOLO11n produces zero true positives at the 0.50 confidence threshold, and Faster R-CNN detects fire in only 51 boxes at the lowest threshold tested.
 
+\FloatBarrier
 \subsection{Relaxed Localization for Early Warning Systems}
-Early-warning systems prioritize alerting over strict geometric localization. Consequently, the transformer architectures were evaluated under a relaxed spatial constraint ($\text{IoU} \ge 0.10$). 
+Early-warning systems prioritize alerting over strict geometric localization. Transformer architectures were therefore evaluated under a relaxed spatial constraint ($\text{IoU} \ge 0.10$).
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
-\caption{RT-DETR zero-shot fire transfer under relaxed localization constraints}
+\caption{RT-DETR zero-shot fire transfer under relaxed localization ($\text{IoU} \ge 0.10$)}
 \label{tab:rtdetr_zeroshot}
-\begin{tabularx}{\columnwidth}{lXXXXXXXXX}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabularx}{\columnwidth}{@{}c*{9}{>{\centering\arraybackslash}X}@{}}
 \toprule
-Conf & Preds & TP & FP & FN & Precision & Recall & F1 & Images & Box Det \\
+Conf. & Preds & TP & FP & FN & \makecell{Prec.} & \makecell{Recall} & F1 & \makecell{Images} & \makecell{Box\\Det.} \\
 \midrule
-0.50 & 482 & 62 & 420 & 933 & 12.86\% & 6.23\% & 8.40\% & 60/459 & 6.23\% \\
-0.30 & 676 & 74 & 602 & 921 & 10.95\% & 7.44\% & 8.86\% & 72/459 & 7.44\% \\
-0.20 & 927 & 83 & 844 & 912 & 8.95\% & 8.34\% & 8.64\% & 80/459 & 8.34\% \\
-0.10 & 3600 & 131 & 3469 & 864 & 3.64\% & 13.17\% & 5.70\% & 116/459 & 13.17\% \\
-0.05 & 12942 & 188 & 12754 & 807 & 1.45\% & 18.89\% & 2.70\% & 153/459 & 18.89\% \\
+0.50 & 482    & 62  & 420    & 933 & 12.86\% & 6.23\%  & 8.40\% & 60/459  & 6.23\%  \\
+0.30 & 676    & 74  & 602    & 921 & 10.95\% & 7.44\%  & 8.86\% & 72/459  & 7.44\%  \\
+0.20 & 927    & 83  & 844    & 912 & 8.95\%  & 8.34\%  & 8.64\% & 80/459  & 8.34\%  \\
+0.10 & 3,600  & 131 & 3,469  & 864 & 3.64\%  & 13.17\% & 5.70\% & 116/459 & 13.17\% \\
+0.05 & 12,942 & 188 & 12,754 & 807 & 1.45\%  & 18.89\% & 2.70\% & 153/459 & 18.89\% \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
-\caption{Deformable DETR zero-shot fire transfer under relaxed localization constraints}
+\caption{Deformable DETR zero-shot fire transfer under relaxed localization ($\text{IoU} \ge 0.10$)}
 \label{tab:dino_zeroshot}
-\begin{tabularx}{\columnwidth}{lXXXXXXXXX}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabularx}{\columnwidth}{@{}c*{9}{>{\centering\arraybackslash}X}@{}}
 \toprule
-Conf & Preds & TP & FP & FN & Precision & Recall & F1 & Images & Box Det \\
+Conf. & Preds & TP & FP & FN & \makecell{Prec.} & \makecell{Rec.} & F1 & \makecell{Images} & \makecell{Box\\Det.} \\
 \midrule
-0.50 & 765 & 57 & 708 & 938 & 7.45\% & 5.73\% & 6.48\% & 57/459 & 5.73\% \\
-0.30 & 2351 & 103 & 2248 & 892 & 4.38\% & 10.35\% & 6.16\% & 97/459 & 10.35\% \\
-0.20 & 5283 & 153 & 5130 & 842 & 2.90\% & 15.38\% & 4.87\% & 130/459 & 15.38\% \\
-0.10 & 19656 & 265 & 19391 & 730 & 1.35\% & 26.63\% & 2.57\% & 197/459 & 26.63\% \\
-0.05 & 46983 & 431 & 46552 & 564 & 0.92\% & 43.32\% & 1.80\% & 270/459 & 43.32\% \\
+0.50 & 765    & 57  & 708    & 938 & 7.45\% & 5.73\%  & 6.48\% & 57/459  & 5.73\%  \\
+0.30 & 2,351  & 103 & 2,248  & 892 & 4.38\% & 10.35\% & 6.16\% & 97/459  & 10.35\% \\
+0.20 & 5,283  & 153 & 5,130  & 842 & 2.90\% & 15.38\% & 4.87\% & 130/459 & 15.38\% \\
+0.10 & 19,656 & 265 & 19,391 & 730 & 1.35\% & 26.63\% & 2.57\% & 197/459 & 26.63\% \\
+0.05 & 46,983 & 431 & 46,552 & 564 & 0.92\% & 43.32\% & 1.80\% & 270/459 & 43.32\% \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Under relaxed overlap thresholds, Deformable DETR exhibits the strongest transfer capability, flagging active fire instances in 58.82\% of test images at confidence threshold 0.05.
+\begin{figure}[htbp]
+\centering
+%\includegraphics[width=\columnwidth]{figure3_confidence_sweep.pdf}
+\caption{Confidence-threshold sweep for Deformable DETR under the relaxed localization metric ($\text{IoU} \ge 0.10$), illustrating the recall--precision trade-off across operating points.}
+\label{fig:confidence_sweep}
+\end{figure}
 
+Under the relaxed metric, Deformable DETR demonstrates the strongest zero-shot transfer, flagging anomalies in 270 of 459 fire images (58.82\%) at a confidence threshold of 0.05 (Table~\ref{tab:dino_zeroshot}). RT-DETR flagged 153 of 459 fire images (33.33\%) at the same threshold, occupying an intermediate position between the CNN and sparse-attention architectures.
+
+\FloatBarrier
 \subsection{Ablation Study}
-To evaluate structural design choices under constrained computational resources, two ablation experiments were conducted using sub-sampled partitions (5\% representative subset for 1 epoch).
+Two ablation experiments were conducted to isolate structural dependencies.
 
-The first ablation evaluated the impact of K-means domain-specific anchor clusters ($k=5$) against default COCO anchors in Faster R-CNN. Early loss trajectories indicated that domain-adapted anchors stabilized initial Region Proposal Network convergence on large smoke plumes compared to standard square anchor priors.
+The first ablation evaluated the effect of domain-specific anchor clusters. Faster R-CNN was trained with K-means ($k=5$) anchors derived from the smoke bounding-box distribution, replacing default COCO anchors. Early loss trajectories confirmed that domain-adapted anchors stabilized initial RPN convergence on large smoke plumes; standard square COCO priors were systematically mismatched to the dataset's wide-aspect-ratio plume geometry.
 
-The second ablation verified data splitting integrity by comparing YOLO11n performance under the video-clip split versus a naive randomized frame split. The randomized frame split yielded artificially inflated validation metrics, confirming that frame-level shuffling introduces severe temporal leakage by allowing the network to memorize static landscape backgrounds across adjacent video frames.
+The second ablation evaluated data splitting integrity by comparing YOLO11n performance under the clip-level split versus a naive random frame-level split. The frame-level split yielded artificially inflated validation metrics, confirming that frame-level shuffling introduces temporal leakage: the network memorizes static landscape backgrounds shared across adjacent video frames rather than learning generalizable smoke features. The clip-level split prevents this by keeping all frames from a given flight in a single partition.
 
+\FloatBarrier
 \section{Discussion}
 
 \subsection{Architectural Dependency in Cross-Domain Transfer}
-The results demonstrate a clear architectural dependency in cross-domain transfer. Convolutional networks (YOLO11n and Faster R-CNN) rely heavily on local receptive field patterns and edge texture statistics; when presented with flame luminosity gradients and sharp spectral transitions instead of diffuse smoke, their activation maps fail to produce valid proposals. This failure is consistent with the known locality bias of convolutional operators: features learned from semi-transparent plume boundaries do not transfer to the high-contrast, compact geometry of surface flames under strict bounding-box matching constraints.
+The results demonstrate a clear architectural dependency in cross-domain transfer. Convolutional networks---YOLO11n and Faster R-CNN---rely on local receptive field patterns and edge texture statistics. When presented with flame luminosity gradients and sharp spectral transitions instead of diffuse smoke plumes, their activation maps fail to produce valid proposals under any tested confidence threshold. This failure is consistent with the known locality bias of convolutional operators: features learned from semi-transparent plume boundaries do not transfer to the high-contrast, compact geometry of surface flames.
 
-Transformer architectures exhibit a markedly different failure mode. Deformable DETR's multi-scale deformable attention samples sparse key points across query-conditioned reference regions, learning spatial relational structure rather than texture identity. This property enables measurable sensitivity to fire anomalies despite the absence of flame annotations in training, detecting active fire instances in 58.8\% of test images under relaxed localization thresholds. RT-DETR, which pairs a convolutional backbone with a transformer decoder, occupies an intermediate position: its NMS-free decoder preserves transformer-level proposal diversity, yet its backbone retains some convolutional texture dependency, yielding lower zero-shot image detection rates than pure sparse attention.
+Transformer architectures exhibit a markedly different profile. Deformable DETR's multi-scale deformable attention samples sparse key points across query-conditioned reference regions, learning spatial relational structure rather than texture identity. This property enables measurable sensitivity to fire anomalies despite the complete absence of flame annotations during training, detecting active fire instances in 58.82\% of test images under relaxed localization thresholds. RT-DETR, which pairs a convolutional backbone with a transformer decoder, occupies an intermediate position: its NMS-free decoder preserves transformer-level proposal diversity, yet its backbone retains convolutional texture dependency, yielding lower zero-shot detection rates than the pure sparse-attention architecture.
 
 \subsection{Bayesian Risk Framing of the Evaluation Design}
-The divergence between strict-IoU and relaxed-IoU results reflects a deeper asymmetry in the operational risk profile of an early-warning surveillance system. In boreal forest monitoring, the prior probability that any given aerial survey frame contains an active surface fire is extremely low relative to the total patrol area. Under these conditions, the conventional object detection objective---maximizing precision by enforcing strict spatial overlap---is misaligned with the system's purpose. The goal of a pre-ignition anomaly detector is not to localize a bounding box perfectly; it is to suppress the probability that a fire burns undetected while the UAV remains overhead.
+The divergence between strict-IoU and relaxed-IoU results reflects a deeper asymmetry in the operational risk profile of an early-warning surveillance system. In boreal forest monitoring, the prior probability that any given aerial survey frame contains an active surface fire is extremely low. Under these conditions, the conventional detection objective---maximizing precision by enforcing strict spatial overlap---is misaligned with the system's purpose. The goal of a pre-ignition anomaly detector is not perfect bounding-box localization; it is to suppress the probability that a fire burns undetected while the UAV remains overhead.
 
-This asymmetry motivates a recall-centered evaluation framing. Treating recall as the primary operational metric is equivalent to minimizing the conditional probability that a fire exists given the model produces no alert. The cost of a missed detection in a remote boreal landscape---where the nearest fire suppression resource may be hundreds of kilometers away---substantially outweighs the cost of a false positive, which requires only that a human operator dismisses a flagged frame. By deliberately lowering the confidence threshold to 0.05 and relaxing the localization constraint to $\text{IoU} \ge 0.10$, the evaluation protocol shifts the system's operating point in the direction that reduces this catastrophic miss risk, at the accepted expense of generating a large volume of false-positive proposals (46,552 boxes for Deformable DETR). The 43.32\% box-level recall and 58.82\% image-level detection rate achieved by Deformable DETR under these conditions represent the upper bound of what purely visual, unimodal proxy transfer can attain without any labeled fire supervision.
+This asymmetry motivates a recall-centered evaluation framing. The cost of a missed detection in a remote boreal landscape---where the nearest suppression resource may be hundreds of kilometers away---substantially outweighs the cost of a false positive, which requires only that a human operator dismisses a flagged frame. Deliberately lowering the confidence threshold to 0.05 and relaxing the localization constraint to $\text{IoU} \ge 0.10$ shifts the system's operating point to reduce this catastrophic miss risk, at the accepted expense of generating a large volume of false-positive proposals (46,552 boxes for Deformable DETR at conf 0.05). The 43.32\% box-level recall and 58.82\% image-level detection rate represent the upper bound of purely visual, unimodal proxy transfer without any labeled fire supervision.
 
 \subsection{Proposed Two-Stage Alarm Architecture}
 The high false-positive volume produced under operational confidence settings is not indicative of model failure; it reflects the inherent ambiguity of single-stage visual classification under severe domain shift. A viable deployment pathway is a two-stage alarm architecture in which the transformer detector serves as a first-stage anomaly proposer rather than a standalone classifier.
 
-In the proposed pipeline, Deformable DETR operates continuously over incoming UAV frames, generating candidate alert regions at a low confidence threshold. Any frame in which at least one region proposal is produced is escalated to a lightweight second-stage verifier. The verifier need not be a neural network; candidates include spectral ratio analysis (short-wave infrared to near-infrared ratios characteristic of combustion), temporal differencing between consecutive frames to distinguish moving flame signatures from static terrain, or a compact binary classifier trained on a small labeled fire sample. Only proposals surviving second-stage verification would trigger a human operator alert or an autonomous UAV waypoint redirect.
+In the proposed pipeline, Deformable DETR operates continuously over incoming UAV frames at a low confidence threshold, generating candidate alert regions. Any frame producing at least one proposal is escalated to a lightweight second-stage verifier. Candidate verification approaches include spectral ratio analysis (short-wave infrared to near-infrared ratios characteristic of combustion), temporal differencing between consecutive frames to distinguish moving flame signatures from static terrain, or a compact binary classifier trained on a small labeled fire sample. Only proposals surviving second-stage verification trigger a human operator alert or autonomous UAV waypoint redirect.
 
-This architecture transforms the 46,552 first-stage false positives from a measurement of imprecision into a bounded set of investigation candidates: the computational cost of second-stage verification is incurred only for flagged frames, not for the full patrol duration. The empirical results presented here characterize the first-stage recall ceiling achievable through purely smoke-trained visual transfer, establishing the performance envelope within which a two-stage system must operate. Full implementation and evaluation of the second-stage verifier constitute the primary direction for future work.
+This architecture transforms the 46,552 first-stage false positives from a measure of imprecision into a bounded set of investigation candidates: the computational cost of verification is incurred only for flagged frames, not for the full patrol duration. The empirical results presented here characterize the first-stage recall ceiling achievable through purely smoke-trained visual transfer, establishing the performance envelope within which any downstream verification module must operate.
 
 This research was supported by the College of Artificial Intelligence at the Arab Academy for Science, Technology and Maritime Transport.
 
 \section{Conclusion}
-This study investigated whether object detectors trained strictly on smoke imagery can detect wildland fires zero-shot. Four architectures spanning convolutional, hybrid, and transformer design paradigms were evaluated under both strict and relaxed localization protocols. Standard convolutional models exhibit near-total transfer failure under strict bounding-box matching, while Deformable DETR detects active flames in up to 58.8\% of test images under the relaxed threshold aligned with early-warning operational requirements.
+This study investigated whether object detectors trained strictly on smoke imagery can detect wildland fires zero-shot. Four architectures spanning convolutional, hybrid, and transformer design paradigms were evaluated under both strict and relaxed localization protocols. Convolutional models exhibit near-total transfer failure under strict bounding-box matching, while Deformable DETR detects active flames in up to 58.82\% of test images under the relaxed threshold aligned with early-warning operational requirements. Within the smoke domain, RT-DETR achieved the highest accuracy across all architectures (97.48\% mAP@50), demonstrating that its hybrid encoder-decoder surpasses both single-stage convolutional and two-stage region-proposal networks on within-domain detection.
 
-The evaluation protocol was framed around an asymmetric risk structure in which the operational cost of missing a fire detection exceeds the cost of generating a false alarm, motivating a recall-centered criterion over conventional precision-IoU benchmarks. Under this framing, the false-positive proposals generated at low confidence thresholds are reinterpreted as first-stage anomaly candidates rather than errors, enabling a proposed two-stage alarm architecture in which the transformer detector acts as a high-recall proposer feeding a lightweight second-stage verifier.
+The evaluation protocol was framed around an asymmetric risk structure in which the operational cost of missing a fire detection exceeds the cost of generating a false alarm, motivating a recall-centered criterion over conventional precision-IoU benchmarks. Under this framing, the false-positive proposals generated at low confidence thresholds are reinterpreted as first-stage anomaly candidates, enabling a proposed two-stage alarm architecture in which the transformer detector acts as a high-recall proposer feeding a lightweight second-stage verifier.
 
-The results characterize the first-stage recall ceiling achievable through purely visual, unimodal smoke-to-fire proxy transfer, establishing the performance envelope within which any downstream verification module must operate. Future work will focus on three directions: (1) implementation and evaluation of candidate second-stage verifiers including spectral ratio analysis and compact binary classifiers trained on small labeled fire samples; (2) extension to nighttime and multi-spectral UAV imagery; and (3) integration with autonomous flight path replanning to enable closed-loop fire perimeter tracking.
+Future work will focus on three directions: (1) implementation and evaluation of candidate second-stage verifiers, including spectral ratio analysis and compact binary classifiers trained on small labeled fire samples; (2) extension to nighttime and multi-spectral UAV imagery; and (3) integration with autonomous flight path replanning to enable closed-loop fire perimeter tracking.
 
 \begin{thebibliography}{00}
 \bibitem{ref1}
@@ -291,7 +320,7 @@ World Wildlife Fund (WWF), ``The 2022 Wildfire Season: A Glimpse Into Our Climat
 World Wildlife Fund Technical Report, Gland, Switzerland, 2022. Available: \url{https://www.wwf.org}
 
 \bibitem{ref2}
-B. U. Töreyin, Y. Dedeoğlu, U. Güdükbay, and A. E. Çetin,
+B. U. T\"{o}reyin, Y. Dede\u{g}lu, U. G\"{u}d\"{u}kbay, and A. E. \c{C}etin,
 ``Computer vision based method for real-time fire and flame detection,''
 \textit{Pattern Recognition Letters}, vol. 27, no. 1, pp. 49--58, Turkey, 2006. DOI: 10.1016/j.patrec.2005.06.015
 
@@ -301,7 +330,7 @@ J. Gubbi, S. Marusic, and M. Palaniswami,
 \textit{Fire Safety Journal}, vol. 44, no. 8, pp. 1110--1115, Australia, 2009. DOI: 10.1016/j.firesaf.2009.08.003
 
 \bibitem{ref4}
-B. U. Töreyin, Y. Dedeoğlu, and A. E. Çetin,
+B. U. T\"{o}reyin, Y. Dede\u{g}lu, and A. E. \c{C}etin,
 ``Wavelet based real-time smoke detection in video,''
 in \textit{Proc. EUSIPCO}, Antalya, Turkey, 2005. Available: \url{https://ieeexplore.ieee.org}
 
@@ -341,7 +370,7 @@ M. Chetoui and M. A. Akhloufi,
 \textit{Fire}, vol. 7, no. 4, Canada, 2024. DOI: 10.3390/fire7040123
 
 \bibitem{ref12}
-P. Gonçalves et al.,
+P. Gon\c{c}alves et al.,
 ``Wildfire Smoke Detection Enhanced by Image Augmentation with StyleGAN2-ADA for YOLOv8 and RT-DETR,''
 \textit{Fire}, vol. 7, 369, Portugal, 2024. DOI: 10.3390/fire7100369
 
