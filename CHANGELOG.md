@@ -74,9 +74,10 @@ This project was built collaboratively through distinct modular division of arch
 | Model | Architecture Paradigm | Framework | Epochs | Precision | Recall | F1 Score | mAP@50 | mAP@50-95 | Lead Owner |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | **YOLO11n (Baseline)** | One-Stage CNN | Ultralytics | 40 | 89.51% | 86.86% | 88.15% | 94.01% | 62.01% | Esraa Nasr |
-| **YOLO11n (Custom Aug)** | One-Stage CNN | Ultralytics | 70 | 92.70% | 92.81% | 92.75% | **96.51%** | 60.27% | Esraa Nasr |
-| **Faster R-CNN (MobileNetV3)** | Two-Stage RPN | PyTorch/torchvision | 5 | **95.27%** | **94.47%** | **94.87%** | 94.18% | **63.24%** | Esraa Nasr |
-| **Deformable DETR** | Sparse Attention Transformer | HuggingFace | 50 | — | — | — | 88.61% | 40.75% | Ahmed Ayman |
+| **YOLO11n (Custom Aug)** | One-Stage CNN | Ultralytics | 70 | 92.70% | 92.81% | 92.75% | 96.51% | 60.27% | Esraa Nasr |
+| **Faster R-CNN (MobileNetV3)** | Two-Stage RPN | PyTorch/torchvision | 5 | 95.27% | 94.47% | 94.87% | 94.18% | 63.24% | Esraa Nasr |
+| **RT-DETR (RT-DETR-L)** | Real-Time Hybrid Transformer | Ultralytics | 75 | **98.67%** | **96.71%** | **97.68%** | **97.48%** | **65.79%** | Ahmed Ayman |
+| **Deformable DETR** | Sparse Attention Transformer | HuggingFace | 50 | 89.20% | 87.40% | 88.29% | 88.61% | 40.75% | Ahmed Ayman |
 
 ---
 
@@ -93,9 +94,9 @@ This project was built collaboratively through distinct modular division of arch
 
 | Model | Conf Threshold | Predictions | True Positives | False Positives | False Negatives | Precision | Recall | F1 Score | Image Det Rate |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **RT-DETR** | 0.50 | 482 | 62 | 420 | 933 | 12.86% | 6.23% | 8.40% | 13.07% (60/459) |
-| **RT-DETR** | 0.10 | 3,600 | 131 | 3,469 | 864 | 3.64% | 13.17% | 5.70% | 25.27% (116/459) |
-| **RT-DETR** | 0.05 | 12,942 | 188 | 12,754 | 807 | 1.45% | 18.89% | 2.70% | 33.33% (153/459) |
+| **RT-DETR** | 0.50 | 475 | 62 | 413 | 933 | 13.05% | 6.23% | 8.44% | 13.29% (61/459) |
+| **RT-DETR** | 0.10 | 3,468 | 124 | 3,344 | 871 | 3.58% | 12.46% | 5.56% | 23.75% (109/459) |
+| **RT-DETR** | 0.05 | 12,298 | 187 | 12,111 | 808 | 1.53% | 18.79% | 2.84% | 33.12% (152/459) |
 | **Deformable DETR** | 0.50 | 765 | 57 | 708 | 938 | 7.45% | 5.73% | 6.48% | 12.42% (57/459) |
 | **Deformable DETR** | 0.10 | 19,656 | 265 | 19,391 | 730 | 1.35% | 26.63% | 2.57% | 42.92% (197/459) |
 | **Deformable DETR** | 0.05 | 46,983 | 431 | 46,552 | 564 | 0.92% | **43.32%** | 1.80% | **58.82% (270/459)** |
