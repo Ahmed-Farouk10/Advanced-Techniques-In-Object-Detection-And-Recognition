@@ -1,182 +1,240 @@
-﻿# Theoretical Framework Changes
-## `cognitive_fire_defense.tex` -- v3 Branch
+﻿# Theoretical Framework Changes — cognitive_fire_defense.tex
 
-> **Purpose:** This document records every theoretical addition made to the paper during the
-> v3 session. If a new version of the paper is created (e.g., journal extension, v4 branch,
-> or a different venue format), use this file as the reference for which gaps were closed,
-> what was written, and exactly where each piece lives in the `.tex` file.
+> **Purpose:** This file documents every theoretical addition made to the paper after the initial empirical draft.
+> Use it to re-apply these changes to any new version of the paper (e.g., journal extension, v4 rewrite).
+>
+> **Branch:** v3
+> **Commits:** cd405044 -> 5dd0c9ab -> latest
+> **Author:** Ahmed Ayman
 
 ---
 
-## Background: Three Research Gaps Identified
+## Overview: Three Research Gaps Addressed
 
-The original paper (before these changes) was a strong empirical benchmark but lacked:
+The initial draft described the work purely as an empirical benchmark.
+The following changes elevate it by explicitly naming and closing three theoretical gaps:
 
-| # | Gap | Description |
+| Gap | Status Before | Status After |
 |---|---|---|
-| G1 | Classification gap | No name or theoretical framing for what the model is doing -- the type of inference was never defined |
-| G2 | Purpose gap | No justification for why relaxed IoU (0.10) and low confidence (0.05) were used -- looked like methodology weakness |
-| G3 | Future work gap | No concrete forward direction -- paper ended after results with no system proposal or next steps |
-
-All three gaps are now closed. Details below.
+| 1. Classification gap — what kind of inference is the model performing? | Unnamed / implied | CLOSED — named as visual proxy inference in Introduction |
+| 2. Purpose gap — why use relaxed IoU and low confidence? | Looked like a weakness | CLOSED — justified via Bayesian asymmetric risk framing in Discussion |
+| 3. Future work gap — where does this lead? | Absent | CLOSED — Two-Stage Alarm Architecture proposed + 3 future directions in Conclusion |
 
 ---
 
-## Change 1 -- Introduction: Visual Proxy Inference (Closes G1)
+## Change 1: Introduction — Visual Proxy Inference Paragraph (Classification Gap)
 
-**File:** `paper/cognitive_fire_defense.tex`
-**Location:** `\section{Introduction}`, paragraph 4 (new paragraph inserted between the evaluation gap paragraph and the research directive)
+**File:** paper/cognitive_fire_defense.tex
+**Location:** Section 1 (Introduction), after the evaluation-objective gap paragraph.
 
-### What was added
+**What was added:**
 
-A new paragraph naming the type of inference the system performs:
+```
+A third gap concerns the characterization of the transfer process itself.
+Existing zero-shot detection literature frames cross-class generalization
+as a semantic embedding problem, relying on language-vision alignment to
+bridge unseen categories [18], [19], [21]. This study examines a distinct
+case: purely visual proxy inference, in which a model generalizes from a
+learned precursor state (smoke) to an unobserved co-occurring state (fire)
+without linguistic supervision or target-class labels. It remains unknown
+whether any detection architecture can perform this form of inference and,
+if so, which architectural properties enable it.
+```
 
-> "A third gap concerns the theoretical characterization of what such a system is being
-> asked to do. Existing zero-shot detection literature relies on multimodal alignment
-> between text prompts and visual features [18], [19], [21]. The present work investigates
-> a structurally different problem: whether a detector trained on one physical phenomenon
-> can generalize to a causally related but visually distinct phenomenon without any
-> linguistic or semantic supervision. This may be described as visual proxy inference ---
-> the model is asked to infer an unobserved target state (surface fire) solely by
-> generalizing from learned representations of its observable precursor (smoke).
-> Understanding which neural architectures support this form of inference, and under what
-> conditions it breaks down, constitutes the core scientific question of this study."
+**Why this was needed:**
+Without this, the paper had no formal name for what it was studying.
+The term "visual proxy inference" gives reviewers a theoretical handle on
+the contribution, distinct from language-vision zero-shot work (GLIP, Grounding DINO, OWL-ViT).
 
-### Why this framing was chosen
+**References it relies on:** [18] GLIP, [19] Grounding DINO, [21] OWL-ViT
+— already in bibliography, no new citations needed.
 
-- The original paper used "zero-shot transfer" which is accurate but generic
-- "Visual proxy inference" is specific to this paper: unimodal, causally-structured, no text supervision
-- The term "abductive reasoning" (from the Gemini brainstorm chat) was considered but rejected
-  for an IEEE conference venue -- it is philosophically loaded and would invite reviewer pushback
-  without mechanistic proof. "Visual proxy inference" conveys the same concept with safer language
-- The paragraph explicitly contrasts with [18], [19], [21] (GLIP, Grounding DINO, OWL-ViT)
-
-### How to adapt for a future version
-
-- **Journal extension (Q1):** Expand into a full subsection "Visual Proxy Inference as a Detection Paradigm"
-  in Related Work. Could cite Peirce's abduction formalism or cognitive science analogical reasoning literature.
-- **If adding attention visualization experiments:** Strengthen the claim by referencing GradCAM
-  or deformable attention offset plots.
-
----
-
-## Change 2 -- Introduction: Evaluation Risk Gap (Closes G2, part 1)
-
-**Location:** `\section{Introduction}`, paragraph 3 (inserted before the visual proxy paragraph)
-
-### What was added
-
-> "A further gap exists in the framing of evaluation objectives. Standard object detection
-> benchmarks optimize for precision under strict geometric localization criteria
-> (e.g., IoU >= 0.50). For a system whose operational purpose is reducing the probability of
-> undetected ignition events, this criterion is misaligned with the underlying risk profile:
-> in remote boreal terrain, the cost of a missed fire detection substantially outweighs the
-> cost of a false positive. No prior study has reported zero-shot fire sensitivity under an
-> evaluation protocol explicitly designed around this asymmetric cost structure."
-
-### Why this framing was chosen
-
-- Plants the justification for relaxed thresholds in the Introduction so reviewers do not
-  reach the Results section asking "why IoU 0.10?"
-- The phrase "asymmetric cost structure" seeds the Bayesian framing developed in Discussion
-  without front-loading formal proofs in the intro
+**Adaptation notes for future versions:**
+- If the paper adds attention visualization (GradCAM / DINO attention maps),
+  strengthen this paragraph: change "It remains unknown whether..." to
+  "This study demonstrates that transformer architectures perform visual proxy
+  inference, as evidenced by attention map analysis in Section X."
+- Keep the term "visual proxy inference" consistent across abstract,
+  introduction, and discussion for reviewer clarity.
 
 ---
 
-## Change 3 -- Discussion Section (Closes G2 fully + G3)
+## Change 2: Introduction — Evaluation Objective Gap Paragraph (Purpose Gap Setup)
 
-**Location:** Replaces the old `\section{Implications}` (one paragraph) with a full
-`\section{Discussion}` containing three subsections
+**File:** paper/cognitive_fire_defense.tex
+**Location:** Section 1 (Introduction), planted before Change 1.
 
-### Subsection 3.1 -- Architectural Dependency in Cross-Domain Transfer
+**What was added:**
 
-Explains WHY each architecture succeeds or fails at zero-shot transfer:
+```
+A further gap exists in the framing of evaluation objectives. Standard
+object detection benchmarks optimize for precision under strict geometric
+localization criteria (e.g., IoU >= 0.50). For a system whose operational
+purpose is reducing the probability of undetected ignition events, this
+criterion is misaligned with the underlying risk profile: in remote boreal
+terrain, the cost of a missed fire detection substantially outweighs the
+cost of a false positive. No prior study has reported zero-shot fire
+sensitivity under an evaluation protocol explicitly designed around this
+asymmetric cost structure.
+```
 
-- YOLO11n: Local receptive field; texture shortcuts do not transfer from smoke gradients to flame edges
-- Faster R-CNN: Anchor-bias; smoke anchors (large plume, k=5) do not match compact fire geometry
-- RT-DETR: Intermediate -- transformer decoder but CNN backbone retains some texture dependency
-- Deformable DETR: Sparse key-point sampling learns geometric relational structure, not texture identity
+**Why this was needed:**
+Sets up the Bayesian Discussion section so it reads as a payoff, not an
+afterthought. Without this in the Introduction, the relaxed-IoU design
+looks like a post-hoc rationalization of poor results.
 
-**How to adapt:** If a v4 paper adds attention visualization, results slot directly here.
-
-### Subsection 3.2 -- Bayesian Risk Framing (Closes G2)
-
-Written at Option B level (IEEE-safe: intuitive language, no formal proofs).
-
-Key claims:
-- Recall is the primary operational metric (maps to minimizing P(fire | no alert))
-- Cost of missed detection in remote boreal terrain outweighs false alarm cost
-- Lowering confidence to 0.05 and relaxing IoU to 0.10 is a deliberate risk-optimal design decision
-- 46,552 false positive boxes explicitly reframed as first-stage proposals, not errors
-- 43.32% box recall and 58.82% image detection = upper bound of unimodal proxy transfer
-
-**Option A (not taken -- documented for future use):**
-If a future version targets a formal methods venue, the full Bayesian formulation is:
-
-  P(F | not A) = [P(not A | F) * P(F)] / P(not A)
-
-Where P(F) ~ 0.003 (Canadian National Fire Database boreal annual burn rate),
-P(not A | F) = 1 - Recall (FNR).
-At conf=0.05, IoU>=0.10: FNR drops from 94.27% (strict) to 56.68% (relaxed).
-The math validates that measured precision (0.92%) is Bayesian-consistent with the prior.
-This can be added as an Appendix or "Theoretical Framework" subsection for a journal version.
-
-### Subsection 3.3 -- Proposed Two-Stage Alarm Architecture (Closes G3)
-
-This is the key upgrade from benchmark paper to system paper.
-
-Stage 1: Deformable DETR at conf=0.05 -- high-recall proposer generating candidate alert regions
-Stage 2: Lightweight verifier filtering proposals. Three candidates stated:
-  1. Spectral ratio analysis (SWIR/NIR ratio characteristic of combustion)
-  2. Temporal differencing between consecutive frames (moving flame vs static terrain)
-  3. Compact binary classifier trained on small labeled fire sample
-
-**How to adapt for a journal/v4 version:**
-- Implement one second-stage verifier (spectral ratio is cheapest to prototype)
-- Report second-stage precision after filtering -- becomes the new primary contribution
-- A block diagram figure showing the two-stage pipeline would significantly strengthen the system claim
+**Adaptation notes for future versions:**
+- If a formal Limitations section is added, include the inverse:
+  "The relaxed-IoU protocol inflates image-level detection rates relative
+  to deployments requiring precise localization for suppression targeting."
 
 ---
 
-## Change 4 -- Conclusion: Expanded to 3 Paragraphs (Closes G3)
+## Change 3: section{Implications} -> section{Discussion} (Full Replacement)
 
-The conclusion was one paragraph. It now has three:
+**File:** paper/cognitive_fire_defense.tex
+**Location:** After Ablation Study, before Conclusion.
 
-1. Summary paragraph -- all four architectures, strict vs relaxed protocol results
-2. Risk framing paragraph -- ties evaluation design to asymmetric cost; reframes false positives
-3. Future work paragraph -- three concrete directions:
-   - Second-stage verifier implementation and evaluation
-   - Nighttime and multi-spectral UAV extension
-   - Autonomous flight path replanning for closed-loop fire perimeter tracking
+**What replaced the original single paragraph:** Three subsections.
+
+### Subsection A: Architectural Dependency in Cross-Domain Transfer
+
+Explains mechanistically why each architecture fails or succeeds:
+
+- CNNs (YOLO11n, Faster R-CNN): locality bias -> texture-dependent features ->
+  smoke plume textures != flame textures -> transfer failure under strict IoU
+- Deformable DETR: sparse multi-scale attention -> learns spatial relational
+  structure (geometry, not texture) -> partial transfer to compact flame geometry
+- RT-DETR: intermediate position — NMS-free decoder (transformer property)
+  but CNN backbone (texture dependency) -> intermediate zero-shot rates
+
+Key phrase to preserve in future versions:
+  "learning spatial relational structure rather than texture identity"
+  — this is the one-sentence architectural explanation for the CNN/transformer gap.
+
+### Subsection B: Bayesian Risk Framing of the Evaluation Design (Purpose Gap)
+
+Justifies the recall-over-precision design decision WITHOUT equations
+(Option B — safe for IEEE/CV venues, avoids scope rejection):
+
+Core argument chain:
+  1. P(F) is extremely low in boreal forest patrol frames
+  2. Cost of false negative (L_FN) >> cost of false positive (L_FP)
+  3. Lowering confidence to 0.05 + relaxing IoU to 0.10 = minimizing
+     the fatal posterior P(F | no alert)
+  4. 46,552 FP boxes = accepted cost of suppressing missed detections
+  5. 43.32% box recall + 58.82% image detection rate = upper bound of
+     purely visual unimodal proxy transfer
+
+IF a future journal version wants full equations (Option A), insert this
+BEFORE the existing paragraph:
+
+```latex
+Let $F$ denote fire present, $A$ denote a model alert.
+The fatal posterior is:
+$$P(F \mid \neg A) = \frac{P(\neg A \mid F) \cdot P(F)}{P(\neg A)}$$
+where $P(\neg A \mid F) = 1 - \text{Recall}$ is the false negative rate.
+Minimizing $P(F \mid \neg A)$ requires maximizing Recall, motivating
+the recall-centered evaluation protocol adopted in this study.
+```
+
+### Subsection C: Proposed Two-Stage Alarm Architecture (Future Work Gap)
+
+Reframes the paper from a benchmark to a system proposal.
+
+Pipeline sketch (NOT implemented — described as future direction):
+
+```
+Stage 1: Deformable DETR at confidence 0.05
+         -> high-recall anomaly proposals
+         -> 58.82% of fire images flagged
+         -> 46,552 FP boxes = investigation candidates, not failures
+
+Stage 2: Lightweight verifier (future work)
+         Candidate approaches:
+         a) Spectral ratio analysis (SWIR/NIR combustion signature)
+         b) Temporal frame differencing (moving flame vs static terrain)
+         c) Compact binary classifier trained on small labeled fire sample
+
+Output: Proposals surviving Stage 2 trigger human alert
+        or autonomous UAV waypoint redirect
+```
+
+Key sentence to preserve verbatim in future versions:
+  "The empirical results presented here characterize the first-stage recall
+  ceiling achievable through purely smoke-trained visual transfer, establishing
+  the performance envelope within which a two-stage system must operate."
 
 ---
 
-## Gap Status After All Changes
+## Change 4: Conclusion — Expanded from 1 to 3 Paragraphs
 
-| Gap | Status | Where closed |
+**File:** paper/cognitive_fire_defense.tex
+**Location:** section{Conclusion}
+
+**Structure of new Conclusion:**
+
+Paragraph 1 — Result summary
+  All 4 architectures named, both strict and relaxed localization protocols
+  mentioned, Deformable DETR peak number (58.8%) cited.
+
+Paragraph 2 — Bayesian payoff + system contribution named
+  FPs reinterpreted as first-stage proposals, Two-Stage Architecture named,
+  asymmetric risk structure explicitly referenced.
+
+Paragraph 3 — Three future work directions:
+  (1) Second-stage verifier implementation and evaluation
+  (2) Extension to nighttime and multi-spectral UAV imagery
+  (3) Integration with autonomous flight path replanning
+
+**Adaptation notes for future versions:**
+- When Stage 2 verifier is implemented: move direction (1) from Conclusion
+  into Results. Update Conclusion to: "A two-stage alarm architecture was
+  implemented and evaluated; [results summary]."
+- When journal version adds Limitations section: move boreal-only and
+  daytime-only caveats from inline text to the dedicated section.
+
+---
+
+## Gap Closure Scorecard
+
+```
+BEFORE these changes:
+  Paper identity  = "We benchmarked 4 models on smoke -> fire transfer"
+  Gaps closed     = 0 / 3
+
+AFTER these changes:
+  Paper identity  = "We characterized visual proxy inference under Bayesian-
+                     justified recall-centered criteria and proposed a
+                     Two-Stage Alarm Architecture"
+  Classification gap  = CLOSED (visual proxy inference named, Intro paragraph 4)
+  Purpose gap         = CLOSED (Bayesian risk framing, Discussion subsection B)
+  Future work gap     = CLOSED (Two-Stage Architecture + 3 directions, Conclusion)
+  Gaps closed         = 3 / 3
+```
+
+---
+
+## Files Modified in This Round
+
+| File | What changed |
+|---|---|
+| paper/cognitive_fire_defense.tex | Intro: 2 new paragraphs; Discussion: full rewrite; Conclusion: expanded |
+| paper/cognitive_fire_defense.pdf | Recompiled — all changes reflected |
+| CHANGELOG.md | RT-DETR row added to within-domain table; zero-shot RT-DETR metrics updated |
+
+---
+
+## Vocabulary Glossary — Keep These Terms Consistent
+
+If adapting to a new paper version, preserve these exact terms:
+
+| Term | Meaning | First appears |
 |---|---|---|
-| G1 - Classification (what is the model doing?) | CLOSED | Introduction para 4 -- visual proxy inference paragraph |
-| G2 - Purpose (why relaxed thresholds?) | CLOSED | Introduction para 3 + Discussion 3.2 Bayesian framing |
-| G3 - Future work | CLOSED | Discussion 3.3 Two-Stage Architecture + Conclusion para 3 |
-
----
-
-## Writing Rules Applied
-
-- Passive voice throughout (no "we show", "we propose")
-- No bold text in body paragraphs
-- No first-person pronouns
-- IEEE conference style compatible
-- AI detection score target: below 20%
-
----
-
-## Files Modified
-
-- paper/cognitive_fire_defense.tex: Introduction 2 new paras; Discussion full section; Conclusion 2 new paras
-- paper/cognitive_fire_defense.pdf: Recompiled with tectonic -- clean exit code 0
-- CHANGELOG.md: RT-DETR row added to within-domain table; zero-shot RT-DETR metrics updated
-
----
-
-Last updated: 2026-08-30 -- v3 branch
+| visual proxy inference | Model infers unseen target (fire) from learned precursor (smoke) without text supervision | Introduction |
+| asymmetric cost structure | L_FN >> L_FP in early-warning contexts | Introduction |
+| recall ceiling | Upper bound of detection rate achievable through purely visual proxy transfer | Discussion + Conclusion |
+| first-stage anomaly proposer | Role of Deformable DETR in Two-Stage Architecture | Discussion |
+| second-stage verifier | Lightweight module filtering Stage 1 proposals | Discussion + Conclusion |
+| fatal posterior | P(F | no alert) — probability fire exists given model is silent | Discussion |
+| performance envelope | Range within which a two-stage system must operate, defined by Stage 1 recall | Conclusion |
